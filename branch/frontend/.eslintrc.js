@@ -31,6 +31,9 @@ module.exports = {
   },
   plugins: ["react", "prettier", "cypress"],
   rules: {
+    "import/no-named-as-default": "off",
+    "import/no-named-as-default-member": "off",
+    "import/no-cycle": "off",
     "prettier/prettier": "error",
     "react/jsx-filename-extension": [1, { extensions: [".js", ".jsx"] }],
     /* Complexity */

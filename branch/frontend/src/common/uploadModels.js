@@ -1,12 +1,12 @@
-import { NotificationManager } from "react-notifications";
 import { backend } from "@inplan/adapters/apiCalls";
 
 // Upload multiple stl files
 export default async function uploadModels(
+  showSnackbar,
   files,
   setup,
   parameters,
-  translation
+  translation,
 ) {
   // The function is asynchronous, files can be reset during the execution of the function,
   //     so copy the files before proceed
@@ -14,9 +14,7 @@ export default async function uploadModels(
   const cont = [];
 
   if (files.length < 1) {
-    NotificationManager.error(
-      translation("messages.cutlines.no_file_selected")
-    );
+    showSnackbar(translation("messages.cutlines.no_file_selected"), "error");
     return [];
   }
 
@@ -25,8 +23,9 @@ export default async function uploadModels(
     return fileSize > 20;
   });
   if (toobig) {
-    NotificationManager.error(
-      translation("messages.cutlines.files_size", { size: "20MB" })
+    showSnackbar(
+      translation("messages.cutlines.files_size", { size: "20MB" }),
+      "error",
     );
     return [];
   }
@@ -49,10 +48,11 @@ export default async function uploadModels(
     cont.push(promise);
 
     promise.then(() => {
-      NotificationManager.success(
+      showSnackbar(
         translation("messages.cutlines.file_downloaded", {
           file: cfiles[fileIndex].name,
-        })
+        }),
+        "success",
       );
     });
   }

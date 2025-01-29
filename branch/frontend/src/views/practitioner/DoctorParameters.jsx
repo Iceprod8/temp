@@ -4,7 +4,7 @@ import { backend } from "@inplan/adapters/apiCalls";
 import BasicSelect from "@inplan/common/BasicSelect";
 import { useAppContext } from "@inplan/AppContext";
 
-const DoctorParameters = () => {
+function DoctorParameters() {
   const { t: translation } = useTranslation();
   const [doctorList, setDoctorList] = useState([]);
   const [isCreatingDoctor, setIsCreatingDoctor] = useState(false);
@@ -43,7 +43,7 @@ const DoctorParameters = () => {
       <div className="page-head__title">
         <h2 className="h2">
           {translation(
-            "navbar.profile.parameters.order_template.settings.doctors.default_doctor"
+            "navbar.profile.parameters.order_template.settings.doctors.default_doctor",
           )}
         </h2>
       </div>
@@ -81,7 +81,7 @@ const DoctorParameters = () => {
           {translation(
             isCreatingDoctor
               ? "navbar.profile.parameters.order_template.settings.doctors.cancel"
-              : "navbar.profile.parameters.order_template.settings.doctors.add_doctor"
+              : "navbar.profile.parameters.order_template.settings.doctors.add_doctor",
           )}
         </button>
       </div>
@@ -99,7 +99,7 @@ const DoctorParameters = () => {
           <input
             type="text"
             placeholder={translation(
-              "navbar.profile.parameters.order_template.settings.doctors.doctor_name"
+              "navbar.profile.parameters.order_template.settings.doctors.doctor_name",
             )}
             value={newDoctorName}
             onChange={(e) => setNewDoctorName(e.target.value)}
@@ -119,13 +119,13 @@ const DoctorParameters = () => {
             disabled={newDoctorName.trim() === ""}
           >
             {translation(
-              "navbar.profile.parameters.order_template.settings.doctors.save_doctor"
+              "navbar.profile.parameters.order_template.settings.doctors.save_doctor",
             )}
           </button>
         </div>
       )}
     </div>
   );
-};
+}
 
 export default DoctorParameters;

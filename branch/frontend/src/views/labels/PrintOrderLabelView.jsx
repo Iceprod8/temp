@@ -39,19 +39,22 @@ export default function OrderLabelView() {
   useEffect(() => {
     getUserRights();
   }, []);
-  useEffect(async () => {
-    if (!idOrder) return;
+  useEffect(() => {
+    async function fetchOrderLabel() {
+      if (!idOrder) return;
 
-    const order1 = await fetchOrder(idOrder);
-    if (!order1) return;
+      const order1 = await fetchOrder(idOrder);
+      if (!order1) return;
 
-    const order2 = await getDetailedOrder(order1, translation);
-    setOrder(order2);
+      const order2 = await getDetailedOrder(order1, translation);
+      setOrder(order2);
 
-    const labelDescriptionFetched = await getLabelDescription();
-    setLabelDescription(labelDescriptionFetched);
+      const labelDescriptionFetched = await getLabelDescription();
+      setLabelDescription(labelDescriptionFetched);
 
-    goPrint();
+      goPrint();
+    }
+    fetchOrderLabel();
   }, [idOrder]);
 
   return (

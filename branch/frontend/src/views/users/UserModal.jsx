@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { NotificationManager } from "react-notifications";
 import Modal from "@inplan/common/Modal";
 import BasicSelect from "@inplan/common/BasicSelect";
 import { useAppContext } from "@inplan/AppContext";
+import { useSnackbar } from "@inplan/contexts/SnackbarContext";
 
 export default function UserModal({
   seletedOffice,
@@ -15,26 +15,27 @@ export default function UserModal({
 }) {
   const { getUserRights, offices, createUser, updateUser } = useAppContext();
   const { t: translation } = useTranslation();
+  const showSnackbar = useSnackbar();
 
   const title = selectedUser
     ? `${translation("users.form.update")} : ${selectedUser?.username}`
     : `${translation("users.form.create")}`;
 
   const [username, setUsername] = useState(
-    selectedUser && selectedUser.username !== null ? selectedUser.username : ""
+    selectedUser && selectedUser.username !== null ? selectedUser.username : "",
   );
   const [firstname, setFirstname] = useState(
     selectedUser && selectedUser.first_name !== null
       ? selectedUser.first_name
-      : ""
+      : "",
   );
   const [lastname, setLastname] = useState(
     selectedUser && selectedUser.last_name !== null
       ? selectedUser.last_name
-      : ""
+      : "",
   );
   const [email, setEmail] = useState(
-    selectedUser && selectedUser.email !== null ? selectedUser.email : ""
+    selectedUser && selectedUser.email !== null ? selectedUser.email : "",
   );
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
@@ -59,18 +60,15 @@ export default function UserModal({
     setUsernameError([]);
     setEmailError([]);
     setPasswordError([]);
-    const username_pattern = new RegExp(/^[a-zA-Z0-9@.+_-]{1,150}$/);
-    const email_pattern = new RegExp(
-      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$/
-    );
+    const username_pattern = /^[a-zA-Z0-9@.+_-]{1,150}$/;
+    const email_pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$/;
     // password_pattern:
     // At least 8 characters. Max 128 characters
     // At least one special character: !@  $%^&*()-_=+[{]}|;:',<.>?
     // At least one number
     // At least one uppercase
-    const password_pattern = new RegExp(
-      /^(?=.*[!@  # $%^&*()\-_=+[{\]}|;:',<.>?])(?=.*\d)(?=.*[A-Z]).{8,128}$/
-    );
+    const password_pattern =
+      /^(?=.*[!@  # $%^&*()\-_=+[{\]}|;:',<.>?])(?=.*\d)(?=.*[A-Z]).{8,128}$/;
     const result_username = username_pattern.test(data.username);
     const result_email = email_pattern.test(data.email);
     const result_password = password_pattern.test(data.password);
@@ -93,7 +91,7 @@ export default function UserModal({
       if (result_password === false) {
         setPasswordError([
           translation(
-            "users.form.fields_rules.at_least_8_characters_max_128_characters"
+            "users.form.fields_rules.at_least_8_characters_max_128_characters",
           ),
           translation("users.form.fields_rules.at_least_one_special_character"),
           translation("users.form.fields_rules.at_least_one number"),
@@ -104,7 +102,7 @@ export default function UserModal({
     } else if (!selectedUser && data.password !== data.password_confirm) {
       setPasswordError([
         translation(
-          "users.form.fields_rules.password_and_password_confirmation_do_not_match"
+          "users.form.fields_rules.password_and_password_confirmation_do_not_match",
         ),
       ]);
       ret = false;
@@ -128,14 +126,13 @@ export default function UserModal({
     if (selectedUser && updatedRights?.to_update_user) {
       const res = await updateUser(selectedUser.id, data);
       if (res !== undefined) {
-        NotificationManager.success(
-          translation("messages.users.user_was_updated")
-        );
+        showSnackbar(translation("messages.users.user_was_updated"), "success");
         setModal("");
         setSelectedUser(null);
       } else {
-        NotificationManager.error(
-          translation("messages.users.invalid_information_provided")
+        showSnackbar(
+          translation("messages.users.invalid_information_provided"),
+          "error",
         );
       }
       return;
@@ -144,22 +141,22 @@ export default function UserModal({
     if (!selectedUser && updatedRights?.to_create_user) {
       const res = await createUser({}, data);
       if (res !== undefined) {
-        NotificationManager.success(
-          translation("messages.users.user_was_created")
-        );
+        showSnackbar(translation("messages.users.user_was_created"), "success");
         setModal("");
       } else {
-        NotificationManager.error(
-          translation("messages.users.invalid_information_provided")
+        showSnackbar(
+          translation("messages.users.invalid_information_provided"),
+          "error",
         );
       }
       return;
     }
     // NO PERMISSION
-    NotificationManager.error(
+    showSnackbar(
       translation(
-        "messages.common.you_do_not_have_permission_to_execute_this_action"
-      )
+        "messages.common.you_do_not_have_permission_to_execute_this_action",
+      ),
+      "error",
     );
     setModal("");
   };

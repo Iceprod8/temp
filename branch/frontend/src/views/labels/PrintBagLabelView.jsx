@@ -80,33 +80,25 @@ export default function Labels() {
   useEffect(() => {
     getUserRights();
   }, []);
-  useEffect(async () => {
-    if (!idOrder) return;
+  useEffect(() => {
+    async function OrderLabelFetch() {
+      if (!idOrder) return;
 
-    const order1 = await fetchOrder(idOrder);
-    if (!order1) return;
+      const order1 = await fetchOrder(idOrder);
+      if (!order1) return;
 
-    // Specific to Bag label. Find minimum and max aligners
-    // Considering there can be a different sequence on top or bottom
-    // FIXME to be replace by an algo giving the sequence of actual ranks
-    // The current system doesn't work if the rank don't overlap
-    // const minAligner = minAlignerInCommand(order1);
-    // const maxAligner = maxAlignerInCommand(order1);
-    // const alignersNum1 = [...Array(maxAligner - minAligner + 1).keys()].map(
-    //   (x) => x + minAligner
-    // );
-    // setAligersNum(alignersNum1);
+      const rankList = getRankList(order1);
+      setAligersNum(rankList);
 
-    const rankList = getRankList(order1);
-    setAligersNum(rankList);
+      const order2 = await getDetailedOrder(order1, translation);
+      setOrder(order2);
 
-    const order2 = await getDetailedOrder(order1, translation);
-    setOrder(order2);
+      const labelDescriptionFetched = await getLabelDescription();
+      setLabelDescription(labelDescriptionFetched);
 
-    const labelDescriptionFetched = await getLabelDescription();
-    setLabelDescription(labelDescriptionFetched);
-
-    goPrint();
+      goPrint();
+    }
+    OrderLabelFetch();
   }, [idOrder]);
 
   return (

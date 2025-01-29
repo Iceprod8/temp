@@ -64,7 +64,7 @@ export default function getLicenseColumns(translation) {
     {
       field: "license_type.description",
       headerName: translation(
-        "licenses.table.titles.description"
+        "licenses.table.titles.description",
       ).toUpperCase(),
       flex: 0.7,
       valueGetter: (params) => params?.row?.license_type?.description,
@@ -112,10 +112,10 @@ export default function getLicenseColumns(translation) {
                 status === ACTIVE
                   ? "oliveDrab"
                   : status === NO_ACTIVE
-                  ? "steelBlue"
-                  : status === INCONSISTENCY_OF_DATES
-                  ? "paleVioletRed"
-                  : "gray",
+                    ? "steelBlue"
+                    : status === INCONSISTENCY_OF_DATES
+                      ? "paleVioletRed"
+                      : "gray",
             }}
           >
             {getLicenseStatus(translation)[status]}

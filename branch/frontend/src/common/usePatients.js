@@ -1,8 +1,8 @@
 import { useCallback, useReducer } from "react";
 import { useTranslation } from "react-i18next";
-import { NotificationManager } from "react-notifications";
 import { backend } from "@inplan/adapters/apiCalls";
 import useIsMounted from "@inplan/common/useIsMounted";
+import { useSnackbar } from "@inplan/contexts/SnackbarContext";
 
 function reducer(state, action) {
   console.debug("PATIENTS REDUCER", action.type, action);
@@ -19,7 +19,7 @@ function reducer(state, action) {
       return {
         ...state,
         patients: state.patients.map((p) =>
-          p === action.target ? action.payload : p
+          p === action.target ? action.payload : p,
         ),
       };
     case "FETCHING_PATIENT":
@@ -39,7 +39,7 @@ export default function usePatients() {
     loading: false,
   });
   const { t: translation } = useTranslation();
-
+  const showSnackbar = useSnackbar();
   const { isMounted } = useIsMounted();
 
   return {
@@ -74,14 +74,14 @@ export default function usePatients() {
           console.debug("The component is not mounted anymore");
         }
       },
-      [state.patients]
+      [state.patients],
     ),
 
     createPatient: useCallback(async (data) => {
       try {
         const patientCreationResponse = await backend.post(
           "patients/get_or_create",
-          data
+          data,
         );
         if (patientCreationResponse.status === 201) {
           // if 201 - patient created - ADD PATIENT
@@ -91,20 +91,23 @@ export default function usePatients() {
           });
         } else if (patientCreationResponse.status === 200) {
           // 200 : the patient was not created because he/she already exists
-          NotificationManager.warning(
-            translation("messages.patients.patient_already_exists")
+          showSnackbar(
+            translation("messages.patients.patient_already_exists"),
+            "warning",
           );
         }
       } catch (error) {
         if (error.response.status === 409) {
-          NotificationManager.error(
+          showSnackbar(
             translation(
-              "messages.patients.patient_with_same_name_already_exist_check_birth_dates"
-            )
+              "messages.patients.patient_with_same_name_already_exist_check_birth_dates",
+            ),
+            "error",
           );
         } else {
-          NotificationManager.error(
-            translation("messages.patients.error_during_patient_creation")
+          showSnackbar(
+            translation("messages.patients.error_during_patient_creation"),
+            "error",
           );
         }
       }
@@ -113,7 +116,7 @@ export default function usePatients() {
     updatePatient: useCallback(async (patient, data) => {
       const { data: newPatient } = await backend.patch(
         `patients/${patient.id}`,
-        data
+        data,
       );
 
       /*

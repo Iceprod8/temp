@@ -14,7 +14,7 @@ export default function BatchModalValidate({ handle, name }) {
   const { setModal, selectedBatch, unselectBatch } = useBatchContext();
 
   const [validatedAligners, setValidatedAligners] = useState(
-    selectedBatch && selectedBatch.aligners ? selectedBatch.aligners : []
+    selectedBatch && selectedBatch.aligners ? selectedBatch.aligners : [],
   );
 
   const batchName =
@@ -30,11 +30,11 @@ export default function BatchModalValidate({ handle, name }) {
       <div className="grid">
         <h4 className="h4">
           {translation(
-            "3d_printing.table_pending_printer_beds.batch_modal_validate.name"
+            "3d_printing.table_pending_printer_beds.batch_modal_validate.name",
           )}
         </h4>
         {translation(
-          "3d_printing.table_pending_printer_beds.batch_modal_validate.message"
+          "3d_printing.table_pending_printer_beds.batch_modal_validate.message",
         )}
         <div className="grid">
           <table className="table">
@@ -42,12 +42,12 @@ export default function BatchModalValidate({ handle, name }) {
               <tr style={{ height: "59px" }}>
                 <th>
                   {translation(
-                    "3d_printing.table_pending_printer_beds.batch_modal_validate.table.titles.aligners"
+                    "3d_printing.table_pending_printer_beds.batch_modal_validate.table.titles.aligners",
                   )}
                 </th>
                 <th>
                   {translation(
-                    "3d_printing.table_pending_printer_beds.batch_modal_validate.table.titles.actions"
+                    "3d_printing.table_pending_printer_beds.batch_modal_validate.table.titles.actions",
                   )}
                 </th>
               </tr>
@@ -75,7 +75,7 @@ export default function BatchModalValidate({ handle, name }) {
             }}
           >
             {translation(
-              "3d_printing.table_pending_printer_beds.batch_modal_validate.buttons.cancel"
+              "3d_printing.table_pending_printer_beds.batch_modal_validate.buttons.cancel",
             )}
           </button>
           <button
@@ -86,7 +86,7 @@ export default function BatchModalValidate({ handle, name }) {
             }}
           >
             {translation(
-              "3d_printing.table_pending_printer_beds.batch_modal_validate.buttons.confirm"
+              "3d_printing.table_pending_printer_beds.batch_modal_validate.buttons.confirm",
             )}
           </button>
         </div>

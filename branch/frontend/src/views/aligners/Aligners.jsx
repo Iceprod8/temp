@@ -59,7 +59,7 @@ export default function Aligners() {
         subject="aligners"
         pendingTitle={translation("cutting.table_pending_cutting_batches.name")}
         batchTitle={translation(
-          "cutting.table_pending_cutting_batches.titles.cutting_batches"
+          "cutting.table_pending_cutting_batches.titles.cutting_batches",
         )}
         Main={
           <BatchOrdersTable
@@ -67,7 +67,7 @@ export default function Aligners() {
             verb="Prepare tray of"
             maxBatch={100000}
             tableTitle={translation(
-              "3d_printing.table_pending_models.aligners"
+              "3d_printing.table_pending_models.aligners",
             )}
           />
         }

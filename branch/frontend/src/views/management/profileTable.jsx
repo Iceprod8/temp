@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { DataGridPro } from "@mui/x-data-grid-pro";
+import { DataGrid } from "@mui/x-data-grid";
 import { mainColor } from "@inplan/common/Form/styles";
 import { useTranslation } from "react-i18next";
 import { IoMdTrash } from "react-icons/io";
@@ -7,7 +7,7 @@ import { IoClose, IoEye } from "react-icons/io5";
 
 import { useProfiles } from "../../common/collections";
 
-const ProfileTabel = () => {
+function ProfileTabel() {
   const { t: translation } = useTranslation();
   const [selectedProfile, setSelectedProfile] = useState({});
   const {
@@ -99,7 +99,7 @@ const ProfileTabel = () => {
           <h1>Profile List</h1>
         </div>
         <div>
-          <DataGridPro
+          <DataGrid
             columns={columns}
             rows={rows}
             // checkboxSelection
@@ -116,7 +116,7 @@ const ProfileTabel = () => {
               cell: { "data-test": "cell-lab" },
               pagination: {
                 labelRowsPerPage: `${translation(
-                  "utilities.DataGridPro.pagination.labelRowsPerPage"
+                  "utilities.DataGridPro.pagination.labelRowsPerPage",
                 )}:`,
                 labelDisplayedRows: ({ from, to, count }) =>
                   `${translation(
@@ -125,7 +125,7 @@ const ProfileTabel = () => {
                       from,
                       to,
                       count,
-                    }
+                    },
                   )}`,
               },
             }}
@@ -151,7 +151,7 @@ const ProfileTabel = () => {
                     selectedProfile[key] === true &&
                     !["name", "id", "description", "role"].includes(key) && (
                       <div key={key}>{key}</div>
-                    )
+                    ),
                 )}
               </div>
             </div>
@@ -175,6 +175,6 @@ const ProfileTabel = () => {
       )}
     </div>
   );
-};
+}
 
 export default ProfileTabel;

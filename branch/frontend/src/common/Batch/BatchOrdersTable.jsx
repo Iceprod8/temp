@@ -1,10 +1,7 @@
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-
-import { NotificationManager } from "react-notifications";
-import { capitalizeFirstLetter } from "@inplan/adapters/functions";
+import { useSnackbar } from "@inplan/contexts/SnackbarContext";
 import { useBatchContext } from "./BatchContext";
-
 import ItemsTab from "./ItemsTab";
 import OrderForBatch from "./OrderForBatch";
 
@@ -18,6 +15,7 @@ export default function BatchOrdersTable({
   tableTitle,
 }) {
   const { t: translation } = useTranslation();
+  const showSnackbar = useSnackbar();
   const { cart, setCart, batchViewOrders, createBatch, fetchBatches } =
     useBatchContext();
 
@@ -29,17 +27,17 @@ export default function BatchOrdersTable({
       await createBatch(batch);
       await fetchBatches();
     } else {
-      NotificationManager.error(
+      showSnackbar(
         `${translation("messages.common.select_batch_between", {
           minBatch,
           maxBatch,
-        })} ${translation(`utilities.variables.${subject}`)}`
+        })} ${translation(`utilities.variables.${subject}`)}`,
+        "error",
       );
     }
   };
-
   if (!batchViewOrders) {
-    return <></>;
+    return null; // Remplacement du fragment inutile par null.
   }
 
   // Reinit cart at each order change

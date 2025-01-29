@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { NotificationManager } from "react-notifications";
 import { BsFillPenFill } from "react-icons/bs";
 import { TiDocumentAdd, TiDocumentDelete } from "react-icons/ti";
+import { IoMdTrash } from "react-icons/io";
 import { useAppContext } from "@inplan/AppContext";
 import CustomTranslation from "@inplan/common/translation/CustomTranslation";
-import Fade from "@inplan/common/Fade";
 import { Button } from "@mui/material";
-import { IoMdTrash } from "react-icons/io";
+import { useSnackbar } from "@inplan/contexts/SnackbarContext";
 import LicenseModal from "./LicenseModal";
 import DataGridProLicenses from "./DataGridProLicenses";
 import getLicenseColumns from "./licenseColumns";
 
-const LicensesTable = () => {
+function LicensesTable() {
   const { t: translation } = useTranslation();
   const {
     userLicenses,
@@ -22,7 +21,7 @@ const LicensesTable = () => {
     licenseTypes,
     users,
   } = useAppContext();
-
+  const showSnackbar = useSnackbar();
   const [selectedRows, setSelectedRows] = useState([]);
   const [modal, setModal] = useState("");
   const [selectedUser, setSelectedUser] = useState({ id: "" });
@@ -54,10 +53,11 @@ const LicensesTable = () => {
       if (updatedRights?.to_delete) {
         deleteUserLicense(row);
       } else {
-        NotificationManager.error(
+        showSnackbar(
           translation(
-            "messages.common.you_do_not_have_permission_to_execute_this_action"
-          )
+            "messages.common.you_do_not_have_permission_to_execute_this_action",
+          ),
+          "error",
         );
       }
     }
@@ -114,8 +114,9 @@ const LicensesTable = () => {
   const handleDeleteLicenses = async () => {
     try {
       if (selectedRows?.length === 0) {
-        NotificationManager.error(
-          translation("messages.licenses.no_license_selected")
+        showSnackbar(
+          translation("messages.licenses.no_license_selected"),
+          "error",
         );
         return;
       }
@@ -125,21 +126,23 @@ const LicensesTable = () => {
         const updatedRights = await getUserRights();
         if (updatedRights?.to_delete) {
           const rowToDelete = userLicenses.filter((license) =>
-            selectedRows.includes(license.id)
+            selectedRows.includes(license.id),
           );
           const futurs = rowToDelete.map((row) => deleteUserLicense(row));
           await Promise.all(futurs);
           await fetchUserLicenses();
           if (selectedRows?.length > 0) {
-            NotificationManager.success(
-              translation("messages.licenses.licenses_have_been_deleted")
+            showSnackbar(
+              translation("messages.licenses.licenses_have_been_deleted"),
+              "success",
             );
           }
         } else {
-          NotificationManager.error(
+          showSnackbar(
             translation(
-              "messages.common.you_do_not_have_permission_to_execute_this_action"
-            )
+              "messages.common.you_do_not_have_permission_to_execute_this_action",
+            ),
+            "error",
           );
         }
       }
@@ -149,23 +152,16 @@ const LicensesTable = () => {
   };
   return (
     <div>
-      <Fade
-        visible={modal === "modal-license"}
-        duration={300}
-        zIndex={1000}
-        from={{ opacity: 0 }}
-      >
-        <LicenseModal
-          selectedUser={selectedUser}
-          setSelectedUser={setSelectedUser}
-          selectedLicense={selectedLicense}
-          setSelectedLicense={setSelectedLicense}
-          seletedLicenseType={seletedLicenseType}
-          setSeletedLicenseType={setSeletedLicenseType}
-          setModal={setModal}
-          labelColor="#4b525f"
-        />
-      </Fade>
+      <LicenseModal
+        selectedUser={selectedUser}
+        setSelectedUser={setSelectedUser}
+        selectedLicense={selectedLicense}
+        setSelectedLicense={setSelectedLicense}
+        seletedLicenseType={seletedLicenseType}
+        setSeletedLicenseType={setSeletedLicenseType}
+        setModal={setModal}
+        labelColor="#4b525f"
+      />
       <div style={{ padding: "30px" }}>
         <div className="page">
           <div
@@ -235,6 +231,6 @@ const LicensesTable = () => {
       </div>
     </div>
   );
-};
+}
 
 export default LicensesTable;

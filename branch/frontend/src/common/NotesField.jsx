@@ -3,8 +3,8 @@ import { Controller } from "react-hook-form";
 import { TextField } from "@mui/material";
 import styles, { textFieldSx } from "@inplan/common/Form/styles";
 
-const NotesField = ({ data, control }) => (
-  <>
+export default function NotesField({ data, control }) {
+  return (
     <Controller
       name={data.name}
       control={control}
@@ -32,7 +32,5 @@ const NotesField = ({ data, control }) => (
         </div>
       )}
     />
-  </>
-);
-
-export default NotesField;
+  );
+}

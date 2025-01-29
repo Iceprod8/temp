@@ -16,7 +16,7 @@ function ArchiveConfirmationBox({
     {
       last_name: patient.last_name,
       first_name: patient.first_name,
-    }
+    },
   );
 
   const handleArchive = async () => {
@@ -56,7 +56,7 @@ function UnrchiveConfirmationBox({ patient, setRefresh }) {
     {
       last_name: patient.last_name,
       first_name: patient.first_name,
-    }
+    },
   );
 
   const handleUnarchive = async () => {

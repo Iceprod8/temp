@@ -1,35 +1,32 @@
 import React, { useEffect, useState } from "react";
 import DownloadLink from "react-download-link";
 import { useTranslation } from "react-i18next";
-
 import {
   BatchContextProvider,
   useBatchContext,
 } from "@inplan/common/Batch/BatchContext";
-import { NotificationManager } from "react-notifications";
-
 import { HiCheck } from "react-icons/hi";
 import { AiOutlineDownload } from "react-icons/ai";
 import { FiEdit } from "react-icons/fi";
-
 import { backend } from "@inplan/adapters/apiCalls";
-
 import BatchView from "@inplan/common/Batch/BatchView";
 import BatchOrdersTable from "@inplan/common/Batch/BatchOrdersTable";
-
 import { useAppContext } from "@inplan/AppContext";
-
+import { useSnackbar } from "@inplan/contexts/SnackbarContext";
 import ModelsModalManager from "./ModalManager";
 
 function Actions({ batch, batchName }) {
   const { setModal, fetchBatch, setLoading } = useBatchContext();
   const { userData, getUserRights, userRights } = useAppContext();
   const { t: translation } = useTranslation();
+  const showSnackbar = useSnackbar();
+
   const notifyOnlyInLase = () => {
-    NotificationManager.info(
+    showSnackbar(
       translation(
-        "messages.3d_printing.downloading_models_only_available_using_inlase"
-      )
+        "messages.3d_printing.downloading_models_only_available_using_inlase",
+      ),
+      "info",
     );
   };
 
@@ -82,7 +79,7 @@ function Actions({ batch, batchName }) {
                   `printer_batches/${batch.id}/export`,
                   {
                     responseType: "arraybuffer",
-                  }
+                  },
                 );
                 fetchBatch(batch, "select");
                 setwasDownloaded(true);
@@ -90,8 +87,9 @@ function Actions({ batch, batchName }) {
                 return data;
               } catch (error) {
                 setLoading(false);
-                NotificationManager.error(
-                  translation("messages.3d_printing.error_downloading_models")
+                showSnackbar(
+                  translation("messages.3d_printing.error_downloading_models"),
+                  "error",
                 );
                 throw error;
               }
@@ -140,10 +138,10 @@ export default function Models() {
         subject="models"
         verb="Print"
         pendingTitle={translation(
-          "3d_printing.table_pending_printer_beds.name"
+          "3d_printing.table_pending_printer_beds.name",
         )}
         batchTitle={translation(
-          "3d_printing.table_pending_printer_beds.titles.printer_beds"
+          "3d_printing.table_pending_printer_beds.titles.printer_beds",
         )}
         Main={
           <BatchOrdersTable

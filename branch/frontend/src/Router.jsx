@@ -1,9 +1,7 @@
 import React from "react";
-
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Navbar from "@inplan/common/Navbar";
-
 import IndexView from "@inplan/views/auth/IndexView";
 import Dashboard from "@inplan/views/dashboard/Dashboard";
 import Patients from "@inplan/views/patients/Patients";
@@ -15,168 +13,247 @@ import OrderLabelView from "@inplan/views/labels/PrintOrderLabelView";
 import Inlase from "@inplan/views/inlase";
 import Calibration from "@inplan/views/calibration/Calibration";
 import OrderEditView from "@inplan/views/order/OrderEditView";
-
 import Profile from "@inplan/views/practitioner/Profile";
-
 import { Register, ForgotPass, ResetPass } from "@inplan/views/auth/index";
-
 import NotFound from "@inplan/common/NotFound";
 import Laboratory from "@inplan/views/laboratory";
-
 import { useAppContext } from "@inplan/AppContext";
-
-import PrivateRoute from "./PrivateRoute";
-import NoRights from "./common/NoRights";
 import Licenses from "./views/licenses";
 import Management from "./views/management/management";
 import Users from "./views/users";
+import PrivateRoute from "./PrivateRoute";
+import Test from "./Test";
 
-export default function Router() {
-  const { onConnect, userRights } = useAppContext();
-  const renderComponent = (check, component) => {
-    return check ? component : <NoRights />;
-  };
+export default function GlobalRouter() {
+  const { userRights } = useAppContext();
+  const isLoading = !userRights;
+
   return (
-    <BrowserRouter>
-      {onConnect ? <Navbar /> : null}
-      <Switch>
-        <Route path="/" exact render={(props) => <IndexView {...props} />} />
+    <Router>
+      <Navbar />
+      <Routes>
+        {/* Public Routes */}
+        <Route path="/" element={<IndexView />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPass />} />
+        <Route path="/reset-password/:token" element={<ResetPass />} />
 
-        {/* DASHBOARD OPTIONS */}
-        <PrivateRoute path="/dashboard/:idPatient" exact>
-          {userRights?.order_creation || userRights?.reduced_order_creation ? (
-            <Dashboard submenu="orders" />
-          ) : userRights?.cutlines ? (
-            <Dashboard submenu="cutlines" />
-          ) : userRights?.patient_profile ? (
-            <Dashboard submenu="patient" />
-          ) : userRights?.setups ? (
-            <Dashboard submenu="setups" />
-          ) : userRights?.appointments ? (
-            <Dashboard submenu="appointment" />
-          ) : userRights?.periods ? (
-            <Dashboard submenu="informations" />
-          ) : (
-            <NoRights />
-          )}
-        </PrivateRoute>
-
-        <PrivateRoute path="/dashboard/:idPatient/periods" exact>
-          {renderComponent(
-            userRights?.periods,
-            <Dashboard submenu="informations" />
-          )}
-        </PrivateRoute>
-
-        <PrivateRoute path="/dashboard/:idPatient/orders" exact>
-          {renderComponent(
-            userRights?.order_creation || userRights?.reduced_order_creation,
-            <Dashboard submenu="orders" />
-          )}
-        </PrivateRoute>
-
-        <PrivateRoute path="/dashboard/:idPatient/setups" exact>
-          {renderComponent(userRights?.setups, <Dashboard submenu="setups" />)}
-        </PrivateRoute>
-
-        <PrivateRoute path="/dashboard/:idPatient/cutlines" exact>
-          {renderComponent(
-            userRights?.cutlines,
-            <Dashboard submenu="cutlines" />
-          )}
-        </PrivateRoute>
-
-        <PrivateRoute path="/dashboard/:idPatient/appointment" exact>
-          {renderComponent(
-            userRights?.appointments,
-            <Dashboard submenu="appointment" />
-          )}
-        </PrivateRoute>
-        {/* END DASHBOARD OPTIONS */}
-
-        {/* NAVBAR OPTIONS */}
-        <PrivateRoute path="/patients" exact>
-          {renderComponent(
-            userRights?.patients_list || userRights?.reduced_patients_list,
-            <Patients />
-          )}
-        </PrivateRoute>
-
-        <PrivateRoute path="/laboratory" exact>
-          {renderComponent(userRights?.order_list, <Laboratory />)}
-        </PrivateRoute>
-
-        <PrivateRoute path="/models" exact>
-          {renderComponent(userRights?.printing, <Models />)}
-        </PrivateRoute>
-
-        <PrivateRoute path="/aligners" exact>
-          {renderComponent(userRights?.thermoforming, <Aligners />)}
-        </PrivateRoute>
-
-        <PrivateRoute path="/inlase" exact>
-          {renderComponent(userRights?.inlase, <Inlase />)}
-        </PrivateRoute>
-
-        <PrivateRoute exact path="/profile">
-          <Profile />
-        </PrivateRoute>
-        {/* END NAVBAR OPTIONS */}
-
-        <PrivateRoute path="/calibration" exact>
-          {renderComponent(userRights?.calibration_screen, <Calibration />)}
-        </PrivateRoute>
-
-        <PrivateRoute path="/licenses" exact>
-          {renderComponent(
-            userRights?.handle_licenses && userRights?.to_read,
-            <Licenses />
-          )}
-        </PrivateRoute>
-        <PrivateRoute path="/management" exact>
-          {renderComponent(
-            userRights?.handle_licenses && userRights?.handle_users,
-            <Management />
-          )}
-        </PrivateRoute>
-
-        <PrivateRoute path="/users" exact>
-          {renderComponent(
-            userRights?.handle_users && userRights?.to_read_user,
-            <Users />
-          )}
-        </PrivateRoute>
-
-        <PrivateRoute path="/labels1/:idOrder" exact>
-          {renderComponent(
-            userRights?.bag_label_parameters,
-            <PrintBagLabelView />
-          )}
-        </PrivateRoute>
-
-        <PrivateRoute path="/addresslabel/:idPatient" exact>
-          {renderComponent(
-            userRights?.patient_profile,
-            <PrintPatientAddressLabelView />
-          )}
-        </PrivateRoute>
-
-        <PrivateRoute path="/orderlabel/:idOrder" exact>
-          {renderComponent(
-            userRights?.order_label_parameters,
-            <OrderLabelView />
-          )}
-        </PrivateRoute>
-
-        <PrivateRoute path="/orderedit/:orderId" exact>
-          {renderComponent(userRights?.order_edit, <OrderEditView />)}
-        </PrivateRoute>
-
-        <Route component={Register} path="/register" exact />
-        <Route component={ForgotPass} path="/forgot-password" exact />
-        <Route component={ResetPass} path="/reset-password/:token" />
-        <Route component={NotFound} />
-      </Switch>
-    </BrowserRouter>
+        {/* Private Routes */}
+        <Route
+          path="/dashboard/:idPatient/orders"
+          element={
+            <PrivateRoute
+              condition={
+                userRights?.order_creation || userRights?.reduced_order_creation
+              }
+              loading={isLoading}
+            >
+              <Dashboard submenu="orders" />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/dashboard/:idPatient/periods"
+          element={
+            <PrivateRoute condition={userRights?.periods} loading={isLoading}>
+              <Dashboard submenu="informations" />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/dashboard/:idPatient/setups"
+          element={
+            <PrivateRoute condition={userRights?.setups} loading={isLoading}>
+              <Dashboard submenu="setups" />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/dashboard/:idPatient/cutlines"
+          element={
+            <PrivateRoute condition={userRights?.cutlines} loading={isLoading}>
+              <Dashboard submenu="cutlines" />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/dashboard/:idPatient/appointment"
+          element={
+            <PrivateRoute
+              condition={userRights?.appointments}
+              loading={isLoading}
+            >
+              <Dashboard submenu="appointment" />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/dashboard/:idPatient/patient"
+          element={
+            <PrivateRoute
+              condition={userRights?.patient_profile}
+              loading={isLoading}
+            >
+              <Dashboard submenu="settings" />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/patients"
+          element={
+            <PrivateRoute
+              condition={
+                userRights?.patients_list || userRights?.reduced_patients_list
+              }
+              loading={isLoading}
+            >
+              <Patients />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/laboratory"
+          element={
+            <PrivateRoute
+              condition={userRights?.order_list}
+              loading={isLoading}
+            >
+              <Laboratory />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/models"
+          element={
+            <PrivateRoute condition={userRights?.printing} loading={isLoading}>
+              <Models />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/aligners"
+          element={
+            <PrivateRoute
+              condition={userRights?.thermoforming}
+              loading={isLoading}
+            >
+              <Aligners />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/inlase"
+          element={
+            <PrivateRoute condition={userRights?.inlase} loading={isLoading}>
+              <Inlase />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <PrivateRoute
+              condition={userRights?.parameters_screen}
+              loading={isLoading}
+            >
+              <Profile />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/calibration"
+          element={
+            <PrivateRoute
+              condition={userRights?.calibration_screen}
+              loading={isLoading}
+            >
+              <Calibration />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/licenses"
+          element={
+            <PrivateRoute
+              condition={userRights?.handle_licenses && userRights?.to_read}
+              loading={isLoading}
+            >
+              <Licenses />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/management"
+          element={
+            <PrivateRoute
+              condition={
+                userRights?.handle_licenses && userRights?.handle_users
+              }
+              loading={isLoading}
+            >
+              <Management />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/users"
+          element={
+            <PrivateRoute
+              condition={userRights?.handle_users && userRights?.to_read_user}
+              loading={isLoading}
+            >
+              <Users />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/labels1/:idOrder"
+          element={
+            <PrivateRoute
+              condition={userRights?.bag_label_parameters}
+              loading={isLoading}
+            >
+              <PrintBagLabelView />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/addresslabel/:idPatient"
+          element={
+            <PrivateRoute
+              condition={userRights?.patient_profile}
+              loading={isLoading}
+            >
+              <PrintPatientAddressLabelView />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/orderlabel/:idOrder"
+          element={
+            <PrivateRoute
+              condition={userRights?.order_label_parameters}
+              loading={isLoading}
+            >
+              <OrderLabelView />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/orderedit/:orderId"
+          element={
+            <PrivateRoute
+              condition={userRights?.order_edit}
+              loading={isLoading}
+            >
+              <OrderEditView />
+            </PrivateRoute>
+          }
+        />
+        <Route path="/test" element={<Test />} />
+        {/* Fallback Route */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Router>
   );
 }

@@ -1,8 +1,7 @@
 import React, { useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { NotificationManager } from "react-notifications";
-
 import Modal from "@inplan/common/Modal";
+import { useSnackbar } from "@inplan/contexts/SnackbarContext";
 import { useDashboardContext } from "./Context";
 
 export default function DeleteModalPeriod() {
@@ -15,13 +14,15 @@ export default function DeleteModalPeriod() {
   } = useDashboardContext();
   const ref = useRef();
   const { t: translation } = useTranslation();
+  const showSnackbar = useSnackbar();
   const handleDelete = async () => {
     setModal("");
     setCurrentPeriod(null);
     await deletePeriod(currentPeriod);
     await fetchPatientPeriods();
-    NotificationManager.success(
-      translation("messages.period_information.period_deleted")
+    showSnackbar(
+      translation("messages.period_information.period_deleted"),
+      "success",
     );
   };
 
@@ -40,7 +41,7 @@ export default function DeleteModalPeriod() {
             onClick={() => setModal("")}
           >
             {translation(
-              "dashboard.period_information.delete_form.buttons.cancel"
+              "dashboard.period_information.delete_form.buttons.cancel",
             )}
           </button>
           <button
@@ -49,7 +50,7 @@ export default function DeleteModalPeriod() {
             onClick={handleDelete}
           >
             {translation(
-              "dashboard.period_information.delete_form.buttons.confirm"
+              "dashboard.period_information.delete_form.buttons.confirm",
             )}
           </button>
         </div>

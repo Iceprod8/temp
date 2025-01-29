@@ -139,7 +139,7 @@ class CalibrationCut extends React.Component {
     if (localState.applyOffset) {
       const updatedTrayResponse = await backend.post(
         "machines/transform_json",
-        trayJson
+        trayJson,
       );
       trayJson = updatedTrayResponse.data;
     }

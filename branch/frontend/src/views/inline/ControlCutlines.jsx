@@ -7,9 +7,8 @@ import {
   CircularProgress,
   TextField,
 } from "@mui/material";
-import { NotificationManager } from "react-notifications";
 import { useBeforeunload } from "react-beforeunload";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import { useParams } from "react-router-dom";
 import DownloadLink from "react-download-link";
 import {
   capitalizeFirstLetter,
@@ -23,15 +22,11 @@ import usePeriodicTask from "@inplan/common/usePeriodicTask";
 import uploadModels from "@inplan/common/uploadModels";
 import uploadCutlines from "@inplan/common/uploadCutlines";
 import { useAppContext } from "@inplan/AppContext";
-
+import { useInlineContext } from "@inplan/contexts/InlineContext";
+import { useSnackbar } from "@inplan/contexts/SnackbarContext";
 import CustomTranslation from "@inplan/common/translation/CustomTranslation";
 import ControlCards from "./ControlCards";
 import { CardBodyProgressAndEdit } from "./CardModelBodies";
-import { useInlineContext } from "./InlineContext";
-
-// Control for the list of aligners cards
-// Used next to the vizualizer
-// This is used for the step of creating and validating cutlines
 
 const UPPER_JAW = 0;
 const LOWER_JAW = 1;
@@ -55,18 +50,17 @@ export default function DashboardControlCutlines({
     setups,
     latestSetup,
     models,
-    setModels,
+    selectedModels,
+    selectedSetup,
+    cutlineStep,
+    applySmooth,
+    setState,
     fetchModelsCutline,
     updateModel,
-    selected,
-    setSelected,
-    selectedSetup,
-    setSelectedSetup,
-    cutlineStep,
     deleteModel,
-    applySmooth,
-    setApplySmooth,
+    createSetup,
   } = useInlineContext();
+  const showSnackbar = useSnackbar();
   const { idPatient } = useParams();
   const [isValidatingModels, setIsValidatingModels] = useState(false);
 
@@ -81,28 +75,22 @@ export default function DashboardControlCutlines({
     await fetchModelsCutline();
     return true;
   };
-  // Fixme - get a mutex or something to wait the previous refresh
+
   usePeriodicTask(refreshModels, 5000);
 
-  /* Set by default the last setup */
   useEffect(() => {
-    if (selectedSetup === null || selectedSetup === undefined) {
-      if (latestSetup === null || latestSetup === undefined) {
-        setSelectedSetup({ id: "" });
-      } else {
-        setSelectedSetup(latestSetup);
-      }
-    } else if (selectedSetup.id === "") {
-      if (latestSetup !== null && latestSetup !== undefined) {
-        setSelectedSetup(latestSetup);
-      }
+    if (!selectedSetup) {
+      setState((prev) => ({
+        ...prev,
+        selectedSetup: latestSetup || { id: "" },
+      }));
     }
-  }, []);
+  }, [selectedSetup, latestSetup, setState]);
 
   const [loading, setloading] = useState(false);
 
   const setupModels = models.filter(
-    (model) => model.setup === selectedSetup?.id
+    (model) => model.setup === selectedSetup?.id,
   );
 
   const filteredModels = getGeneratedModels("all", setupModels);
@@ -122,18 +110,22 @@ export default function DashboardControlCutlines({
     setloading(true);
     try {
       await uploadModels(
+        showSnackbar,
         files,
         setup,
         {
           is_original: false,
           is_template: false,
         },
-        translation
+        translation,
       );
     } catch (e) {
       console.error(e);
-      NotificationManager.error(
-        translation("messages.cutlines.something_went_wrong_when_uploading_stl")
+      showSnackbar(
+        translation(
+          "messages.cutlines.something_went_wrong_when_uploading_stl",
+        ),
+        "error",
       );
     } finally {
       await fetchModelsCutline();
@@ -147,8 +139,11 @@ export default function DashboardControlCutlines({
       await uploadCutlines(files, setup, {}, translation);
     } catch (e) {
       console.error(e);
-      NotificationManager.error(
-        translation("messages.cutlines.something_went_wrong_when_uploading_pts")
+      showSnackbar(
+        translation(
+          "messages.cutlines.something_went_wrong_when_uploading_pts",
+        ),
+        "error",
       );
     } finally {
       setloading(false);
@@ -171,100 +166,74 @@ export default function DashboardControlCutlines({
     }
   };
 
-  // Todo to be checked - probably to be removed
   if (![0, 1, 2].includes(cutlineStep)) return null;
 
   const allModelsToValidateInSection = models.filter(
-    (model) => model.setup === selectedSetup?.id
+    (model) => model.setup === selectedSetup?.id,
   );
 
   const [isSelectedUpperJaw, setIsSelectedUpperJaw] = useState(false);
   const [isSelectedLowerJaw, setIsSelectedLowerJaw] = useState(false);
 
   const handleValidateAllCutlines = () => {
-    const modelsList = models.filter((model) => selected[model.id]);
+    const modelsList = models.filter((model) => selectedModels[model.id]);
     if (modelsList.length > 0) {
       setIsValidatingModels(true);
       validateAllCutline(modelsList, updateModel, applySmooth, translation);
       setIsValidatingModels(false);
-      setSelected({});
+      setState((prev) => ({ ...prev, selectedModels: {} }));
       setIsSelectedUpperJaw(false);
       setIsSelectedLowerJaw(false);
     } else {
-      NotificationManager.error(
-        translation("messages.cutlines.no_model_selected")
-      );
+      showSnackbar(translation("messages.cutlines.no_model_selected"), "error");
     }
   };
 
   const handleDeleteAllModels = () => {
-    const modelsList = models.filter((model) => selected[model.id]);
+    const modelsList = models.filter((model) => selectedModels[model.id]);
 
     if (modelsList?.length > 0) {
       const message = `${translation(
-        "messages.cutlines.delete_all_selected_models_confirmation"
+        "messages.cutlines.delete_all_selected_models_confirmation",
       )}\n${modelsList.map((model) => `- ${model.filename}`).join("\n")}`;
       const confirmed = window.confirm(message);
       if (confirmed) {
-        for (let i = 0; i < modelsList.length; i += 1) {
-          deleteModel(modelsList[i]);
-          const updatedModels = models.filter((p) => p.id !== modelsList[i].id);
-          setModels(updatedModels);
-        }
-        setSelected({});
+        modelsList.forEach((model) => deleteModel(model));
+        setState((prev) => ({
+          ...prev,
+          models: models.filter((m) => !modelsList.includes(m)),
+          selectedModels: {},
+        }));
         setIsSelectedUpperJaw(false);
         setIsSelectedLowerJaw(false);
       }
     } else {
-      NotificationManager.error(
-        translation("messages.cutlines.no_model_selected")
-      );
+      showSnackbar(translation("messages.cutlines.no_model_selected"), "error");
     }
   };
 
   const handleSelectAll = (e, jawType) => {
-    if (jawType === UPPER_JAW) {
-      setIsSelectedUpperJaw(e.target.checked);
-    }
-    if (jawType === LOWER_JAW) {
-      setIsSelectedLowerJaw(e.target.checked);
-    }
-    let selected2 = {};
-    if (Object.keys(selected).length === 0) {
-      allModelsToValidateInSection.forEach((model) => {
-        if (model.type === jawType) {
-          selected2[model.id] = e.target.checked;
-        }
-      });
-    } else {
-      selected2 = { ...selected };
-      for (let i = 0; i < allModelsToValidateInSection.length; i += 1) {
-        const model = allModelsToValidateInSection[i];
-        if (model.type === jawType) {
-          selected2 = {
-            ...selected2,
-            [model.id]: e.target.checked,
-          };
-        }
-      }
-    }
-    setSelected(selected2);
+    const isSelected = e.target.checked;
+    if (jawType === UPPER_JAW) setIsSelectedUpperJaw(isSelected);
+    if (jawType === LOWER_JAW) setIsSelectedLowerJaw(isSelected);
+
+    const updatedSelection = { ...selectedModels };
+    allModelsToValidateInSection.forEach((model) => {
+      if (model.type === jawType) updatedSelection[model.id] = isSelected;
+    });
+    setState((prev) => ({ ...prev, selectedModels: updatedSelection }));
   };
 
-  const { createSetup } = useInlineContext();
   const [setupName, setSetupName] = useState("");
   const onSubmit = async (data) => {
     try {
       await backend.get("setups/get_setup_by_name", {
-        params: {
-          name: data,
-          patientId: idPatient,
-        },
+        params: { name: data, patientId: idPatient },
       });
     } catch (error) {
-      if (error.response.status === 404) {
+      if (error.response?.status === 404) {
         const res = await createSetup(idPatient, { name: data });
-        setSelectedSetup(res);
+        setState((prev) => ({ ...prev, selectedSetup: res }));
         setSetupName("");
         return res;
       }
@@ -275,28 +244,29 @@ export default function DashboardControlCutlines({
   const innerOnSubmit = async (data) => {
     try {
       const isOk = await onSubmit(data);
-
       if (isOk) {
-        NotificationManager.success(
+        showSnackbar(
           `${translation("messages.common.subject_was_created", {
             subject: capitalizeFirstLetter(
-              translation(`utilities.variables.setup`)
+              translation(`utilities.variables.setup`),
             ),
-          })}`
+          })}`,
+          "success",
         );
       } else {
-        NotificationManager.error(
+        showSnackbar(
           `${translation("messages.common.subject_was_not_created", {
             subject: capitalizeFirstLetter(
-              translation(`utilities.variables.setup`)
+              translation(`utilities.variables.setup`),
             ),
-          })}`
+          })}`,
+          "error",
         );
         console.error("Backend error");
       }
     } catch (err) {
       console.error(err);
-      NotificationManager.error(translation("messages.common.error_occurred"));
+      showSnackbar(translation("messages.common.error_occurred"), "error");
     }
   };
 
@@ -308,21 +278,16 @@ export default function DashboardControlCutlines({
     setPatient(data);
     setZipName(`${data.last_name}_${data.first_name}_ready_models_export.zip`);
   };
-  // Initialize
-  useEffect(async () => {
-    if (!idPatient) {
-      return;
-    }
-    await refreshPage();
+
+  useEffect(() => {
+    if (idPatient) refreshPage();
   }, [idPatient]);
+
   return (
     <div className="dashboard-control__body">
       <div
         className="flex alignItems-center justify-content-space-between"
-        style={{
-          flex: 1,
-          marginBottom: "10px",
-        }}
+        style={{ flex: 1, marginBottom: "10px" }}
       >
         <div
           style={{
@@ -335,7 +300,9 @@ export default function DashboardControlCutlines({
         >
           <BasicSelect
             value={selectedSetup}
-            setValue={setSelectedSetup}
+            setValue={(value) =>
+              setState((prev) => ({ ...prev, selectedSetup: value }))
+            }
             data-test="selectSetup"
             data={{
               name: "setups",
@@ -350,7 +317,6 @@ export default function DashboardControlCutlines({
             }}
           />
         </div>
-
         <div className="flex alignItems-center">
           <Box
             component="form"
@@ -365,19 +331,14 @@ export default function DashboardControlCutlines({
           >
             <div>
               <TextField
-                InputLabelProps={{
-                  style: { color: "#d9d7d2" },
-                }}
+                InputLabelProps={{ style: { color: "#d9d7d2" } }}
                 sx={{
-                  // Root class for the input field
                   "& .MuiOutlinedInput-root": {
                     color: "#d9d7d2",
-                    // Class for the border around the input field
                     "& .MuiOutlinedInput-notchedOutline": {
                       borderColor: "#d9d7d2",
                     },
                   },
-                  // Class for the label of the input field
                   "& .MuiInputLabel-outlined": {
                     color: "#2e2e2e",
                   },
@@ -396,9 +357,7 @@ export default function DashboardControlCutlines({
               color="secondary"
               variant="contained"
               onClick={() => innerOnSubmit(setupName)}
-              style={{
-                textTransform: "none",
-              }}
+              style={{ textTransform: "none" }}
               disableElevation
             >
               <div style={{ color: "#d9d7d2" }}>
@@ -409,11 +368,7 @@ export default function DashboardControlCutlines({
         </div>
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
-        <div
-          style={{
-            textAlign: "center",
-          }}
-        >
+        <div style={{ textAlign: "center" }}>
           <input
             style={{ display: "none" }}
             type="file"
@@ -427,18 +382,14 @@ export default function DashboardControlCutlines({
             type="button"
             className="btn-tertiary"
             data-test="model_upload_btn"
-            style={{
-              marginRight: "50px",
-              marginLeft: "10px",
-            }}
+            style={{ marginRight: "50px", marginLeft: "10px" }}
             onClick={() => {
-              if (selectedSetup?.id) {
-                ref1.current.click();
-              } else {
-                NotificationManager.error(
-                  translation("messages.cutlines.select_a_setup")
+              if (selectedSetup?.id) ref1.current.click();
+              else
+                showSnackbar(
+                  translation("messages.cutlines.select_a_setup"),
+                  "error",
                 );
-              }
             }}
             disabled={loading}
           >
@@ -451,11 +402,7 @@ export default function DashboardControlCutlines({
             )}
           </button>
         </div>
-        <div
-          style={{
-            textAlign: "center",
-          }}
-        >
+        <div style={{ textAlign: "center" }}>
           <input
             style={{ display: "none" }}
             type="file"
@@ -475,13 +422,12 @@ export default function DashboardControlCutlines({
               marginBottom: "10px",
             }}
             onClick={() => {
-              if (selectedSetup?.id) {
-                ref2.current.click();
-              } else {
-                NotificationManager.error(
-                  translation("messages.cutlines.select_a_setup")
+              if (selectedSetup?.id) ref2.current.click();
+              else
+                showSnackbar(
+                  translation("messages.cutlines.select_a_setup"),
+                  "error",
                 );
-              }
             }}
             disabled={loading}
           >
@@ -495,25 +441,14 @@ export default function DashboardControlCutlines({
           </button>
         </div>
       </div>
-      {/* VALIDATE & DELETE BUTTONS */}
       <div className="flex">
-        {/* if inline */}
         {userRights?.inline && (
-          <div
-            style={{
-              flex: 1,
-              marginRight: "10px",
-              marginLeft: "10px",
-            }}
-          >
+          <div style={{ flex: 1, marginRight: "10px", marginLeft: "10px" }}>
             <Button
               color="primary"
               variant="contained"
               onClick={handleValidateAllCutlines}
-              style={{
-                marginTop: "10px",
-                textTransform: "none",
-              }}
+              style={{ marginTop: "10px", textTransform: "none" }}
               disableElevation
             >
               <div style={{ color: "#d9d7d2" }}>
@@ -522,22 +457,12 @@ export default function DashboardControlCutlines({
             </Button>
           </div>
         )}
-
-        <div
-          style={{
-            flex: 1,
-            marginRight: "50px",
-            marginLeft: "50px",
-          }}
-        >
+        <div style={{ flex: 1, marginRight: "50px", marginLeft: "50px" }}>
           <Button
             color="secondary"
             variant="contained"
             onClick={handleDeleteAllModels}
-            style={{
-              marginTop: "10px",
-              textTransform: "none",
-            }}
+            style={{ marginTop: "10px", textTransform: "none" }}
             disableElevation
           >
             <div style={{ color: "#d9d7d2" }}>
@@ -546,8 +471,6 @@ export default function DashboardControlCutlines({
           </Button>
         </div>
       </div>
-
-      {/* OPTION TOGGLES */}
       <div
         style={{
           display: "grid",
@@ -565,7 +488,9 @@ export default function DashboardControlCutlines({
         >
           <Checkbox
             checked={applySmooth}
-            onClick={() => setApplySmooth(!applySmooth)}
+            onClick={() =>
+              setState((prev) => ({ ...prev, applySmooth: !applySmooth }))
+            }
           />
           <CustomTranslation text="dashboard.cutlines.smooth_line" />
         </div>
@@ -612,7 +537,7 @@ export default function DashboardControlCutlines({
               { file_names: fileNames, setup_id: selectedSetup.id },
               {
                 responseType: "arraybuffer",
-              }
+              },
             );
             return data;
           }

@@ -70,7 +70,7 @@ describe("basic", () => {
             "ABIBULA__Etape_0_de_10_Superieur.stl",
             {
               type: "Meshmixer Document",
-            }
+            },
           );
           const dataTransfer = new DataTransfer();
           dataTransfer.items.add(testFile);
@@ -81,7 +81,7 @@ describe("basic", () => {
         .find(".message", { timeout: 100000 })
         .should(($message) => {
           expect($message.text()).to.equal(
-            "ABIBULA__Etape_0_de_10_Superieur.stl downloaded"
+            "ABIBULA__Etape_0_de_10_Superieur.stl downloaded",
           );
         });
     });
@@ -90,7 +90,7 @@ describe("basic", () => {
       .first()
       .should(($filename) => {
         expect($filename.text()).to.equal(
-          "ABIBULA__Etape_0_de_10_Superieur.stl"
+          "ABIBULA__Etape_0_de_10_Superieur.stl",
         );
       });
   });

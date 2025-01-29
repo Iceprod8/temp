@@ -5,7 +5,7 @@ import { backend } from "@inplan/adapters/apiCalls";
 import { useAppContext } from "@inplan/AppContext";
 import i18n from "@inplan/i18n";
 
-const LanguageParameters = () => {
+export default function LanguageParameters() {
   const { t: translation } = useTranslation();
   const { language: ln } = useAppContext();
   const [language, setLanguage] = useState(ln);
@@ -67,6 +67,4 @@ const LanguageParameters = () => {
       </button>
     </div>
   );
-};
-
-export default LanguageParameters;
+}

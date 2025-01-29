@@ -12,7 +12,7 @@ class Simulator {
     // this.cameraControl = parent.cameraControl;
   }
 
-  load(points, start, setSimulator) {
+  load(points, start, setState) {
     if (!points) {
       this.controlPoints = [];
       this.parent.remove(this.simulator);
@@ -34,11 +34,11 @@ class Simulator {
       // this.cameraControl.maxAzimutAngle = [-2 * Math.PI, 2 * Math.PI];
     }
 
-    this.update(controlPoints, start, setSimulator);
+    this.update(controlPoints, start, setState);
   }
 
-  update = (controlPoints, start, setSimulator) => {
-    const cone = new THREE.ConeBufferGeometry(5, 20, 10);
+  update = (controlPoints, start, setState) => {
+    const cone = new THREE.ConeGeometry(5, 20, 10);
 
     const first = controlPoints || this.controlPoints;
 
@@ -73,7 +73,7 @@ class Simulator {
         });
 
         tween.onComplete(() => {
-          setSimulator(false);
+          setState((prev) => ({ ...prev, simulator: false }));
           this.parent.remove(this.simulator);
           this.render();
         });

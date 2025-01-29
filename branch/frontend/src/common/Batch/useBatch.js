@@ -15,7 +15,7 @@ function reducer(name, state, action) {
       return {
         ...state,
         batches: state.batches.map((b) =>
-          b === action.target ? action.payload : b
+          b === action.target ? action.payload : b,
         ),
       };
     case "DELETE_BATCH":
@@ -98,7 +98,7 @@ export default function useBatch(name) {
     updateBatch: useCallback(async (batch, data, type) => {
       if (type === "validate") {
         const { data: newValidatedBatch } = await backend.get(
-          `${resource}/${batch.id}/validate`
+          `${resource}/${batch.id}/validate`,
         );
         dispatch({
           type: "UPDATE_BATCH",
@@ -108,7 +108,7 @@ export default function useBatch(name) {
       } else {
         const { data: newPatchedBatch } = await backend.patch(
           `${resource}/${batch.id}`,
-          data
+          data,
         );
         dispatch({
           type: "UPDATE_BATCH",

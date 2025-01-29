@@ -1,9 +1,8 @@
-import { NotificationManager } from "react-notifications";
-
 import { backend } from "@inplan/adapters/apiCalls";
 import React from "react";
 import CustomTranslation from "@inplan/common/translation/CustomTranslation";
 import { capitalizeFirstLetter } from "@inplan/adapters/functions";
+import { useSnackbar } from "@inplan/contexts/SnackbarContext";
 
 // CONST //
 
@@ -98,7 +97,7 @@ export const generateAlignersDesciptions = (
   order,
   setTopContentDesciption,
   setBottomContentDescription,
-  translation
+  translation,
 ) => {
   if (order) {
     if (order.type === 1) {
@@ -153,7 +152,7 @@ export const generateAlignersDesciptions = (
         {
           start_aligner_bottom: order.start_aligner_bottom,
           multiplicity_bottom: order.multiplicity_bottom,
-        }
+        },
       );
       const noTop = translation("orderedit.header.no_upper_retainer");
       const noBottom = translation("orderedit.header.no_bottom_retainer");
@@ -199,7 +198,7 @@ export const formatDate = (dateFromBackend, translation) => {
 export const getInlaseAvailableSheets = async (
   setSheetsList,
   setsheetsDict,
-  translation
+  translation,
 ) => {
   try {
     const { data: res } = await backend.get("sheets/available");
@@ -208,7 +207,7 @@ export const getInlaseAvailableSheets = async (
       {
         id: "0",
         name: capitalizeFirstLetter(
-          translation("utilities.variables.undefined")
+          translation("utilities.variables.undefined"),
         ),
         provider: "Undefined",
         thickness: 0,
@@ -237,7 +236,7 @@ export const getInlaseAvailableSheets = async (
 export const getAllUsedSheets = async (
   setSheetsList,
   setsheetsDict,
-  translation
+  translation,
 ) => {
   let usedSheetListIds = [];
   try {
@@ -258,7 +257,7 @@ export const getAllUsedSheets = async (
     // Validate the response and filter sheets based on the usedSheetListIds
     if (allSheets && Array.isArray(allSheets.results)) {
       usedSheetListDescriptions = allSheets.results.filter((sheet) =>
-        usedSheetListIds.includes(sheet.id)
+        usedSheetListIds.includes(sheet.id),
       );
     }
   } catch (error) {
@@ -296,14 +295,14 @@ export const getSheets = async (setSheetsList, setsheetsDict, translation) => {
 export const getDoctors = async (
   setDoctorsList,
   setDoctorsDict,
-  translation
+  translation,
 ) => {
   const { data: res } = await backend.get("doctors/available");
   const doctorList = [
     {
       id: "0",
       appellation: capitalizeFirstLetter(
-        translation("utilities.variables.unspecified")
+        translation("utilities.variables.unspecified"),
       ),
     },
   ].concat(res);
@@ -335,28 +334,32 @@ export const cancelOrder = async (order, refreshOrder) => {
 };
 
 export const askForCancelOrder = async (order, refreshOrder, translation) => {
+  const showSnackbar = useSnackbar();
   const message = translation("messages.orders.cancel_order_confirmation");
-
   if (order.status === 3) {
-    NotificationManager.warning(
-      translation("messages.orders.finished_order_cannot_be_canceled")
+    showSnackbar(
+      translation("messages.orders.finished_order_cannot_be_canceled"),
+      "warning",
     );
   } else if (order.status === 4) {
-    NotificationManager.warning(
-      translation("messages.orders.order_already_canceled")
+    showSnackbar(
+      translation("messages.orders.order_already_canceled"),
+      "warning",
     );
   } else {
     const confirmed = window.confirm(message);
     if (confirmed) {
       await cancelOrder(order, refreshOrder);
-      NotificationManager.success(
-        translation("messages.orders.canceling_the_order")
+      showSnackbar(
+        translation("messages.orders.canceling_the_order"),
+        "success",
       );
     }
   }
 };
 
 export const printOrder = async (order, refreshOrder, translation) => {
+  const showSnackbar = useSnackbar();
   try {
     const { id, aligners, type } = order;
     if (aligners.length > 0) {
@@ -365,36 +368,39 @@ export const printOrder = async (order, refreshOrder, translation) => {
     refreshOrder();
     if (type === 0) {
       // if Order type is SETUP
-      NotificationManager.success(
-        translation("messages.orders.order_started", { type: "Setup" })
+      showSnackbar(
+        translation("messages.orders.order_started", { type: "Setup" }),
+        "success",
       );
     } else if (type === 5) {
       // if Order type is OTHER
-      NotificationManager.success(
+      showSnackbar(
         translation("messages.orders.order_started", {
           type: translation("utilities.orderTypeOptions.other"),
-        })
+        }),
+        "success",
       );
     } else {
-      NotificationManager.success(
-        translation("messages.orders.models_available_in_models_tabs")
+      showSnackbar(
+        translation("messages.orders.models_available_in_models_tabs"),
+        "success",
       );
     }
   } catch (error) {
-    NotificationManager.error(
-      translation("messages.orders.error_updating_order")
-    );
+    showSnackbar(translation("messages.orders.error_updating_order"), "error");
     console.error("Error updating order:", error);
   }
 };
 
 export const askForPrintOrder = async (order, refreshOrder, translation) => {
+  const showSnackbar = useSnackbar();
   const confirmMessage = translation(
-    "messages.orders.reset_the_status_of_all_aligners_confirmation"
+    "messages.orders.reset_the_status_of_all_aligners_confirmation",
   );
   if (order.status === 3 || order.status === 4) {
-    NotificationManager.warning(
-      translation("messages.orders.finished_or_canceled_order_cannot_be_reset")
+    showSnackbar(
+      translation("messages.orders.finished_or_canceled_order_cannot_be_reset"),
+      "warning",
     );
   } else if (order.is_started) {
     const confirmed = window.confirm(confirmMessage);
@@ -413,15 +419,14 @@ const terminateAligner = (alignerId) => {
 };
 
 export const terminateOrder = async (order, refreshOrder, translation) => {
+  const showSnackbar = useSnackbar();
   try {
     await backend.post(`orders/${order.id}/terminate`);
-
     refreshOrder();
-    NotificationManager.success(
-      translation("messages.orders.order_terminated")
-    );
+    showSnackbar(translation("messages.orders.order_terminated"), "success");
   } catch (error) {
-    NotificationManager.error(translation("messages.text55"));
+    showSnackbar(translation("messages.text55"), "error");
+
     console.error("Error updating order:", error);
   }
 };
@@ -429,14 +434,16 @@ export const terminateOrder = async (order, refreshOrder, translation) => {
 export const askForTerminateOrder = async (
   order,
   refreshOrder,
-  translation
+  translation,
 ) => {
+  const showSnackbar = useSnackbar();
   const confirmMessage = translation(
-    "messages.orders.mark_order_as_terminated_confirmation"
+    "messages.orders.mark_order_as_terminated_confirmation",
   );
   if (order.status === 3 || order.status === 4) {
-    NotificationManager.warning(
-      translation("messages.orders.order_already_finished_or_canceled")
+    showSnackbar(
+      translation("messages.orders.order_already_finished_or_canceled"),
+      "warning",
     );
   } else if (order.is_started) {
     const confirmed = window.confirm(confirmMessage);

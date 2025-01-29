@@ -38,7 +38,7 @@ function UnrchiveConfirmationBox({ patient, setRefresh }) {
     {
       last_name: patient.last_name,
       first_name: patient.first_name,
-    }
+    },
   );
   const handleUnarchive = async () => {
     await backend.post(`patients/${patient.id}/activate`);
@@ -53,15 +53,9 @@ function UnrchiveConfirmationBox({ patient, setRefresh }) {
   };
 
   return (
-    <>
-      <button
-        className="btn-table-primary"
-        type="button"
-        onClick={handleConfirm}
-      >
-        {translation("patients.table.actions_options.restore_patient")}
-      </button>
-    </>
+    <button className="btn-table-primary" type="button" onClick={handleConfirm}>
+      {translation("patients.table.actions_options.restore_patient")}
+    </button>
   );
 }
 
@@ -96,16 +90,14 @@ export default function NewOrderCol({ rowData, setRefresh }) {
               <CustomTranslation text="patients.table.actions_options.new_order" />
             </div>
           ) : (
-            <>
-              <div className="btn-table-secondary text-center">
-                {/* <Translation>
+            <div className="btn-table-secondary text-center">
+              {/* <Translation>
                   {(t, { i18n }) =>
                     `${t("patients.table.actions_options.start_treatment")}`
                   }
                 </Translation> */}
-                <CustomTranslation text="patients.table.actions_options.start_treatment" />
-              </div>
-            </>
+              <CustomTranslation text="patients.table.actions_options.start_treatment" />
+            </div>
           )}
           {/* Start treatment */}
           {/* {orderDescription} */}

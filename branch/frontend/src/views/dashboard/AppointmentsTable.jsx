@@ -1,5 +1,5 @@
 import React from "react";
-import { DataGridPro } from "@mui/x-data-grid-pro";
+import { DataGrid } from "@mui/x-data-grid";
 import { IoMdTrash } from "react-icons/io";
 import { useTranslation } from "react-i18next";
 
@@ -27,7 +27,7 @@ const columns = () => {
       {
         editable: true,
         headerName: translation("dashboard.appointments.table.titles.type"),
-      }
+      },
     ),
     singleSelectColumn(
       "task",
@@ -40,11 +40,11 @@ const columns = () => {
       {
         editable: true,
         headerName: translation("dashboard.appointments.table.titles.task"),
-      }
+      },
     ),
     dateTimeColumn("date", {
       headerName: translation(
-        "dashboard.appointments.table.titles.appointment_date"
+        "dashboard.appointments.table.titles.appointment_date",
       ),
       editable: true,
     }),
@@ -63,7 +63,7 @@ const columns = () => {
   ];
 };
 
-const AppointmentTable = () => {
+function AppointmentTable() {
   const { updateAppointment, appointments, loading, fetchPatientOrders } =
     useDashboardContext();
   const { t: translation } = useTranslation();
@@ -71,7 +71,7 @@ const AppointmentTable = () => {
   return (
     <div className="dashboard-table-container">
       <SectionHeader type="appointments" />
-      <DataGridPro
+      <DataGrid
         columns={columns()}
         rows={appointments}
         rowCount={appointments.length}
@@ -99,12 +99,12 @@ const AppointmentTable = () => {
         autoHeight
         localeText={{
           footerTotalRows: `${translation(
-            "utilities.DataGridPro.pagination.footerTotalRows"
+            "utilities.DataGridPro.pagination.footerTotalRows",
           )}${":"}`,
         }}
       />
     </div>
   );
-};
+}
 
 export default AppointmentTable;

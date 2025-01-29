@@ -54,7 +54,7 @@ backend.interceptors.response.use(
           `${BACKEND_URL}/api/1/token/refresh/`,
           {
             refresh: refreshToken,
-          }
+          },
         );
 
         // Save the new access token
@@ -75,5 +75,5 @@ backend.interceptors.response.use(
 
     // Reject other errors
     return Promise.reject(new APIError(error.response));
-  }
+  },
 );

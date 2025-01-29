@@ -27,7 +27,7 @@ export default function BatchModalEdit() {
   const [init, setInit] = useState(false);
   const [loading, setLoading] = useState(false);
   const [printVertically, setPrintVertically] = useToggle(
-    selectedBatch?.angle === 90
+    selectedBatch?.angle === 90,
   );
   const [handPrinting, setHandPrinting] = useToggle(selectedBatch?.manual_cut);
 
@@ -96,7 +96,7 @@ export default function BatchModalEdit() {
       process_step: 10,
     });
     const remainingAligners = selectedBatch.aligners.filter(
-      (aligner) => aligner.id !== removedAligner.id
+      (aligner) => aligner.id !== removedAligner.id,
     );
     const aligners = [];
     if (remainingAligners.length === 0) {
@@ -126,7 +126,7 @@ export default function BatchModalEdit() {
   const goToRelatedOrder = async (aligner) => {
     try {
       const response = await backend.get(
-        `ordered_aligners/${aligner.id}/get_order_id`
+        `ordered_aligners/${aligner.id}/get_order_id`,
       );
       const { order_id } = response.data;
       window.location.href = `orderedit/${order_id}`;
@@ -146,7 +146,7 @@ export default function BatchModalEdit() {
       <div className="grid">
         <h4 className="h4">
           {translation(
-            "3d_printing.table_pending_printer_beds.batch_modal_edit.name"
+            "3d_printing.table_pending_printer_beds.batch_modal_edit.name",
           )}
         </h4>
         <div className="grid">
@@ -155,17 +155,17 @@ export default function BatchModalEdit() {
               <tr style={{ height: "59px" }}>
                 <th>
                   {translation(
-                    "3d_printing.table_pending_printer_beds.batch_modal_edit.table.titles.aligners"
+                    "3d_printing.table_pending_printer_beds.batch_modal_edit.table.titles.aligners",
                   )}
                 </th>
                 <th>
                   {translation(
-                    "3d_printing.table_pending_printer_beds.batch_modal_edit.table.titles.remove"
+                    "3d_printing.table_pending_printer_beds.batch_modal_edit.table.titles.remove",
                   )}
                 </th>
                 <th>
                   {translation(
-                    "3d_printing.table_pending_printer_beds.batch_modal_edit.table.titles.order"
+                    "3d_printing.table_pending_printer_beds.batch_modal_edit.table.titles.order",
                   )}
                 </th>
               </tr>

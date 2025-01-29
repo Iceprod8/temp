@@ -1,8 +1,8 @@
 import React from "react";
 import { Checkbox } from "@mui/material";
 import CustomTranslation from "@inplan/common/translation/CustomTranslation";
+import { useInlineContext } from "@inplan/contexts/InlineContext";
 import CardModelHeader from "./CardModelHeader";
-import { useInlineContext } from "./InlineContext";
 
 export default function DashboardControlCards({
   models,
@@ -12,15 +12,11 @@ export default function DashboardControlCards({
   isSelectedUpperJaw,
   isSelectedLowerJaw,
 }) {
-  const { setModal, setCurrentModel } = useInlineContext();
+  const { setState } = useInlineContext();
   const subs = models.map((m) => [
     m,
     <CardModelHeader model={m} modelType={modelType} key={m.id}>
-      <CardBody
-        model={m}
-        setModal={setModal}
-        setCurrentModel={setCurrentModel}
-      />
+      <CardBody model={m} />
     </CardModelHeader>,
   ]);
 

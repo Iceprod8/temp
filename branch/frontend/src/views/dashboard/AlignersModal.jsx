@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import { NotificationManager } from "react-notifications";
-
 import Modal from "@inplan/common/Modal";
-
+import { useSnackbar } from "@inplan/contexts/SnackbarContext";
 import { useDashboardContext } from "./Context";
 
 export default function AlignersModal() {
@@ -14,7 +12,7 @@ export default function AlignersModal() {
     sheets,
     updatePeriod,
   } = useDashboardContext();
-
+  const showSnackbar = useSnackbar();
   const [fields, setFields] = useState({
     default_sheet: currentPeriod?.default_sheet?.id || "",
   });
@@ -37,7 +35,7 @@ export default function AlignersModal() {
       // Refresh models of period
       fetchPatientModels();
 
-      NotificationManager.success("The changes have been recorded.");
+      showSnackbar("The changes have been recorded.", "success");
     } catch (err) {
       console.error(err);
     }

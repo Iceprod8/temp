@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { NotificationManager } from "react-notifications";
 import { useTranslation } from "react-i18next";
 import { BsCart4 } from "react-icons/bs";
-import { FaListUl, FaUserCircle } from "react-icons/fa";
+import { FaListUl } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import ReactDatePicker, { registerLocale } from "react-datepicker";
+import fr from "date-fns/locale/fr";
+import en from "date-fns/locale/en-GB";
 import { TextField } from "@mui/material";
 import { useOrders } from "@inplan/common/collections";
 import { backend } from "@inplan/adapters/apiCalls";
 import getDetailedOrder from "@inplan/common/GetDetailedOrder";
 import styles, { textFieldSx } from "@inplan/common/Form/styles";
 import { capitalizeFirstLetter } from "@inplan/adapters/functions";
-
 import OrderEditorHead from "@inplan/views/order/OrderEditorHead";
 import AlignerEditor from "@inplan/views/order/AlignerEditor";
 import {
@@ -21,20 +22,18 @@ import {
   formatDate,
 } from "@inplan/views/order/OrderUtilities";
 import CustomTranslation from "@inplan/common/translation/CustomTranslation";
-import ReactDatePicker, { registerLocale } from "react-datepicker";
-import fr from "date-fns/locale/fr";
-import en from "date-fns/locale/en-GB";
 import getCurrentLanguage from "@inplan/common/translation/CurrentLanguage";
+import { useSnackbar } from "@inplan/contexts/SnackbarContext";
 
 registerLocale("fr", fr);
 registerLocale("en", en);
 
-const OrderEditor = ({ orderId }) => {
+export default function OrderEditor({ orderId }) {
   const ln = getCurrentLanguage();
   const [order, setOrder] = useState(null);
   const [formData, setFormData] = useState(null);
   const { t: translation } = useTranslation();
-
+  const showSnackbar = useSnackbar();
   // Fixme, common function
   const [sheetsList, setSheetsList] = useState([]);
   const [sheetsDict, setsheetsDict] = useState({});
@@ -51,7 +50,7 @@ const OrderEditor = ({ orderId }) => {
 
   // handle Deadline
   let formattedDeadlineDate = translation(
-    "messages.common.loading_in_progress"
+    "messages.common.loading_in_progress",
   );
   formattedDeadlineDate = formatDate(order?.deadline, translation);
 
@@ -74,7 +73,7 @@ const OrderEditor = ({ orderId }) => {
     if (!fetchedOrder) return;
 
     const getPatientResponse = await backend.get(
-      `patients/${fetchedOrder.patient}`
+      `patients/${fetchedOrder.patient}`,
     );
 
     setPatient(getPatientResponse.data);
@@ -97,12 +96,12 @@ const OrderEditor = ({ orderId }) => {
         throw new Error("Invalid doctors dictionary returned from getDoctors.");
       }
       console.log(
-        "getSheets and getDoctors executed successfully and returned valid data."
+        "getSheets and getDoctors executed successfully and returned valid data.",
       );
     } catch (error) {
       console.error(
         "Validation failed after calling getSheets or getDoctors:",
-        error
+        error,
       );
     }
 
@@ -112,7 +111,7 @@ const OrderEditor = ({ orderId }) => {
       detailedOrder,
       setTopContentDesciption,
       setBottomContentDescription,
-      translation
+      translation,
     );
 
     // should be filled with undefined if null
@@ -151,9 +150,9 @@ const OrderEditor = ({ orderId }) => {
   };
 
   // Initialize
-  useEffect(async () => {
+  useEffect(() => {
     if (!orderId) return;
-    await refreshOrder();
+    refreshOrder();
   }, [orderId]);
 
   const handleChange = (e) => {
@@ -167,10 +166,11 @@ const OrderEditor = ({ orderId }) => {
     e.preventDefault();
 
     if (order.status === 3 || order.status === 4) {
-      NotificationManager.warning(
+      showSnackbar(
         translation(
-          "messages.orders.canceled_or_finished_order_cannot_be_modified"
-        )
+          "messages.orders.canceled_or_finished_order_cannot_be_modified",
+          "warning",
+        ),
       );
     } else {
       try {
@@ -205,12 +205,11 @@ const OrderEditor = ({ orderId }) => {
         await backend.post(`orders/${orderId}/update_aligners`);
 
         refreshOrder();
-        NotificationManager.success(
-          translation("messages.orders.order_updated")
-        );
+        showSnackbar(translation("messages.orders.order_updated"), "success");
       } catch (error) {
-        NotificationManager.error(
-          translation("messages.orders.error_updating_order")
+        showSnackbar(
+          translation("messages.orders.error_updating_order"),
+          "error",
         );
         console.error("Error updating order:", error);
       }
@@ -223,7 +222,7 @@ const OrderEditor = ({ orderId }) => {
       {
         id: "0",
         appellation: capitalizeFirstLetter(
-          translation("utilities.variables.unspecified")
+          translation("utilities.variables.unspecified"),
         ),
       },
     ].concat(res);
@@ -333,14 +332,14 @@ const OrderEditor = ({ orderId }) => {
                     name="deadline"
                     locale={ln}
                     dateFormat={translation(
-                      "utilities.ReactDatePicker.dateFormat"
+                      "utilities.ReactDatePicker.dateFormat",
                     )}
                     showTimeSelect
                     timeCaption={translation(
-                      "utilities.ReactDatePicker.timeCaption"
+                      "utilities.ReactDatePicker.timeCaption",
                     )}
                     timeFormat={translation(
-                      "utilities.ReactDatePicker.timeFormat"
+                      "utilities.ReactDatePicker.timeFormat",
                     )}
                     timeIntervals={15}
                     selected={formData?.deadline}
@@ -488,5 +487,4 @@ const OrderEditor = ({ orderId }) => {
       )}
     </div>
   );
-};
-export default OrderEditor;
+}

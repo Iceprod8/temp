@@ -14,16 +14,11 @@ export default function Fade({
   animateEnter = false,
   from = { opacity: 0 },
 }) {
-  const childRef = useRef(children);
+  const nodeRef = useRef(null);
   const [state, setState] = useState(
-    visible ? (animateEnter ? ENTERING : VISIBLE) : HIDDEN
+    visible ? (animateEnter ? ENTERING : VISIBLE) : HIDDEN,
   );
-
   const [init, setInit] = useState(false);
-
-  if (visible) {
-    childRef.current = children;
-  }
 
   useEffect(() => {
     if (!visible) {
@@ -47,10 +42,11 @@ export default function Fade({
         clearTimeout(timer);
       };
     }
+
     if (state === ENTERING) {
       setState(VISIBLE);
     }
-    return null;
+    return () => {};
   }, [state]);
 
   if (state === HIDDEN) {
@@ -62,19 +58,18 @@ export default function Fade({
     transitionProperty: "opacity transform",
     position: "relative",
     zIndex: `${zIndex}`,
+    ...(state !== VISIBLE && {
+      opacity: from.opacity ?? 0,
+      transform:
+        type === "translate3D"
+          ? `translate3d(${from.x ?? 0}px, ${from.y ?? 0}px, ${from.z ?? 0}px)`
+          : undefined,
+    }),
   };
-  if (state !== VISIBLE) {
-    if (from.opacity !== undefined) {
-      style.opacity = from.opacity;
-    }
-    if (type === "translate3D") {
-      style.transform = `translate3d(${from.x ?? 0}px, ${from.y ?? 0}px, ${
-        from.z ?? 0
-      }px)`;
-    } else {
-      style.opacity = 0;
-    }
-  }
 
-  return <div style={style}>{childRef.current}</div>;
+  return (
+    <div ref={nodeRef} style={style}>
+      {children}
+    </div>
+  );
 }

@@ -1,51 +1,43 @@
-import React, { useState } from "react";
-import { NotificationManager } from "react-notifications";
+import React from "react";
 import { useTranslation } from "react-i18next";
 import { CgTrash } from "react-icons/cg";
 import CustomTranslation from "@inplan/common/translation/CustomTranslation";
 import Modal from "@inplan/common/Modal";
-import EditModalFooter from "./EditModalFooter";
-import { useInlineContext } from "./InlineContext";
+import { useInlineContext } from "@inplan/contexts/InlineContext";
+import { useSnackbar } from "@inplan/contexts/SnackbarContext";
 
 export default function ModelEditModal() {
   const {
-    setModal,
-    setCurrentModel,
+    setState,
     currentModel,
     deleteModel,
     models,
-    setModels,
-    updateModel,
     fetchPatientModels,
     resetInitPoints,
   } = useInlineContext();
   const { t: translation } = useTranslation();
-  const [targetStep, setTargetStep] = useState("");
-
-  const confirm = async () => {
-    if (currentModel) {
-      await updateModel(currentModel.id, { step: targetStep });
-    }
-    fetchPatientModels();
-  };
-
+  const showSnackbar = useSnackbar();
   const askDeletion = async () => {
     const isConfirmed = window.confirm(
-      translation("messages.cutlines.delete_model_confirmation")
+      translation("messages.cutlines.delete_model_confirmation"),
     );
 
     if (isConfirmed) {
       const toDeleteModel = currentModel;
-      setCurrentModel(null);
+      setState((prev) => ({
+        ...prev,
+        currentModel: null,
+      }));
       await deleteModel(toDeleteModel);
       const updatedModels = models.filter((p) => p.id !== toDeleteModel.id);
-      setModels(updatedModels);
+      setState((prev) => ({
+        ...prev,
+        models: updatedModels,
+        modal: "",
+      }));
       resetInitPoints();
       fetchPatientModels();
-      setModal("");
-      NotificationManager.success(
-        translation("messages.cutlines.model_removed")
-      );
+      showSnackbar(translation("messages.cutlines.model_removed"), "success");
     }
   };
 
@@ -62,7 +54,10 @@ export default function ModelEditModal() {
         )
       }
       onClose={(page) => {
-        setModal(page);
+        setState((prev) => ({
+          ...prev,
+          modal: page,
+        }));
       }}
     >
       <div className="grid">

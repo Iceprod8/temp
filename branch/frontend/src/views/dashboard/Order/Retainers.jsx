@@ -4,11 +4,11 @@
 
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import styles, { mainColor } from "@inplan/common/Form/styles";
+import { mainColor } from "@inplan/common/Form/styles";
 
 import RetainerUnit from "./RetainerUnit";
 
-const Retainers = ({ control, getValues }) => {
+export default function Retainers({ control, getValues }) {
   const { t: translation } = useTranslation();
   const [maxAndminAligners, setmaxAndminAligners] = useState({});
 
@@ -59,6 +59,4 @@ const Retainers = ({ control, getValues }) => {
       </div>
     </div>
   );
-};
-
-export default Retainers;
+}

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { DataGridPro } from "@mui/x-data-grid-pro";
+import { DataGrid } from "@mui/x-data-grid";
 import { IoMdTrash } from "react-icons/io";
 import { Button } from "@mui/material";
 
@@ -68,7 +68,7 @@ const deleteConfirmationBox = (row, deleteSetup, translation) => {
   }
 };
 
-const SetupsTable = () => {
+function SetupsTable() {
   const {
     setups,
     models,
@@ -85,7 +85,7 @@ const SetupsTable = () => {
   return (
     <div className="dashboard-table-container">
       <SectionHeader type="setups" />
-      <DataGridPro
+      <DataGrid
         columns={setupsColumns(deleteConfirmationBox, deleteSetup, translation)}
         rows={setups.filter((s) => !s.is_archived)}
         rowCount={setups.length}
@@ -108,12 +108,12 @@ const SetupsTable = () => {
         autoHeight
         localeText={{
           footerTotalRows: `${translation(
-            "utilities.DataGridPro.pagination.footerTotalRows"
+            "utilities.DataGridPro.pagination.footerTotalRows",
           )}${":"}`,
         }}
       />
     </div>
   );
-};
+}
 
 export default SetupsTable;

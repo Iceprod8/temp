@@ -18,7 +18,7 @@ class InitialisationPoints {
 
     /* Convert list of list into list of 3d points */
     const controlPoints = points.map(
-      (p) => new THREE.Vector3(p[0], p[1], p[2])
+      (p) => new THREE.Vector3(p[0], p[1], p[2]),
     );
 
     // this.update(controlPoints);
@@ -43,7 +43,7 @@ class InitialisationPoints {
       return;
     }
 
-    const controlPointsGeometry = new THREE.SphereBufferGeometry(0.4, 16, 16);
+    const controlPointsGeometry = new THREE.SphereGeometry(0.4, 16, 16);
     const controlPointObjects = controlPoints.map((p) => {
       const controlPointsMaterial = new THREE.MeshLambertMaterial({
         color: 0x00ffff,

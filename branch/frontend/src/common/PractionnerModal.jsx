@@ -14,7 +14,7 @@ export default function PractionnerModal({ setModal }) {
   const { username, onConnect, userData } = useAppContext();
 
   if (!onConnect) {
-    return <></>;
+    return null;
   }
 
   const handleSubmit = () => {};

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useAppContext } from "@inplan/AppContext";
 import { IconContext } from "react-icons";
 import showTop from "@inplan/assets/images/inline/show-top.png";
@@ -8,7 +8,7 @@ import showBack from "@inplan/assets/images/inline/show-back.png";
 import showLeft from "@inplan/assets/images/inline/show-left.png";
 import showRight from "@inplan/assets/images/inline/show-right.png";
 import CustomTranslation from "@inplan/common/translation/CustomTranslation";
-import { useInlineContext } from "./InlineContext";
+import { useInlineContext } from "@inplan/contexts/InlineContext";
 
 export default function DashboardToolbar() {
   const {
@@ -21,10 +21,9 @@ export default function DashboardToolbar() {
     setIsSavingRequested,
   } = useInlineContext();
   const { userRights } = useAppContext();
+
   const isInCreationMode =
     currentModel && creationMode && !currentModel.is_cutline_on_process;
-
-  // const isInLineGeneration = currentModel && currentModel.is_cutline_on_process;
 
   const isInEditionMode =
     currentModel &&
@@ -32,16 +31,20 @@ export default function DashboardToolbar() {
     currentModel.active_cutline &&
     !currentModel.is_validated;
 
-  // const isInBaseProcess = currentModel && currentModel.is_base_on_process;
-
   const isInVerificationMode =
     !creationMode &&
     currentModel &&
     currentModel.is_validated &&
     !currentModel.is_base_on_process;
 
+  // Mémorisation de l'objet passé à IconContext.Provider
+  const iconContextValue = useMemo(
+    () => ({ color: "#2061D1", size: "1.4em" }),
+    [],
+  );
+
   return (
-    <IconContext.Provider value={{ color: "#2061D1", size: "1.4em" }}>
+    <IconContext.Provider value={iconContextValue}>
       <div className="dashboard-toolbar__container">
         <div className="dashboard-toolbar__left">
           {userRights?.inline && isInVerificationMode ? (
@@ -53,7 +56,6 @@ export default function DashboardToolbar() {
               <CustomTranslation text="dashboard.cutlines.toolbar.edit" />
             </button>
           ) : null}
-          {/* inline if */}
           {userRights?.inline && isInEditionMode ? (
             <>
               <button

@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
 import DownloadLink from "react-download-link";
-import { NotificationManager } from "react-notifications";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { IoTrashOutline } from "react-icons/io5";
 import { useTranslation } from "react-i18next";
 import CustomTranslation from "@inplan/common/translation/CustomTranslation";
-
 import { backend } from "@inplan/adapters/apiCalls";
 import { useAppContext } from "@inplan/AppContext";
 import NoteModal from "@inplan/common/NoteModal";
 import { Button, Box } from "@mui/material";
-import { DataGridPro, GridOverlay } from "@mui/x-data-grid-pro";
+import { DataGrid, GridOverlay } from "@mui/x-data-grid";
+import { useSnackbar } from "@inplan/contexts/SnackbarContext";
 import PatientEditor from "./PatientEditor";
 import useRowsAndColumns from "./useRowsAndColumns";
 
@@ -79,18 +78,18 @@ function ArchiveConfirmationBox({
   setActivePatient,
 }) {
   const { t: translation } = useTranslation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const message = translation(
     "messages.patients.archive_patient_confirmation",
     {
       last_name: patient.last_name,
       first_name: patient.first_name,
-    }
+    },
   );
 
   const handleArchive = async () => {
     await backend.post(`patients/${patient.id}/archive`);
-    history.push("/patients");
+    navigate("/patients");
   };
 
   const handleConfirm = () => {
@@ -124,8 +123,8 @@ export default function PatientProfile() {
   const { rows, getColumns /* refetchRowsAndColumns */ } =
     useRowsAndColumns(id);
   const [selectedNotes, setSelectedNotes] = useState([]);
-
   const { t: translation } = useTranslation();
+  const showSnackbar = useSnackbar();
   const columns = getColumns(translation);
 
   const refreshPage = async () => {
@@ -135,19 +134,16 @@ export default function PatientProfile() {
   };
 
   // Initialize
-  useEffect(async () => {
+  useEffect(() => {
     if (!id) {
       return;
     }
-
-    await refreshPage();
+    refreshPage();
   }, [id]);
 
   const deleteSelectedNotes = async (list) => {
     if (list.length === 0) {
-      NotificationManager.error(
-        translation("messages.patients.no_note_selected")
-      );
+      showSnackbar(translation("messages.patients.no_note_selected"), "error");
       return;
     }
     try {
@@ -163,7 +159,7 @@ export default function PatientProfile() {
       // refetchRowsAndColumns();
     } catch (err) {
       console.error(err);
-      NotificationManager.error(err.message);
+      showSnackbar(err.message, "error");
     }
   };
 
@@ -250,7 +246,7 @@ export default function PatientProfile() {
           </div>
 
           <div style={{ width: "100%", height: 400 }}>
-            <DataGridPro
+            <DataGrid
               checkboxSelection
               columns={columns}
               rows={rows}
@@ -265,7 +261,7 @@ export default function PatientProfile() {
               onSelectionModelChange={(notes) => setSelectedNotes(notes)}
               localeText={{
                 footerTotalRows: `${translation(
-                  "utilities.DataGridPro.pagination.footerTotalRows"
+                  "utilities.DataGridPro.pagination.footerTotalRows",
                 )}${":"}`,
               }}
             />

@@ -1,6 +1,6 @@
 import React from "react";
 import CustomTranslation from "@inplan/common/translation/CustomTranslation";
-import { useInlineContext } from "./InlineContext";
+import { useInlineContext } from "@inplan/contexts/InlineContext";
 
 export default function EditModalFooter({ confirm }) {
   const { setModal } = useInlineContext();

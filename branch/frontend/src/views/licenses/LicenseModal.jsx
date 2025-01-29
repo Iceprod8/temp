@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { NotificationManager } from "react-notifications";
 import Modal from "@inplan/common/Modal";
 import { Checkbox } from "@mui/material";
 import BasicSelect from "@inplan/common/BasicSelect";
 import { useAppContext } from "@inplan/AppContext";
+import { useSnackbar } from "@inplan/contexts/SnackbarContext";
 
 export default function LicenseModal({
   selectedUser,
@@ -23,7 +23,7 @@ export default function LicenseModal({
     updateUserLicense,
     getUserRights,
   } = useAppContext();
-
+  const showSnackbar = useSnackbar();
   const { t: translation } = useTranslation();
 
   const title = selectedLicense
@@ -35,19 +35,19 @@ export default function LicenseModal({
   const [startDate, setStartDate] = useState(
     selectedLicense && selectedLicense.start_date !== null
       ? selectedLicense.start_date
-      : ""
+      : "",
   );
   const [endDate, setEndDate] = useState(
     selectedLicense &&
       selectedLicense.end_date !== null &&
       !selectedLicense.no_ending
       ? selectedLicense.end_date
-      : ""
+      : "",
   );
   const [noEnding, setnoEnding] = useState(
     selectedLicense && selectedLicense.no_ending !== null
       ? selectedLicense.no_ending
-      : false
+      : false,
   );
 
   useEffect(() => {
@@ -73,8 +73,9 @@ export default function LicenseModal({
       data.end_date = data.start_date;
     }
     if (data.start_date === "" || data.end_date === "") {
-      NotificationManager.error(
-        translation("messages.licenses.dates_cannot_be_empty")
+      showSnackbar(
+        translation("messages.licenses.dates_cannot_be_empty"),
+        "error",
       );
       return;
     }
@@ -83,8 +84,9 @@ export default function LicenseModal({
     if (selectedLicense && updatedRights?.to_update) {
       const res = await updateUserLicense(selectedLicense.id, data);
       if (res !== undefined) {
-        NotificationManager.success(
-          translation("messages.licenses.license_was_updated")
+        showSnackbar(
+          translation("messages.licenses.license_was_updated"),
+          "success",
         );
         setModal("");
         setSelectedLicense(null);
@@ -95,18 +97,20 @@ export default function LicenseModal({
     if (!selectedLicense && updatedRights?.to_create) {
       const res = await createUserLicense({}, data);
       if (res !== undefined) {
-        NotificationManager.success(
-          translation("messages.licenses.license_was_created")
+        showSnackbar(
+          translation("messages.licenses.license_was_created"),
+          "success",
         );
         setModal("");
       }
       return;
     }
     // NO PERMISSION
-    NotificationManager.error(
+    showSnackbar(
       translation(
-        "messages.common.you_do_not_have_permission_to_execute_this_action"
-      )
+        "messages.common.you_do_not_have_permission_to_execute_this_action",
+      ),
+      "error",
     );
     setModal("");
   };

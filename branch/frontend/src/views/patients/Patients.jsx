@@ -1,18 +1,18 @@
 import React, { useEffect, useState, useRef } from "react";
 import MaterialTable from "material-table";
 import { useTranslation } from "react-i18next";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import _ from "lodash";
-
-import Fade from "@inplan/common/Fade";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Button from "@mui/material/Button";
+import { Typography, Box, Switch } from "@mui/material";
 import PatientModal from "@inplan/views/patients/PatientModals";
 import usePatients from "@inplan/common/usePatients";
 import table from "@inplan/common/tableIcons";
 import useIsMounted from "@inplan/common/useIsMounted";
 import { backend } from "@inplan/adapters/apiCalls";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { FormControlLabel, Switch } from "@mui/material";
 import { useAppContext } from "@inplan/AppContext";
+import { useModal } from "@inplan/contexts/ModalContext";
 import RenderPanel from "./RenderPanel";
 import TreatmentPeriodCol from "./TreatmentPeriodCol";
 import ExistingOrdersCol from "./ExistingOrdersCol";
@@ -23,17 +23,13 @@ import FirstNameCol from "./FirstNameCol";
 import SurnameCol from "./SurnameCol";
 import ProgressStatusCol from "./ProgressStatusCol";
 
-// Solve problem of empty prop after updating all package
-const myTheme = createTheme({});
-
 export default function Patients() {
   const { t: translation } = useTranslation();
   const { language, userRights, getUserRights } = useAppContext();
   const { userData } = useAppContext();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { patients, fetchPatients, createPatient } = usePatients();
   const tableIcons = table();
-  const [modal, setModal] = useState("");
   const [offset] = useState(0);
   const limit = 200;
   const materialTableRef = React.createRef();
@@ -43,6 +39,7 @@ export default function Patients() {
   const [tableData, setTableData] = useState(0);
   const displayArchivedRef = useRef(displayArchived);
   const userDoctors = userData.doctors;
+  const { open, close, isOpen } = useModal();
 
   useEffect(() => {
     getUserRights();
@@ -105,7 +102,7 @@ export default function Patients() {
   }, [refresh]);
 
   if (!patients) {
-    return <></>;
+    return null;
   }
 
   function formatData(patients1) {
@@ -182,7 +179,7 @@ export default function Patients() {
           totalCount: 0,
         });
       }
-    }, 200) // in ms, debounce timer
+    }, 200), // in ms, debounce timer
   );
 
   function dataGetter(query) {
@@ -198,7 +195,7 @@ export default function Patients() {
           },
           (error) => {
             console.error(error); // Log any error if the promise rejects
-          }
+          },
         );
 
         setRefresh(false);
@@ -254,7 +251,7 @@ export default function Patients() {
       field: "treatmentPeriod",
       type: "date",
       render: (rowData) =>
-        TreatmentPeriodCol(rowData, translation, history, language),
+        TreatmentPeriodCol(rowData, translation, navigate, language),
       cellStyle: {
         width: "520px",
       },
@@ -303,153 +300,147 @@ export default function Patients() {
       setTableData((prevKey) => prevKey + 1);
     }
   }, [userData]);
+
   return (
-    <ThemeProvider theme={myTheme}>
-      <div className="page-light">
-        <Fade
-          visible={modal === "modal-patient"}
-          duration={300}
-          zIndex={10000}
-          from={{ opacity: 0 }}
+    <Box className="page-light">
+      <PatientModal
+        open={isOpen("modal-patient")}
+        onClose={close}
+        onValidation={createPatient}
+        setRefresh={setRefresh}
+      />
+      <Box className="page">
+        <Box
+          className="flex alignItems-center"
+          style={{
+            justifyContent: "space-between",
+          }}
         >
-          <PatientModal
-            onValidation={createPatient}
-            setRefresh={setRefresh}
-            setModal={setModal}
-          />
-        </Fade>
-        <div className="page">
-          <div
-            className="flex alignItems-center"
+          <Box
+            className="page-head"
             style={{
-              justifyContent: "space-between",
+              flex: 1,
             }}
           >
-            <div
-              className="page-head"
+            <Box
+              className="page-head__title"
               style={{
-                flex: 1,
+                marginTop: "auto",
+                marginBottom: "auto",
               }}
             >
-              <div
-                className="page-head__title"
-                style={{
-                  marginTop: "auto",
-                  marginBottom: "auto",
-                }}
-              >
-                <h1 className="h1">{translation("patients.title")}</h1>
-              </div>
-            </div>
-            <div className="page-head__actions" style={{ flex: 2 }}>
-              <button
-                className="btn-primary rounded"
-                onClick={() => setModal("modal-patient")}
-                type="button"
-                data-test="add_patient"
-                style={{ margin: "auto" }}
-              >
-                {translation("patients.new_patient_button")}
-              </button>
-            </div>
-            <div
-              className="flex alignItems-center"
-              style={{ flex: 1, justifyContent: "flex-end" }}
+              <Typography variant="h1">
+                {translation("patients.title")}
+              </Typography>
+            </Box>
+          </Box>
+          <Box className="page-head__actions" style={{ flex: 2 }}>
+            <Button
+              variant="contained"
+              onClick={() => open("modal-patient")}
+              data-test="add_patient"
+              style={{ margin: "auto" }}
             >
-              <div>
-                {displayArchived
-                  ? `${translation("patients.button_archived.displayed")}`
-                  : `${translation("patients.button_archived.hidden")}`}
-              </div>
-              <FormControlLabel
-                checked={displayArchived}
-                control={
-                  <Switch
-                    color="primary"
-                    onChange={() => {
-                      setDisplayArchived(!displayArchived);
-                      setRefresh(true);
-                    }}
-                  />
-                }
-                labelPlacement="top"
-                sx={{ color: "black" }}
-              />
-            </div>
-          </div>
-
-          <div className="page-tab">
-            <MaterialTable
-              key={tableData}
-              icons={tableIcons}
-              title=""
-              tableRef={materialTableRef}
-              className="table table__patients"
-              columns={allColumns}
-              data={(query) => dataGetter(query)}
-              actions={[
-                {
-                  icon: tableIcons.Refresh,
-                  tooltip: "Refresh Data",
-                  isFreeAction: true,
-                  onClick: () =>
-                    materialTableRef.current &&
-                    materialTableRef.current.onQueryChange(),
-                },
-              ]}
-              options={{
-                pageSize: 20,
-                pageSizeOptions: [10, 20, 50, 100],
-                actionsColumnIndex: 3,
-                actionsCellStyle: { width: "200px" },
-                tableLayout: "auto",
-                headerStyle: {
-                  textTransform: "uppercase",
-                  fontSize: "14px",
-                  lineHeight: "14px",
-                  fontWeight: "600",
-                  verticalAlign: "middle",
-                  textAlign: "start",
-                  padding: "5px",
-                },
-                cellStyle: {
-                  padding: "5px",
-                  width: 500,
-                },
-              }}
-              detailPanel={
-                hasAnyPatientsListAccess()
-                  ? [
-                      {
-                        tooltip: "Show Name",
-                        render: (rowData) => <RenderPanel rowData={rowData} />,
-                      },
-                    ]
-                  : []
+              {translation("patients.new_patient_button")}
+            </Button>
+          </Box>
+          <Box
+            className="flex alignItems-center"
+            style={{ flex: 1, justifyContent: "flex-end" }}
+          >
+            <Box>
+              {displayArchived
+                ? `${translation("patients.button_archived.displayed")}`
+                : `${translation("patients.button_archived.hidden")}`}
+            </Box>
+            <FormControlLabel
+              checked={displayArchived}
+              control={
+                <Switch
+                  color="primary"
+                  onChange={() => {
+                    setDisplayArchived(!displayArchived);
+                    setRefresh(true);
+                  }}
+                />
               }
-              localization={{
-                header: {
-                  actions: "Actions",
-                },
-                toolbar: {
-                  searchPlaceholder: `${translation("patients.table.search")}`,
-                },
-                pagination: {
-                  labelRowsPerPage: `${translation(
-                    "utilities.MaterialTable.pagination.labelRowsPerPage"
-                  )}:`,
-                  labelRowsSelect: `${translation(
-                    "utilities.MaterialTable.pagination.labelRowsSelect"
-                  )}`,
-                  labelDisplayedRows: `${translation(
-                    "utilities.MaterialTable.pagination.labelDisplayedRows"
-                  )}`,
-                },
-              }}
+              labelPlacement="top"
+              sx={{ color: "black" }}
             />
-          </div>
-        </div>
-      </div>
-    </ThemeProvider>
+          </Box>
+        </Box>
+
+        <Box className="page-tab">
+          <MaterialTable
+            key={tableData}
+            icons={tableIcons}
+            title=""
+            tableRef={materialTableRef}
+            className="table table__patients"
+            columns={allColumns}
+            data={(query) => dataGetter(query)}
+            actions={[
+              {
+                icon: tableIcons.Refresh,
+                tooltip: "Refresh Data",
+                isFreeAction: true,
+                onClick: () =>
+                  materialTableRef.current &&
+                  materialTableRef.current.onQueryChange(),
+              },
+            ]}
+            options={{
+              pageSize: 20,
+              pageSizeOptions: [10, 20, 50, 100],
+              actionsColumnIndex: 3,
+              actionsCellStyle: { width: "200px" },
+              tableLayout: "auto",
+              headerStyle: {
+                textTransform: "uppercase",
+                fontSize: "14px",
+                lineHeight: "14px",
+                fontWeight: "600",
+                verticalAlign: "middle",
+                textAlign: "start",
+                padding: "5px",
+              },
+              cellStyle: {
+                padding: "5px",
+                width: 500,
+              },
+            }}
+            detailPanel={
+              hasAnyPatientsListAccess()
+                ? [
+                    {
+                      tooltip: "Show Name",
+                      render: (rowData) => <RenderPanel rowData={rowData} />,
+                    },
+                  ]
+                : []
+            }
+            localization={{
+              header: {
+                actions: "Actions",
+              },
+              toolbar: {
+                searchPlaceholder: `${translation("patients.table.search")}`,
+              },
+              pagination: {
+                labelRowsPerPage: `${translation(
+                  "utilities.MaterialTable.pagination.labelRowsPerPage",
+                )}:`,
+                labelRowsSelect: `${translation(
+                  "utilities.MaterialTable.pagination.labelRowsSelect",
+                )}`,
+                labelDisplayedRows: `${translation(
+                  "utilities.MaterialTable.pagination.labelDisplayedRows",
+                )}`,
+              },
+            }}
+          />
+        </Box>
+      </Box>
+    </Box>
   );
 }

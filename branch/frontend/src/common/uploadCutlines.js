@@ -1,22 +1,20 @@
-import { NotificationManager } from "react-notifications";
-
 import { backend } from "@inplan/adapters/apiCalls";
+import { useSnackbar } from "@inplan/contexts/SnackbarContext";
 
 // Upload multiple pts files
 export default async function uploadcutlines(
   files,
   setup,
   parameters,
-  translation
+  translation,
 ) {
   // The function is asynchronous, files can be reset during the execution of the function,
   //     so copy the files before proceed
   const cfiles = [...files];
+  const showSnackbar = useSnackbar();
 
   if (files.length < 1) {
-    NotificationManager.error(
-      translation("messages.cutlines.no_file_selected")
-    );
+    showSnackbar(translation("messages.cutlines.no_file_selected"), "error");
     return [];
   }
 
@@ -25,8 +23,9 @@ export default async function uploadcutlines(
     return fileSize > 1;
   });
   if (toobig) {
-    NotificationManager.error(
-      translation("messages.cutlines.files_size", { size: "1MB" })
+    showSnackbar(
+      translation("messages.cutlines.files_size", { size: "1MB" }),
+      "error",
     );
     return [];
   }
@@ -48,8 +47,9 @@ export default async function uploadcutlines(
     cont.push(promise);
 
     promise.then(() => {
-      NotificationManager.success(
-        translation("messages.cutlines.file_downloaded", { file: file.name })
+      showSnackbar(
+        translation("messages.cutlines.file_downloaded", { file: file.name }),
+        "success",
       );
     });
   });

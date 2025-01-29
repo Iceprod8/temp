@@ -8,7 +8,7 @@ import CustomTranslation from "@inplan/common/translation/CustomTranslation";
 import AppointmentsTable from "./AppointmentsTable";
 import { useDashboardContext } from "./Context";
 
-const AppointmentsForm = ({ control }) => {
+export function AppointmentsForm({ control }) {
   const [open, setOpen] = useState(false);
   return (
     <div className="order-options-list-container">
@@ -95,7 +95,7 @@ const AppointmentsForm = ({ control }) => {
       />
     </div>
   );
-};
+}
 
 export default function DashboardControlAppointments() {
   const { patient, createAppointment, fetchPatientOrders } =

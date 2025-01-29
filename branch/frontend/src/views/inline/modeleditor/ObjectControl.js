@@ -58,13 +58,13 @@ class ObjectControl extends EventDispatcher {
             deltaMove.y * (Math.PI / 180) * this.rotateSpeed * this.rotateX,
             deltaMove.x * (Math.PI / 180) * this.rotateSpeed, // * this.rotateY,
             0 * deltaMove.x * (Math.PI / 180) * this.rotateSpeed * this.rotateZ, // 0, no rotation in this angle as the mouth is 2D
-            "XYZ"
-          )
+            "XYZ",
+          ),
         );
 
         this.object.quaternion.multiplyQuaternions(
           deltaRotationQuaternion,
-          this.object.quaternion
+          this.object.quaternion,
         );
         movePrev.copy(moveCurr);
       };

@@ -1,12 +1,12 @@
 import { useCallback, useReducer, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { NotificationManager } from "react-notifications";
-
 import { backend } from "@inplan/adapters/apiCalls";
 import useIsMounted from "@inplan/common/useIsMounted";
+import { useSnackbar } from "@inplan/contexts/SnackbarContext";
 
 export default function useCollection(collection, compareFn, defaultParams) {
   const { t: translation } = useTranslation();
+  const showSnackbar = useSnackbar();
   const ucollection = collection.toUpperCase();
 
   function reducer(state, action) {
@@ -23,7 +23,7 @@ export default function useCollection(collection, compareFn, defaultParams) {
         break;
       case "UPDATE_ITEM":
         unsortedItems = state.items.map((p) =>
-          p?.id === action.target ? action.payload : p
+          p?.id === action.target ? action.payload : p,
         );
         break;
       case "DELETE_ITEM":
@@ -69,7 +69,8 @@ export default function useCollection(collection, compareFn, defaultParams) {
         }
         return item;
       } catch (error) {
-        NotificationManager.error(translation("messages.common.backend_issue"));
+        showSnackbar(translation("messages.common.backend_issue"), "error");
+
         console.error(error);
       }
       return undefined;
@@ -97,14 +98,12 @@ export default function useCollection(collection, compareFn, defaultParams) {
           }
           return results;
         } catch (error) {
-          NotificationManager.error(
-            translation("messages.common.backend_issue")
-          );
+          showSnackbar(translation("messages.common.backend_issue"), "error");
           console.error(error);
         }
         return undefined;
       },
-      [state.items]
+      [state.items],
     ),
 
     createItem: useCallback(async (patientId, data) => {
@@ -118,7 +117,8 @@ export default function useCollection(collection, compareFn, defaultParams) {
         dispatch({ type: "ADD_ITEM", payload: item });
         return item;
       } catch (error) {
-        NotificationManager.error(translation("messages.common.backend_issue"));
+        showSnackbar(translation("messages.common.backend_issue"), "error");
+
         console.error(error);
       }
       return undefined;
@@ -133,7 +133,8 @@ export default function useCollection(collection, compareFn, defaultParams) {
         dispatch({ type: "UPDATE_ITEM", payload: nItem, target: itemId });
         return nItem;
       } catch (error) {
-        NotificationManager.error(translation("messages.common.backend_issue"));
+        showSnackbar(translation("messages.common.backend_issue"), "error");
+
         console.error(error);
       }
       return undefined;
@@ -146,7 +147,8 @@ export default function useCollection(collection, compareFn, defaultParams) {
         });
         dispatch({ type: "DELETE_ITEM", payload: item });
       } catch (error) {
-        NotificationManager.error(translation("messages.common.backend_issue"));
+        showSnackbar(translation("messages.common.backend_issue"), "error");
+
         console.error(error);
       }
       return undefined;

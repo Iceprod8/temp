@@ -24,19 +24,19 @@ import CustomTranslation from "@inplan/common/translation/CustomTranslation";
 import { BsFillClipboardCheckFill } from "react-icons/bs";
 import { SiBlueprint } from "react-icons/si";
 
-const OrderEditorHead = ({
+function OrderEditorHead({
   order,
   patient,
   refreshFunction,
   topContentDesciption,
   bottomContentDescription,
-}) => {
+}) {
   const { t: translation } = useTranslation();
   let formattedCreationDate = translation(
-    "messages.common.loading_in_progress"
+    "messages.common.loading_in_progress",
   );
   let formattedDeadlineDate = translation(
-    "messages.common.loading_in_progress"
+    "messages.common.loading_in_progress",
   );
 
   if (order) {
@@ -221,8 +221,9 @@ const OrderEditorHead = ({
           </div>
         </>
       )}
+      <p />
     </>
   );
-};
+}
 
 export default OrderEditorHead;

@@ -49,7 +49,7 @@ function getDefaultSetupValue(setups) {
     }));
   if (availableSetups.length > 0) {
     const sortedSetups = availableSetups.sort((a, b) =>
-      a.rank > b.rank ? -1 : 1
+      a.rank > b.rank ? -1 : 1,
     );
     returnValue = sortedSetups[0].value;
   }
@@ -137,7 +137,7 @@ export default function DashboardControlOrders() {
 
         setDefaultValues({ ...defaultValues, ...defltVals });
       })(),
-    [practitioner]
+    [practitioner],
   );
 
   const onSubmit = async (data) => {
@@ -151,7 +151,7 @@ export default function DashboardControlOrders() {
 
     if (setup === undefined || setup === null || setup === "") {
       window.alert(
-        translation("messages.orders.order_creation_requires_a_setup")
+        translation("messages.orders.order_creation_requires_a_setup"),
       );
       return null;
     }

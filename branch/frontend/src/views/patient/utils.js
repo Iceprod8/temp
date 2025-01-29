@@ -26,5 +26,5 @@ export const setFieldSize = (size) =>
   size === "large"
     ? { width: "calc(75% - 50px)" }
     : size === "medium"
-    ? { width: "calc(50% - 40px)" }
-    : { width: "calc(25% - 20px)" };
+      ? { width: "calc(50% - 40px)" }
+      : { width: "calc(25% - 20px)" };

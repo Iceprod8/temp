@@ -22,7 +22,7 @@ export default function FollowUp() {
     if (!patient) return;
     (async () => {
       const { data: timeline } = await backend.get(
-        `patients/${patient.id}/history?single=${toISODateString(new Date())}`
+        `patients/${patient.id}/history?single=${toISODateString(new Date())}`,
       );
       const nday = timeline.history[0];
 
@@ -39,27 +39,25 @@ export default function FollowUp() {
 
   return (
     <div className="dashboard-sidebar-infos">
-      <>
-        <p>{translation("dashboard.period_information.follow_up.title")}:</p>
-        {!day.step
-          ? `${translation(
-              "dashboard.period_information.follow_up.no_active_period"
-            )}`
-          : null}
-        <Section title="Setup" value={day.setup?.name} />
+      <p>{translation("dashboard.period_information.follow_up.title")}:</p>
+      {!day.step
+        ? `${translation(
+            "dashboard.period_information.follow_up.no_active_period",
+          )}`
+        : null}
+      <Section title="Setup" value={day.setup?.name} />
 
-        <Section
-          title={translation("dashboard.period_information.follow_up.period")}
-          value={day.step?.name}
-        />
-        <Section
-          title={translation("dashboard.period_information.follow_up.start")}
-          value={day.step?.start_date}
-        />
+      <Section
+        title={translation("dashboard.period_information.follow_up.period")}
+        value={day.step?.name}
+      />
+      <Section
+        title={translation("dashboard.period_information.follow_up.start")}
+        value={day.step?.start_date}
+      />
 
-        <Section title="Aligners maxillary" value={day.maxillary?.rank} />
-        <Section title="Aligners mandibular" value={day.mandibular?.rank} />
-      </>
+      <Section title="Aligners maxillary" value={day.maxillary?.rank} />
+      <Section title="Aligners mandibular" value={day.mandibular?.rank} />
     </div>
   );
 }

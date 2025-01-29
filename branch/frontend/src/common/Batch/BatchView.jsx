@@ -1,14 +1,10 @@
 import React, { useState } from "react";
-import { NotificationManager } from "react-notifications";
 import { useTranslation } from "react-i18next";
-
 import { CircularProgress, TextField } from "@mui/material";
-
 import { createBatchName } from "@inplan/adapters/functions";
-
 import LoadingOverlay from "@inplan/common/Batch/LoadingOverlay";
-
 import { useBatchContext } from "@inplan/common/Batch/BatchContext";
+import { useSnackbar } from "@inplan/contexts/SnackbarContext";
 
 // List of existing batch and there interactions
 
@@ -47,6 +43,7 @@ export default function BatchView({
     selectedBatch: selectedBatchInLase,
   } = useBatchContext();
   const { t: translation } = useTranslation();
+  const showSnackbar = useSnackbar();
   const [editBatchName, setEditBatchName] = useState(null);
   const [selectedBatch, setSelectedBatch] = useState(null);
 
@@ -64,14 +61,16 @@ export default function BatchView({
       const data = { name: editBatchName };
       updateBatch(batch, data)
         .then(() => {
-          NotificationManager.success(
-            translation("messages.common.batch_name_updated")
+          showSnackbar(
+            translation("messages.common.batch_name_updated"),
+            "success",
           );
           fetchBatches();
         })
         .catch(() => {
-          NotificationManager.error(
-            translation("messages.common.error_saving_batch_name")
+          showSnackbar(
+            translation("messages.common.error_saving_batch_name"),
+            "error",
           );
         });
     }
@@ -95,7 +94,7 @@ export default function BatchView({
             <th>{batchTitle}</th>
             <th>
               {translation(
-                "3d_printing.table_pending_printer_beds.titles.actions"
+                "3d_printing.table_pending_printer_beds.titles.actions",
               )}
             </th>
           </tr>
@@ -106,7 +105,7 @@ export default function BatchView({
               <TextField
                 id="standard-search"
                 label={translation(
-                  "3d_printing.table_pending_printer_beds.search"
+                  "3d_printing.table_pending_printer_beds.search",
                 )}
                 type="search"
                 name="search"
@@ -137,7 +136,7 @@ export default function BatchView({
                         }}
                         id="standard-basic"
                         label={translation(
-                          "3d_printing.table_pending_printer_beds.batch_name"
+                          "3d_printing.table_pending_printer_beds.batch_name",
                         )}
                         variant="standard"
                         value={editBatchName}

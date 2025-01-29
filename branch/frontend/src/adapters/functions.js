@@ -1,4 +1,4 @@
-import { NotificationManager } from "react-notifications";
+import { useSnackbar } from "@inplan/contexts/SnackbarContext";
 
 // Utils
 
@@ -70,7 +70,7 @@ export function pagination(currentPage, pageCount) {
   let result = [];
 
   result = Array.from({ length: pageCount }, (v, k) => k + 1).filter(
-    (i) => i && i >= left && i < right
+    (i) => i && i >= left && i < right,
   );
 
   if (result.length > 1) {
@@ -113,12 +113,12 @@ export function createBatchName(selectedBatch, subject, translation) {
     selectedBatch && selectedBatch.name
       ? selectedBatch.name
       : `${capitalizeFirstLetter(
-          translation("utilities.variables.batch")
+          translation("utilities.variables.batch"),
         )} ${translation(`utilities.variables.${subject}`)} ${date}`;
 
   // const batchName = `${batchMainName} [${size} aligners]`;
   const batchName = `${batchMainName} [${size} ${translation(
-    "utilities.variables.aligners"
+    "utilities.variables.aligners",
   )}]`;
 
   return batchName;
@@ -128,7 +128,7 @@ export function createBatchName(selectedBatch, subject, translation) {
 export function onGoingC(patients) {
   const date = new Date();
   const today = new Date(
-    `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+    `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
   );
   return patients.reduce(
     (acc, p) =>
@@ -136,18 +136,18 @@ export function onGoingC(patients) {
       (p.archived
         ? 0
         : p.active_step
-        ? new Date(p.active_step.end_date) > today
-          ? 1
-          : 0
-        : 0),
-    0
+          ? new Date(p.active_step.end_date) > today
+            ? 1
+            : 0
+          : 0),
+    0,
   );
 }
 
 export function partialC(patients) {
   return patients.reduce(
     (acc, p) => acc + (p.archived ? 0 : !p.active_step ? 1 : 0),
-    0
+    0,
   );
 }
 
@@ -174,7 +174,7 @@ export function tocutC(patients) {
 export function terminatedC(patients) {
   const date = new Date();
   const today = new Date(
-    `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+    `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
   );
   return patients.reduce(
     (acc, p) =>
@@ -186,7 +186,7 @@ export function terminatedC(patients) {
             : 0
           : 0
         : 0),
-    0
+    0,
   );
 }
 
@@ -248,25 +248,27 @@ export function validateAllCutline(
   modelsList,
   updateModel,
   applySmooth,
-  translation
+  translation,
 ) {
+  const showSnackbar = useSnackbar();
   const validatedModelsListPromise = modelsList.map((model) =>
-    updateModel(model.id, { is_validated: true, apply_smooth: applySmooth })
+    updateModel(model.id, { is_validated: true, apply_smooth: applySmooth }),
   );
 
   Promise.all(validatedModelsListPromise)
     .then((modelsListUpload) => {
       const modelsTovalidate = modelsListUpload.filter(
-        (model) => model === undefined
+        (model) => model === undefined,
       ).length;
       const validatedModel = modelsListUpload.length - modelsTovalidate;
 
       if (validatedModel > 0) {
-        NotificationManager.success(
+        showSnackbar(
           `${translation("messages.cutlines.validated_models", {
             value1: validatedModel,
             value2: modelsListUpload.length,
-          })}`
+          })}`,
+          "success",
         );
       }
 
@@ -274,12 +276,12 @@ export function validateAllCutline(
         const error = new Error(
           `${translation("messages.cutlines.error_during_validation", {
             nbr: modelsTovalidate,
-          })}`
+          })}`,
         );
         throw error;
       }
     })
     .catch((e) => {
-      NotificationManager.error(e.message);
+      showSnackbar(e.message, "error");
     });
 }

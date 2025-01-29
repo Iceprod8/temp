@@ -1,17 +1,17 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import MetaTags from "react-meta-tags";
+// import MetaTags from "react-meta-tags";
 import page404 from "@inplan/assets/images/404.svg";
 
 function NotFound() {
   const { t: translation } = useTranslation();
   return (
     <>
-      <MetaTags>
+      {/* <MetaTags>
         <title>{translation("not_found.name")}</title>
         <meta name="description" content="This page isn't avaiable" />
         <meta property="og:title" content="Orthoin3D" />
-      </MetaTags>
+      </MetaTags> */}
       <div className="_404-container" style={{ "text-align": "center" }}>
         <img
           src={page404}

@@ -1,7 +1,9 @@
 import React from "react";
 import { IoClose } from "react-icons/io5";
 
-export default function Modal({ title, onClose, children }) {
+export default function Modal({ title, onClose, children, open }) {
+  if (!open) return null;
+
   return (
     <div className="modal">
       <div className="modal-wrapper" onClick={() => onClose("")} />

@@ -12,7 +12,7 @@ const fontSettings = {
   fontSize: 15,
 };
 
-const mapping = (translation) => {
+function mapping(translation) {
   const options = {
     orders: {
       title: translation("dashboard.orders.table.name"),
@@ -28,9 +28,9 @@ const mapping = (translation) => {
     },
   };
   return options;
-};
+}
 
-const SectionHeader = ({ type }) => {
+export default function SectionHeader({ type }) {
   const { t: translation } = useTranslation();
   const style = { fontSize: "24px", color: mainColor };
   const Icon = React.createElement(mapping(translation)[type].icon, {
@@ -50,6 +50,4 @@ const SectionHeader = ({ type }) => {
       <div className="empty-div" />
     </div>
   );
-};
-
-export default SectionHeader;
+}

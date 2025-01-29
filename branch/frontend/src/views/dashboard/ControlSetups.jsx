@@ -7,7 +7,7 @@ import CustomTranslation from "@inplan/common/translation/CustomTranslation";
 import SetupsTable from "./SetupsTable";
 import { useDashboardContext } from "./Context";
 
-const SetupsForm = ({ control }) => (
+export function SetupsForm({ control }) {
   <div className="order-options-list-container">
     <div style={{ marginRight: "10px" }}>
       <TextFieldBasic
@@ -18,8 +18,8 @@ const SetupsForm = ({ control }) => (
         }}
       />
     </div>
-  </div>
-);
+  </div>;
+}
 
 export default function DashboardControlSetups() {
   const { patient, createSetup } = useDashboardContext();

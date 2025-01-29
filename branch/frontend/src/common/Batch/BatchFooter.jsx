@@ -20,7 +20,7 @@ export default function BatchFooter() {
           }}
         >
           {translation(
-            "3d_printing.table_pending_printer_beds.batch_modal_edit.buttons.delete"
+            "3d_printing.table_pending_printer_beds.batch_modal_edit.buttons.delete",
           )}
           <CgTrash
             name="delete"
@@ -44,7 +44,7 @@ export default function BatchFooter() {
           }}
         >
           {translation(
-            "3d_printing.table_pending_printer_beds.batch_modal_edit.buttons.close"
+            "3d_printing.table_pending_printer_beds.batch_modal_edit.buttons.close",
           )}
         </button>
       </div>

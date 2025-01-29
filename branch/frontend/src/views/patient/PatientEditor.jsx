@@ -1,19 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { NotificationManager } from "react-notifications";
 import { useTranslation } from "react-i18next";
-
 import DatePicker, { registerLocale } from "react-datepicker";
 import fr from "date-fns/locale/fr";
 import en from "date-fns/locale/en-GB";
-
 import "react-datepicker/dist/react-datepicker.css";
-
+import { TbPrinter } from "react-icons/tb";
 import { backend } from "@inplan/adapters/apiCalls";
-import styles from "@inplan/common/Form/styles";
 import CustomTranslation from "@inplan/common/translation/CustomTranslation";
 import getCurrentLanguage from "@inplan/common/translation/CurrentLanguage";
-import { TbPrinter } from "react-icons/tb";
 import "@inplan/assets/scss/pages/dashboard_patient.scss";
+import { useSnackbar } from "@inplan/contexts/SnackbarContext";
 
 // Used in DataPicker component
 registerLocale("fr", fr);
@@ -21,13 +17,11 @@ registerLocale("en", en);
 
 //  TODO: Improve by removing all duplicated patient fetching logic compared to patient Editor
 
-const PatientEditor = ({ patientId, refreshPage }) => {
+export default function PatientEditor({ patientId, refreshPage }) {
   const { t: translation } = useTranslation();
-
+  const showSnackbar = useSnackbar();
   const [formData, setFormData] = useState(null);
-
   const [formDataAddress, setFormDataAddress] = useState(null);
-
   const [patient, setPatient] = useState(null);
 
   const fetchPatient = async (patientIdIn) => {
@@ -79,9 +73,9 @@ const PatientEditor = ({ patientId, refreshPage }) => {
   };
 
   // Initialize
-  useEffect(async () => {
+  useEffect(() => {
     if (!patientId) return;
-    await refreshEditor();
+    refreshEditor();
   }, [patientId]);
 
   const handleChange = (e) => {
@@ -109,11 +103,8 @@ const PatientEditor = ({ patientId, refreshPage }) => {
   };
 
   const validateEmail = (value) => {
-    const email_pattern = new RegExp(
-      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$/
-    );
-    const result_email = email_pattern.test(value);
-    return result_email;
+    const email_pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return email_pattern.test(value);
   };
 
   const handleSubmit = async (e) => {
@@ -126,8 +117,9 @@ const PatientEditor = ({ patientId, refreshPage }) => {
         formData.email !== null &&
         validateEmail(formData.email) === false
       ) {
-        NotificationManager.error(
-          translation("messages.patients.email_is_not_valid")
+        showSnackbar(
+          translation("messages.patients.email_is_not_valid"),
+          "error",
         );
         return;
       }
@@ -160,12 +152,11 @@ const PatientEditor = ({ patientId, refreshPage }) => {
       });
 
       refreshEditor();
-      NotificationManager.success(
-        translation("messages.patients.patient_updated")
-      );
+      showSnackbar(translation("messages.patients.patient_updated"), "success");
     } catch (error) {
-      NotificationManager.error(
-        translation("messages.patients.error_updating_patient")
+      showSnackbar(
+        translation("messages.patients.error_updating_patient"),
+        "error",
       );
       console.error("Error updating patient:", error);
     }
@@ -247,7 +238,7 @@ const PatientEditor = ({ patientId, refreshPage }) => {
             <input
               type="text"
               placeholder={translation(
-                "patient_profile.table.columns.element.address.address-line1"
+                "patient_profile.table.columns.element.address.address-line1",
               )}
               value={formDataAddress?.address_line1 || ""}
               onChange={handleChangeAddress}
@@ -256,7 +247,7 @@ const PatientEditor = ({ patientId, refreshPage }) => {
             <input
               type="text"
               placeholder={translation(
-                "patient_profile.table.columns.element.address.address-line2"
+                "patient_profile.table.columns.element.address.address-line2",
               )}
               value={formDataAddress?.address_line2 || ""}
               onChange={handleChangeAddress}
@@ -267,7 +258,7 @@ const PatientEditor = ({ patientId, refreshPage }) => {
             <input
               type="text"
               placeholder={translation(
-                "patient_profile.table.columns.element.address.zip"
+                "patient_profile.table.columns.element.address.zip",
               )}
               value={formDataAddress?.zip || ""}
               onChange={handleChangeAddress}
@@ -276,7 +267,7 @@ const PatientEditor = ({ patientId, refreshPage }) => {
             <input
               type="text"
               placeholder={translation(
-                "patient_profile.table.columns.element.address.city"
+                "patient_profile.table.columns.element.address.city",
               )}
               value={formDataAddress?.city || ""}
               onChange={handleChangeAddress}
@@ -287,7 +278,7 @@ const PatientEditor = ({ patientId, refreshPage }) => {
             <input
               type="text"
               placeholder={translation(
-                "patient_profile.table.columns.element.address.state"
+                "patient_profile.table.columns.element.address.state",
               )}
               value={formDataAddress?.state || ""}
               onChange={handleChangeAddress}
@@ -296,7 +287,7 @@ const PatientEditor = ({ patientId, refreshPage }) => {
             <input
               type="text"
               placeholder={translation(
-                "patient_profile.table.columns.element.address.country"
+                "patient_profile.table.columns.element.address.country",
               )}
               value={formDataAddress?.country || ""}
               onChange={handleChangeAddress}
@@ -322,6 +313,4 @@ const PatientEditor = ({ patientId, refreshPage }) => {
       )}
     </div>
   );
-};
-
-export default PatientEditor;
+}

@@ -14,7 +14,7 @@ function sumDiff(lists) {
       const [cumul, prev] = acc;
       return [cumul + (prev ? m.rank - prev : 0), m.rank];
     },
-    [0, null]
+    [0, null],
   );
 
   return value - lists.length;
@@ -83,51 +83,47 @@ export default function CardPeriod({ period, onDelete, onClick }) {
       .replace(/\//g, "-");
   }
   return (
-    <>
+    <div
+      data-test="step_card"
+      className={clsx("cardPeriod")}
+      style={{ margin: 5 }}
+    >
       <div
-        data-test="step_card"
-        className={clsx("cardPeriod")}
-        style={{ margin: 5 }}
+        className={clsx(
+          "cardPeriod__head",
+          currentPeriod?.id === period.id ? "is-selected" : null,
+        )}
       >
-        <div
-          className={clsx(
-            "cardPeriod__head",
-            currentPeriod?.id === period.id ? "is-selected" : null
-          )}
-        >
-          <div className="cardPeriod-head">
-            <div className="cardPeriod-head__info">
-              + {weeks} {translation("dashboard.period_information.card.weeks")}
-            </div>
-            {period.name}
-            <div className="cardPeriod-head__actions">
-              <CgTrash
-                name="delete"
-                className="icon icon-delete"
-                size={14}
-                style={{
-                  fill: "currentColor",
-                }}
-                data-test="delete-step"
-                onClick={handleDelete}
-              />
-            </div>
+        <div className="cardPeriod-head">
+          <div className="cardPeriod-head__info">
+            + {weeks} {translation("dashboard.period_information.card.weeks")}
           </div>
-        </div>
-        <div className="cardPeriod__body" onClick={() => onClick(period)}>
-          <div className="cardPeriod-main">
-            <p>
-              <span>
-                {translation("dashboard.period_information.card.from")}
-              </span>
-              {period_start_date}
-              <span>{translation("dashboard.period_information.card.to")}</span>
-              {period_end_date}
-            </p>
-            <p>{rankText}</p>
+          {period.name}
+          <div className="cardPeriod-head__actions">
+            <CgTrash
+              name="delete"
+              className="icon icon-delete"
+              size={14}
+              style={{
+                fill: "currentColor",
+              }}
+              data-test="delete-step"
+              onClick={handleDelete}
+            />
           </div>
         </div>
       </div>
-    </>
+      <div className="cardPeriod__body" onClick={() => onClick(period)}>
+        <div className="cardPeriod-main">
+          <p>
+            <span>{translation("dashboard.period_information.card.from")}</span>
+            {period_start_date}
+            <span>{translation("dashboard.period_information.card.to")}</span>
+            {period_end_date}
+          </p>
+          <p>{rankText}</p>
+        </div>
+      </div>
+    </div>
   );
 }

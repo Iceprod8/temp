@@ -11,11 +11,11 @@ import { EventDispatcher, MOUSE, Quaternion, Vector2, Vector3 } from "three";
 var TrackballControls = function (object, domElement) {
   if (domElement === undefined)
     console.warn(
-      'THREE.TrackballControls: The second parameter "domElement" is now mandatory.'
+      'THREE.TrackballControls: The second parameter "domElement" is now mandatory.',
     );
   if (domElement === document)
     console.error(
-      'THREE.TrackballControls: "document" should not be used as the target "domElement". Please use "renderer.domElement" instead.'
+      'THREE.TrackballControls: "document" should not be used as the target "domElement". Please use "renderer.domElement" instead.',
     );
 
   var _this = this;
@@ -113,7 +113,7 @@ var TrackballControls = function (object, domElement) {
     return function getMouseOnScreen(pageX, pageY) {
       vector.set(
         (pageX - _this.screen.left) / _this.screen.width,
-        (pageY - _this.screen.top) / _this.screen.height
+        (pageY - _this.screen.top) / _this.screen.height,
       );
 
       return vector;
@@ -128,7 +128,7 @@ var TrackballControls = function (object, domElement) {
         (pageX - _this.screen.width * 0.5 - _this.screen.left) /
           (_this.screen.width * 0.5),
         (_this.screen.height + 2 * (_this.screen.top - pageY)) /
-          _this.screen.width // screen.width intentional
+          _this.screen.width, // screen.width intentional
       );
 
       return vector;
@@ -148,7 +148,7 @@ var TrackballControls = function (object, domElement) {
       moveDirection.set(
         _moveCurr.x - _movePrev.x,
         _moveCurr.y - _movePrev.y,
-        0
+        0,
       );
       angle = moveDirection.length();
 
@@ -262,7 +262,7 @@ var TrackballControls = function (object, domElement) {
           _translateStart.add(
             mouseChange
               .subVectors(_translateEnd, _translateStart)
-              .multiplyScalar(_this.dynamicDampingFactor)
+              .multiplyScalar(_this.dynamicDampingFactor),
           );
         }
       }
@@ -274,7 +274,7 @@ var TrackballControls = function (object, domElement) {
       if (_eye.lengthSq() > _this.maxDistance * _this.maxDistance) {
         _this.object.position.addVectors(
           _this.target,
-          _eye.setLength(_this.maxDistance)
+          _eye.setLength(_this.maxDistance),
         );
         _zoomStart.copy(_zoomEnd);
       }
@@ -282,7 +282,7 @@ var TrackballControls = function (object, domElement) {
       if (_eye.lengthSq() < _this.minDistance * _this.minDistance) {
         _this.object.position.addVectors(
           _this.target,
-          _eye.setLength(_this.minDistance)
+          _eye.setLength(_this.minDistance),
         );
         _zoomStart.copy(_zoomEnd);
       }
@@ -496,7 +496,7 @@ var TrackballControls = function (object, domElement) {
       case 1:
         _state = STATE.TOUCH_ROTATE;
         _moveCurr.copy(
-          getMouseOnCircle(event.touches[0].pageX, event.touches[0].pageY)
+          getMouseOnCircle(event.touches[0].pageX, event.touches[0].pageY),
         );
         _movePrev.copy(_moveCurr);
         break;
@@ -507,7 +507,7 @@ var TrackballControls = function (object, domElement) {
         var dx = event.touches[0].pageX - event.touches[1].pageX;
         var dy = event.touches[0].pageY - event.touches[1].pageY;
         _touchZoomDistanceEnd = _touchZoomDistanceStart = Math.sqrt(
-          dx * dx + dy * dy
+          dx * dx + dy * dy,
         );
 
         var x = (event.touches[0].pageX + event.touches[1].pageX) / 2;
@@ -530,7 +530,7 @@ var TrackballControls = function (object, domElement) {
       case 1:
         _movePrev.copy(_moveCurr);
         _moveCurr.copy(
-          getMouseOnCircle(event.touches[0].pageX, event.touches[0].pageY)
+          getMouseOnCircle(event.touches[0].pageX, event.touches[0].pageY),
         );
         break;
 
@@ -558,7 +558,7 @@ var TrackballControls = function (object, domElement) {
       case 1:
         _state = STATE.TOUCH_ROTATE;
         _moveCurr.copy(
-          getMouseOnCircle(event.touches[0].pageX, event.touches[0].pageY)
+          getMouseOnCircle(event.touches[0].pageX, event.touches[0].pageY),
         );
         _movePrev.copy(_moveCurr);
         break;

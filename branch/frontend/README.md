@@ -1,13 +1,15 @@
 # Frontend
 
 ## Table of content
- - [Technologies](#technologies)
- - [Application organization](#application-organization)
- - [Available scripts](#available-scripts)
- - [Installation](#installation)
- - [Code quality process and tools](#code-quality)
+
+- [Technologies](#technologies)
+- [Application organization](#application-organization)
+- [Available scripts](#available-scripts)
+- [Installation](#installation)
+- [Code quality process and tools](#code-quality)
 
 ## Technologies
+
 - [ReactJs](https://fr.reactjs.org/), more on [React](https://overreacted.io/react-as-a-ui-runtime/) and [React Router](https://reacttraining.com/react-router/)
 - [ES 2018](http://ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf)
 - [Eslint](https://eslint.org/) configuration [AirBnB](https://github.com/airbnb/javascript)
@@ -15,7 +17,6 @@
 - [ThreeJs](https://threejs.org/) for 3D
 
 ## Application organization
-
 
 ## Available Scripts
 
@@ -54,7 +55,6 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-
 ### `yarn deploy`
 
 **Note: this is a homemade opration**
@@ -69,18 +69,20 @@ yarn deploy
 ```
 
 Certificates
-* ```certbot certonly --manual -d app.orthoin3d.com```
-* then copy the given file into s3
-* Create/Update certificates in [ACM EC2 Service](https://console.aws.amazon.com/acm/home?region=us-east-1#/)
-* copy (in order): cert.pem (body), privkey.pem (priv), fullchain.pem (chain)
 
+- `certbot certonly --manual -d app.orthoin3d.com`
+- then copy the given file into s3
+- Create/Update certificates in [ACM EC2 Service](https://console.aws.amazon.com/acm/home?region=us-east-1#/)
+- copy (in order): cert.pem (body), privkey.pem (priv), fullchain.pem (chain)
 
-* invalidate cloud front distribution
+- invalidate cloud front distribution
 
 ### S3 Configuration
+
 Disable all "block public access"
 
 Bucket policy:
+
 ```
 {
     "Version": "2012-10-17",
@@ -97,6 +99,7 @@ Bucket policy:
 ```
 
 Update CORS rules:
+
 ```
 [
     {
@@ -120,10 +123,13 @@ Configure as a public bucket
 ## Code quality process and tools
 
 ### `yarn lint`
+
 Linter
 
 ### `jscpd`
+
 Code du verification
 
 ### `unimported`
+
 Dead file (import) detector

@@ -17,11 +17,14 @@ export default function Labels() {
     getUserRights();
   }, []);
   const [patient, setPatient] = useState(null);
-  useEffect(async () => {
-    if (!idPatient) return;
-    const { data } = await backend.get(`patients/${idPatient}`);
-    setPatient(data);
-    goPrint();
+  useEffect(() => {
+    async function fetchPatient() {
+      if (!idPatient) return;
+      const { data } = await backend.get(`patients/${idPatient}`);
+      setPatient(data);
+      goPrint();
+    }
+    fetchPatient();
   }, [idPatient]);
 
   return (

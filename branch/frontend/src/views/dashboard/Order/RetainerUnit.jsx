@@ -6,7 +6,7 @@ import React from "react";
 import { Controller } from "react-hook-form";
 import { TextField } from "@mui/material";
 import styles, { textFieldSx, mainColor } from "@inplan/common/Form/styles";
-import NumberFormat from "react-number-format";
+import { NumericFormat } from "react-number-format";
 import { useTranslation } from "react-i18next";
 
 // Validation Order Aligner
@@ -21,7 +21,13 @@ const localStyles = {
   },
 };
 
-const RetainerUnit = ({ control, top, dual, getValues, maxAndminAligners }) => {
+export default function RetainerUnit({
+  control,
+  top,
+  dual,
+  getValues,
+  maxAndminAligners,
+}) {
   const { t: translation } = useTranslation();
   const withValueLimit = (value, isStart) => {
     // FIXME: the on-the-fly validation for number is not suitable
@@ -41,7 +47,7 @@ const RetainerUnit = ({ control, top, dual, getValues, maxAndminAligners }) => {
     if (value !== Math.floor(value)) return false;
     const min = Math.max(
       isStart ? 0 : startmin,
-      maxAndminAligners[top ? "topMin" : "botMin"]
+      maxAndminAligners[top ? "topMin" : "botMin"],
     );
     const max = maxAndminAligners[top ? "topMax" : "botMax"];
 
@@ -55,7 +61,7 @@ const RetainerUnit = ({ control, top, dual, getValues, maxAndminAligners }) => {
     <div style={{ display: "flex", alignItems: "center" }}>
       <div style={localStyles.label}>
         {translation(
-          "dashboard.orders.form.fields.retainers_detail.rank_in_setup"
+          "dashboard.orders.form.fields.retainers_detail.rank_in_setup",
         )}
       </div>
       <div>
@@ -64,7 +70,7 @@ const RetainerUnit = ({ control, top, dual, getValues, maxAndminAligners }) => {
           control={control}
           render={({ field }) => (
             <div style={styles.fieldSmall}>
-              <NumberFormat
+              <NumericFormat
                 customInput={TextField}
                 {...field}
                 isAllowed={(e) => withValueLimit(e.floatValue, true)}
@@ -85,13 +91,13 @@ const RetainerUnit = ({ control, top, dual, getValues, maxAndminAligners }) => {
                 label={
                   dual && top
                     ? `${translation(
-                        "dashboard.orders.form.fields.retainers_detail.upper_rank"
+                        "dashboard.orders.form.fields.retainers_detail.upper_rank",
                       )}`
                     : dual
-                    ? `${translation(
-                        "dashboard.orders.form.fields.retainers_detail.lower_rank"
-                      )}`
-                    : "Rank"
+                      ? `${translation(
+                          "dashboard.orders.form.fields.retainers_detail.lower_rank",
+                        )}`
+                      : "Rank"
                 }
                 variant="outlined"
                 sx={textFieldSx}
@@ -112,7 +118,7 @@ const RetainerUnit = ({ control, top, dual, getValues, maxAndminAligners }) => {
           control={control}
           render={({ field }) => (
             <div style={styles.fieldSmall}>
-              <NumberFormat
+              <NumericFormat
                 customInput={TextField}
                 {...field}
                 isAllowed={(e) => withValueLimit(e.floatValue, false)}
@@ -129,13 +135,13 @@ const RetainerUnit = ({ control, top, dual, getValues, maxAndminAligners }) => {
                 label={
                   dual && top
                     ? `${translation(
-                        "dashboard.orders.form.fields.retainers_detail.quantity_upper"
+                        "dashboard.orders.form.fields.retainers_detail.quantity_upper",
                       )}`
                     : dual
-                    ? `${translation(
-                        "dashboard.orders.form.fields.retainers_detail.quantity_lower"
-                      )}`
-                    : "Quantity"
+                      ? `${translation(
+                          "dashboard.orders.form.fields.retainers_detail.quantity_lower",
+                        )}`
+                      : "Quantity"
                 }
                 variant="outlined"
                 sx={textFieldSx}
@@ -149,6 +155,4 @@ const RetainerUnit = ({ control, top, dual, getValues, maxAndminAligners }) => {
       </div>
     </div>
   );
-};
-
-export default RetainerUnit;
+}

@@ -8,9 +8,12 @@ const Licenses = () => {
   const { t: translation } = useTranslation();
   const [userLicenses, setUserLicenses] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
-  useEffect(async () => {
-    const { data } = await backend.get("/user_licenses/get_user_licenses");
-    setUserLicenses(data);
+  useEffect(() => {
+    async function fetchLicenses() {
+      const { data } = await backend.get("/user_licenses/get_user_licenses");
+      setUserLicenses(data);
+    }
+    fetchLicenses();
   }, []);
 
   const columns = getLicenseColumns(translation);

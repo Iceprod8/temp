@@ -14,9 +14,7 @@ function CardModelBodyLine({ model }) {
     <div className="badge-little-waiting">
       <CustomTranslation text="dashboard.cutlines.card_model.no_line" />
     </div>
-  ) : model.base && model.is_validated ? (
-    <></>
-  ) : model.is_validated ? (
+  ) : model.base && model.is_validated ? null : model.is_validated ? (
     <div className="badge-little-success" data-test="badge-ok">
       <CustomTranslation text="dashboard.cutlines.card_model.line_validated" />
     </div>
@@ -44,11 +42,9 @@ function CardModelBodyModel({ model }) {
       </div>
     </>
   ) : model.base && model.is_validated ? (
-    <>
-      <div className="infoPopAligner badge-little-success" data-test="badge-ok">
-        <CustomTranslation text="dashboard.cutlines.card_model.ready_for_printing" />
-      </div>
-    </>
+    <div className="infoPopAligner badge-little-success" data-test="badge-ok">
+      <CustomTranslation text="dashboard.cutlines.card_model.ready_for_printing" />
+    </div>
   ) : model.is_base_on_process ? (
     <div className="infoPopAligner badge-little-waiting flex alignItems-center">
       <CircularProgress />
@@ -93,12 +89,10 @@ export function CardModelBodyExport({ model }) {
   );
 }
 
-export function CardBodyProgressAndEdit({ model, setModal, setCurrentModel }) {
+export function CardBodyProgressAndEdit({ model }) {
   return (
-    <>
-      <div>
-        <CardModelBodyEdit model={model} />
-      </div>
-    </>
+    <div>
+      <CardModelBodyEdit model={model} />
+    </div>
   );
 }

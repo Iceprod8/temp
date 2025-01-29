@@ -43,7 +43,7 @@ class TransformControls extends Object3D {
 
     if (domElement === undefined) {
       console.warn(
-        'THREE.TransformControls: The second parameter "domElement" is now mandatory.'
+        'THREE.TransformControls: The second parameter "domElement" is now mandatory.',
       );
       domElement = document;
     }
@@ -167,20 +167,20 @@ class TransformControls extends Object3D {
 
       if (this.object.parent === null) {
         console.error(
-          "TransformControls: The attached 3D object must be a part of the scene graph."
+          "TransformControls: The attached 3D object must be a part of the scene graph.",
         );
       } else {
         this.object.parent.matrixWorld.decompose(
           this._parentPosition,
           this._parentQuaternion,
-          this._parentScale
+          this._parentScale,
         );
       }
 
       this.object.matrixWorld.decompose(
         this.worldPosition,
         this.worldQuaternion,
-        this._worldScale
+        this._worldScale,
       );
 
       this._parentQuaternionInv.copy(this._parentQuaternion).invert();
@@ -191,7 +191,7 @@ class TransformControls extends Object3D {
     this.camera.matrixWorld.decompose(
       this.cameraPosition,
       this.cameraQuaternion,
-      this._cameraScale
+      this._cameraScale,
     );
 
     this.eye.copy(this.cameraPosition).sub(this.worldPosition).normalize();
@@ -206,7 +206,7 @@ class TransformControls extends Object3D {
 
     const intersect = intersectObjectWithRay(
       this._gizmo.picker[this.mode],
-      _raycaster
+      _raycaster,
     );
     this.axis = "XYZ";
   }
@@ -224,7 +224,7 @@ class TransformControls extends Object3D {
     const planeIntersect = intersectObjectWithRay(
       this._plane,
       _raycaster,
-      true
+      true,
     );
 
     if (planeIntersect) {
@@ -238,7 +238,7 @@ class TransformControls extends Object3D {
       this.object.matrixWorld.decompose(
         this.worldPositionStart,
         this.worldQuaternionStart,
-        this._worldScaleStart
+        this._worldScaleStart,
       );
 
       this.pointStart.copy(planeIntersect.point).sub(this.worldPositionStart);
@@ -272,7 +272,7 @@ class TransformControls extends Object3D {
     const planeIntersect = intersectObjectWithRay(
       this._plane,
       _raycaster,
-      true
+      true,
     );
 
     if (!planeIntersect) return;
@@ -309,7 +309,7 @@ class TransformControls extends Object3D {
       if (this.translationSnap) {
         if (space === "local") {
           object.position.applyQuaternion(
-            _tempQuaternion.copy(this._quaternionStart).invert()
+            _tempQuaternion.copy(this._quaternionStart).invert(),
           );
 
           if (axis.search("X") !== -1) {
@@ -336,7 +336,7 @@ class TransformControls extends Object3D {
         if (space === "world") {
           if (object.parent) {
             object.position.add(
-              _tempVector.setFromMatrixPosition(object.parent.matrixWorld)
+              _tempVector.setFromMatrixPosition(object.parent.matrixWorld),
             );
           }
 
@@ -360,7 +360,7 @@ class TransformControls extends Object3D {
 
           if (object.parent) {
             object.position.sub(
-              _tempVector.setFromMatrixPosition(object.parent.matrixWorld)
+              _tempVector.setFromMatrixPosition(object.parent.matrixWorld),
             );
           }
         }
@@ -447,7 +447,7 @@ class TransformControls extends Object3D {
 
   update() {
     console.warn(
-      "THREE.TransformControls: update function has no more functionality and therefore has been deprecated."
+      "THREE.TransformControls: update function has no more functionality and therefore has been deprecated.",
     );
   }
 }
@@ -622,7 +622,7 @@ class TransformControlsGizmo extends Object3D {
     const lineGeometry = new BufferGeometry();
     lineGeometry.setAttribute(
       "position",
-      new Float32BufferAttribute([0, 0, 0, 1, 0, 0], 3)
+      new Float32BufferAttribute([0, 0, 0, 1, 0, 0], 3),
     );
 
     const lineGeometry2 = new CylinderGeometry(0.0075, 0.0075, 0.5, 3);
@@ -634,7 +634,7 @@ class TransformControlsGizmo extends Object3D {
         0.0075,
         3,
         64,
-        arc * Math.PI * 2
+        arc * Math.PI * 2,
       );
       geometry.rotateY(Math.PI / 2);
       geometry.rotateX(Math.PI / 2);
@@ -648,7 +648,7 @@ class TransformControlsGizmo extends Object3D {
 
       geometry.setAttribute(
         "position",
-        new Float32BufferAttribute([0, 0, 0, 1, 1, 1], 3)
+        new Float32BufferAttribute([0, 0, 0, 1, 1, 1], 3),
       );
 
       return geometry;
@@ -661,7 +661,7 @@ class TransformControlsGizmo extends Object3D {
         [
           new Mesh(
             new OctahedronGeometry(0.02, 0),
-            matWhiteTransparent.clone()
+            matWhiteTransparent.clone(),
           ),
           [0, 0, 0],
         ],
@@ -828,7 +828,7 @@ class TransformControlsGizmo extends Object3D {
           Math.min(
             (1.9 * Math.tan((Math.PI * this.camera.fov) / 360)) /
               this.camera.zoom,
-            7
+            7,
           );
       }
 
@@ -852,7 +852,7 @@ class TransformControlsGizmo extends Object3D {
                 _alignVector
                   .copy(_unitX)
                   .applyQuaternion(quaternion)
-                  .dot(this.eye)
+                  .dot(this.eye),
               ) > 0.9
             ) {
               handle.visible = false;
@@ -868,7 +868,7 @@ class TransformControlsGizmo extends Object3D {
                 _alignVector
                   .copy(_unitY)
                   .applyQuaternion(quaternion)
-                  .dot(this.eye)
+                  .dot(this.eye),
               ) > 0.9
             ) {
               handle.visible = false;
@@ -884,7 +884,7 @@ class TransformControlsGizmo extends Object3D {
                 _alignVector
                   .copy(_unitZ)
                   .applyQuaternion(quaternion)
-                  .dot(this.eye)
+                  .dot(this.eye),
               ) > 0.9
             ) {
               handle.visible = false;
@@ -895,7 +895,7 @@ class TransformControlsGizmo extends Object3D {
             _tempQuaternion.setFromEuler(_tempEuler.set(0, Math.PI / 2, 0));
             _alignVector.copy(this.rotationAxis);
             handle.quaternion.setFromRotationMatrix(
-              _lookAtMatrix.lookAt(_zeroVector, _alignVector, _unitY)
+              _lookAtMatrix.lookAt(_zeroVector, _alignVector, _unitY),
             );
             handle.quaternion.multiply(_tempQuaternion);
             handle.visible = this.dragging;
@@ -919,7 +919,7 @@ class TransformControlsGizmo extends Object3D {
             .sub(this.worldPosition)
             .multiplyScalar(-1);
           _tempVector.applyQuaternion(
-            this.worldQuaternionStart.clone().invert()
+            this.worldQuaternionStart.clone().invert(),
           );
           handle.scale.copy(_tempVector);
           handle.visible = this.dragging;
@@ -957,7 +957,7 @@ class TransformControlsGizmo extends Object3D {
               _alignVector
                 .copy(_unitX)
                 .applyQuaternion(quaternion)
-                .dot(this.eye)
+                .dot(this.eye),
             ) > AXIS_HIDE_TRESHOLD
           ) {
             handle.scale.set(1e-10, 1e-10, 1e-10);
@@ -971,7 +971,7 @@ class TransformControlsGizmo extends Object3D {
               _alignVector
                 .copy(_unitY)
                 .applyQuaternion(quaternion)
-                .dot(this.eye)
+                .dot(this.eye),
             ) > AXIS_HIDE_TRESHOLD
           ) {
             handle.scale.set(1e-10, 1e-10, 1e-10);
@@ -985,7 +985,7 @@ class TransformControlsGizmo extends Object3D {
               _alignVector
                 .copy(_unitZ)
                 .applyQuaternion(quaternion)
-                .dot(this.eye)
+                .dot(this.eye),
             ) > AXIS_HIDE_TRESHOLD
           ) {
             handle.scale.set(1e-10, 1e-10, 1e-10);
@@ -999,7 +999,7 @@ class TransformControlsGizmo extends Object3D {
               _alignVector
                 .copy(_unitZ)
                 .applyQuaternion(quaternion)
-                .dot(this.eye)
+                .dot(this.eye),
             ) < PLANE_HIDE_TRESHOLD
           ) {
             handle.scale.set(1e-10, 1e-10, 1e-10);
@@ -1013,7 +1013,7 @@ class TransformControlsGizmo extends Object3D {
               _alignVector
                 .copy(_unitX)
                 .applyQuaternion(quaternion)
-                .dot(this.eye)
+                .dot(this.eye),
             ) < PLANE_HIDE_TRESHOLD
           ) {
             handle.scale.set(1e-10, 1e-10, 1e-10);
@@ -1027,7 +1027,7 @@ class TransformControlsGizmo extends Object3D {
               _alignVector
                 .copy(_unitY)
                 .applyQuaternion(quaternion)
-                .dot(this.eye)
+                .dot(this.eye),
             ) < PLANE_HIDE_TRESHOLD
           ) {
             handle.scale.set(1e-10, 1e-10, 1e-10);
@@ -1092,7 +1092,7 @@ class TransformControlsPlane extends Mesh {
         transparent: true,
         opacity: 0.1,
         toneMapped: false,
-      })
+      }),
     );
 
     this.type = "TransformControlsPlane";
@@ -1108,17 +1108,17 @@ class TransformControlsPlane extends Mesh {
     _v1
       .copy(_unitX)
       .applyQuaternion(
-        space === "local" ? this.worldQuaternion : _identityQuaternion
+        space === "local" ? this.worldQuaternion : _identityQuaternion,
       );
     _v2
       .copy(_unitY)
       .applyQuaternion(
-        space === "local" ? this.worldQuaternion : _identityQuaternion
+        space === "local" ? this.worldQuaternion : _identityQuaternion,
       );
     _v3
       .copy(_unitZ)
       .applyQuaternion(
-        space === "local" ? this.worldQuaternion : _identityQuaternion
+        space === "local" ? this.worldQuaternion : _identityQuaternion,
       );
 
     // Align the plane for current transform mode, axis and space.

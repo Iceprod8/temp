@@ -64,8 +64,8 @@ const SheetParameters = ({ idValuesSheets, setIdValuesSheets }) => {
     setIdValuesSheets(initUsedSheets);
   };
 
-  useEffect(async () => {
-    await getSheetList();
+  useEffect(() => {
+    getSheetList();
   }, []);
 
   return (
@@ -73,7 +73,7 @@ const SheetParameters = ({ idValuesSheets, setIdValuesSheets }) => {
       <div className="page-head__title">
         <h2 className="h2">
           {translation(
-            "navbar.profile.parameters.order_template.settings.sheets.title"
+            "navbar.profile.parameters.order_template.settings.sheets.title",
           )}
         </h2>
       </div>
@@ -84,7 +84,7 @@ const SheetParameters = ({ idValuesSheets, setIdValuesSheets }) => {
         <HiCube /> :
         <div style={{ marginLeft: "10px" }}>
           {translation(
-            "navbar.profile.parameters.order_template.settings.sheets.legend"
+            "navbar.profile.parameters.order_template.settings.sheets.legend",
           )}
         </div>
       </div>
@@ -113,7 +113,7 @@ const SheetParameters = ({ idValuesSheets, setIdValuesSheets }) => {
         <div className="page-head__title">
           <h2 className="h2">
             {translation(
-              "navbar.profile.parameters.order_template.settings.sheets.default_sheet"
+              "navbar.profile.parameters.order_template.settings.sheets.default_sheet",
             )}
           </h2>
         </div>
@@ -151,7 +151,7 @@ const SheetParameters = ({ idValuesSheets, setIdValuesSheets }) => {
                 }}
               >
                 {translation(
-                  "navbar.profile.parameters.order_template.settings.sheets.warning_default_sheet"
+                  "navbar.profile.parameters.order_template.settings.sheets.warning_default_sheet",
                 )}
               </div>
             )}

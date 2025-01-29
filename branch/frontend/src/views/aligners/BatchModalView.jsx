@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import DownloadLink from "react-download-link";
 import { useTranslation } from "react-i18next";
 
-import { DataGridPro, useGridApiContext } from "@mui/x-data-grid-pro";
+import { DataGrid } from "@mui/x-data-grid";
 import Select from "@mui/material/Select";
 
 import { AiOutlineDownload } from "react-icons/ai";
@@ -40,19 +40,32 @@ function addDefaultSheet(aligners_in, availableSheetList) {
   return aligners_out;
 }
 
+function SheetSelection({ id, value, field, options, apiRef, fetchBatches }) {
+  const handleChange = async (event) => {
+    if (id !== 0) {
+      await backend.patch(`ordered_aligners/${id}`, {
+        sheet: event.target.value,
+      });
+    }
+    await fetchBatches();
+    apiRef.current.stopCellEditMode({ id, field });
+  };
+
+  return (
+    <Select value={value} onChange={handleChange} size="small" native autoFocus>
+      {options.map((option) => (
+        <option key={option.value} value={option.value}>
+          {option.label}
+        </option>
+      ))}
+    </Select>
+  );
+}
+
 export default function BatchModalView() {
   const { getUserRights } = useAppContext();
-  const {
-    setModal,
-    selectedBatch,
-    updateBatch,
-    fetchBatches,
-    deleteBatch,
-    unselectBatch,
-    sheets,
-  } = useBatchContext();
+  const { setModal, selectedBatch, fetchBatches, sheets } = useBatchContext();
   const { t: translation } = useTranslation();
-  // FIXME: loading
   const [loading, setLoading] = useState(false);
   const [alignerList, setAlignerList] = useState([]);
 
@@ -62,7 +75,7 @@ export default function BatchModalView() {
     if (selectedBatch && selectedBatch.aligners) {
       const newAlignerList = addDefaultSheet(
         selectedBatch.aligners,
-        availableSheetList
+        availableSheetList,
       );
       setAlignerList(newAlignerList);
     }
@@ -75,61 +88,10 @@ export default function BatchModalView() {
   const batchName =
     selectedBatch && selectedBatch.name ? selectedBatch.name : "Batch";
 
-  // start of code related to sheet matrial change
-  const sheetOptions = sheets.map((sheet) => ({
-    label: sheet.name,
-    value: sheet.id,
-  }));
-
-  function SheetSelection(props) {
-    const { id, value, field, row } = props;
-    const apiRef = useGridApiContext();
-
-    const handleChange = async (event) => {
-      if (id !== 0) {
-        await backend.patch(`ordered_aligners/${id}`, {
-          sheet: event.target.value,
-        });
-      }
-      await fetchBatches();
-
-      apiRef.current.stopCellEditMode({ id, field });
-    };
-
-    return (
-      <Select
-        value={value}
-        onChange={handleChange}
-        size="small"
-        sx={{ height: 1 }}
-        native
-        autoFocus
-      >
-        {sheetOptions.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </Select>
-    );
-  }
-
   const renderSheetSelection = (params) => <SheetSelection {...params} />;
 
-  // end of code related to sheet matrial change
-
-  // Delete one aligner from a batch
   const handleDelete = async (removedAligner) => {
     setLoading(true);
-
-    // const remainingAligners = selectedBatch.aligners.filter(
-    //   (aligner) => aligner.id !== removedAligner.id
-    // );
-    // if (remainingAligners.length === 0) {
-    //   unselectBatch();
-    //   setModal("");
-    // }
-
     const aligner_list = [removedAligner?.id];
     await backend.post(`cutter_batches/${selectedBatch.id}/remove_aligners`, {
       aligners: aligner_list,
@@ -146,7 +108,7 @@ export default function BatchModalView() {
   const goToRelatedOrder = async (aligner) => {
     try {
       const response = await backend.get(
-        `ordered_aligners/${aligner.id}/get_order_id`
+        `ordered_aligners/${aligner.id}/get_order_id`,
       );
       const { order_id } = response.data;
       window.location.href = `orderedit/${order_id}`;
@@ -158,7 +120,7 @@ export default function BatchModalView() {
   const sendToBagLabel = async (aligner) => {
     try {
       const response = await backend.get(
-        `ordered_aligners/${aligner.id}/get_order_id`
+        `ordered_aligners/${aligner.id}/get_order_id`,
       );
       const { order_id } = response.data;
       window.open(`/labels1/${order_id}`, "_blank");
@@ -177,26 +139,26 @@ export default function BatchModalView() {
       <div>
         <h4 className="h4">
           {translation(
-            "cutting.table_pending_cutting_batches.batch_modal_view.name"
+            "cutting.table_pending_cutting_batches.batch_modal_view.name",
           )}
         </h4>
       </div>
       <div className="grid">
-        <DataGridPro
+        <DataGrid
           experimentalFeatures={{ newEditingApi: true }}
           rows={alignerList}
           columns={[
             {
               field: "short_code",
               headerName: translation(
-                "cutting.table_pending_cutting_batches.batch_modal_view.table.titles.aligner"
+                "cutting.table_pending_cutting_batches.batch_modal_view.table.titles.aligner",
               ),
               flex: 2,
             },
             {
               field: "sheet",
               headerName: translation(
-                "cutting.table_pending_cutting_batches.batch_modal_view.table.titles.sheet"
+                "cutting.table_pending_cutting_batches.batch_modal_view.table.titles.sheet",
               ),
               flex: 2,
               renderCell: renderSheetSelection,
@@ -206,79 +168,73 @@ export default function BatchModalView() {
             {
               field: "Remove",
               headerName: translation(
-                "cutting.table_pending_cutting_batches.batch_modal_view.table.titles.remove"
+                "cutting.table_pending_cutting_batches.batch_modal_view.table.titles.remove",
               ),
               sortable: false,
               filterable: false,
               disableColumnMenu: true,
               flex: 0.7,
               renderCell: (params) => (
-                <>
-                  <div
-                    className="btn-rounded-danger"
-                    onClick={() => handleDelete(params.row)}
-                  >
-                    <MdOutlineRemoveCircleOutline
-                      name="delete"
-                      className="icon icon-delete"
-                      size={20}
-                      style={{
-                        fill: "currentColor",
-                      }}
-                    />
-                  </div>
-                </>
+                <div
+                  className="btn-rounded-danger"
+                  onClick={() => handleDelete(params.row)}
+                >
+                  <MdOutlineRemoveCircleOutline
+                    name="delete"
+                    className="icon icon-delete"
+                    size={20}
+                    style={{
+                      fill: "currentColor",
+                    }}
+                  />
+                </div>
               ),
             },
             {
               field: "Order",
               headerName: translation(
-                "cutting.table_pending_cutting_batches.batch_modal_view.table.titles.order"
+                "cutting.table_pending_cutting_batches.batch_modal_view.table.titles.order",
               ),
               sortable: false,
               filterable: false,
               disableColumnMenu: true,
               flex: 0.7,
               renderCell: (params) => (
-                <>
-                  <div
-                    onClick={() => goToRelatedOrder(params.row)}
-                    className="btn-rounded-tertiary"
-                  >
-                    <BsCart4
-                      name="related-order"
-                      className="icon icon-delete"
-                      size={20}
-                      style={{
-                        fill: "currentColor",
-                      }}
-                    />
-                  </div>
-                </>
+                <div
+                  onClick={() => goToRelatedOrder(params.row)}
+                  className="btn-rounded-tertiary"
+                >
+                  <BsCart4
+                    name="related-order"
+                    className="icon icon-delete"
+                    size={20}
+                    style={{
+                      fill: "currentColor",
+                    }}
+                  />
+                </div>
               ),
             },
             {
               field: "Labels",
               headerName: translation(
-                "cutting.table_pending_cutting_batches.batch_modal_view.table.titles.labels"
+                "cutting.table_pending_cutting_batches.batch_modal_view.table.titles.labels",
               ),
               sortable: false,
               filterable: false,
               disableColumnMenu: true,
               flex: 0.7,
               renderCell: (params) => (
-                <>
-                  <div
-                    onClick={() => sendToBagLabel(params.row)}
-                    className="btn-rounded-tertiary"
-                  >
-                    <TbPaperBag
-                      name="related-order"
-                      className="icon icon-delete"
-                      size={20}
-                    />
-                  </div>
-                </>
+                <div
+                  onClick={() => sendToBagLabel(params.row)}
+                  className="btn-rounded-tertiary"
+                >
+                  <TbPaperBag
+                    name="related-order"
+                    className="icon icon-delete"
+                    size={20}
+                  />
+                </div>
               ),
             },
           ]}
@@ -307,7 +263,7 @@ export default function BatchModalView() {
             setLoading(true);
             const { data } = await backend.get(
               `cutter_batches/${selectedBatch.id}/export`,
-              { responseType: "arraybuffer" }
+              { responseType: "arraybuffer" },
             );
             setLoading(false);
             return data;

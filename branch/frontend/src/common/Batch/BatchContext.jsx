@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  useMemo,
+} from "react";
 import { useTranslation } from "react-i18next";
 import { backend } from "@inplan/adapters/apiCalls";
 import useToggle from "@inplan/common/useToogle";
@@ -83,7 +89,7 @@ export function BatchContextProvider({
     const orderList = Object.values(ordersResults);
     // ascending order by creation_time
     orderList?.sort(
-      (a, b) => new Date(a.creation_time) - new Date(b.creation_time)
+      (a, b) => new Date(a.creation_time) - new Date(b.creation_time),
     );
     // ascending order by deadline, and deadline == null at the end
     orderList?.sort((a, b) => {
@@ -95,10 +101,6 @@ export function BatchContextProvider({
     });
     setBatchViewOrders(orderList);
   };
-
-  // useEffect(() => {
-  //   fetchBatchViewOrders();
-  // }, []);
 
   useEffect(() => {
     fetchBatches();
@@ -120,7 +122,7 @@ export function BatchContextProvider({
         {
           id: "0",
           name: capitalizeFirstLetter(
-            translation("utilities.variables.undefined")
+            translation("utilities.variables.undefined"),
           ),
           provider: "Undefined",
           thickness: 0,
@@ -134,7 +136,7 @@ export function BatchContextProvider({
         {
           id: "0",
           name: capitalizeFirstLetter(
-            translation("utilities.variables.undefined")
+            translation("utilities.variables.undefined"),
           ),
           provider: "Undefined",
           thickness: 0,
@@ -148,38 +150,54 @@ export function BatchContextProvider({
     })();
   }, []);
 
+  const contextValue = useMemo(
+    () => ({
+      modal,
+      setModal,
+      allSelected,
+      setAllSelected,
+      selected,
+      setSelected,
+      cart,
+      setCart,
+      batchViewOrders,
+      batches,
+      selectedBatch,
+      fetchBatches,
+      fetchBatch,
+      createBatch,
+      updateBatch,
+      deleteBatch,
+      unselectBatch,
+      loading,
+      setLoading,
+      sheets,
+      sheetDict,
+      maxBatchSize,
+    }),
+    [
+      modal,
+      allSelected,
+      selected,
+      cart,
+      batchViewOrders,
+      batches,
+      selectedBatch,
+      fetchBatches,
+      fetchBatch,
+      createBatch,
+      updateBatch,
+      deleteBatch,
+      unselectBatch,
+      loading,
+      sheets,
+      sheetDict,
+      maxBatchSize,
+    ],
+  );
+
   return (
-    <BatchContext.Provider
-      value={{
-        modal,
-        setModal,
-        allSelected,
-        setAllSelected,
-        selected,
-        setSelected,
-        cart,
-        setCart,
-
-        batchViewOrders,
-
-        batches,
-        selectedBatch,
-        fetchBatches,
-        fetchBatch,
-        createBatch,
-        updateBatch,
-        deleteBatch,
-        unselectBatch,
-
-        loading,
-        setLoading,
-
-        sheets,
-        sheetDict,
-
-        maxBatchSize,
-      }}
-    >
+    <BatchContext.Provider value={contextValue}>
       {children}
     </BatchContext.Provider>
   );

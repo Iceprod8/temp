@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { DataGridPro, GridToolbar } from "@mui/x-data-grid-pro";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { useTranslation } from "react-i18next";
 import { capitalizeFirstLetter } from "@inplan/adapters/functions";
 
@@ -52,7 +52,7 @@ const columns = () => {
   ];
 };
 
-const OrdersInProgress = ({ exclude }) => {
+function OrdersInProgress({ exclude }) {
   const { t: translation } = useTranslation();
   const { orders, loading, updateOrder, fetchPatientOrders } =
     useDashboardContext();
@@ -129,7 +129,7 @@ const OrdersInProgress = ({ exclude }) => {
       {
         id: "0",
         appellation: capitalizeFirstLetter(
-          translation("utilities.variables.unspecified")
+          translation("utilities.variables.unspecified"),
         ),
       },
     ].concat(res);
@@ -149,7 +149,7 @@ const OrdersInProgress = ({ exclude }) => {
       {
         id: "0",
         name: capitalizeFirstLetter(
-          translation("utilities.producerTypeOptions.locally")
+          translation("utilities.producerTypeOptions.locally"),
         ),
       },
     ].concat(res);
@@ -256,10 +256,10 @@ const OrdersInProgress = ({ exclude }) => {
     <div className="dashboard-table-container">
       <SectionHeader type="orders" />
 
-      <DataGridPro
+      {/* <DataGrid
         // columns={columns()}
         columns={columns(translation).filter(
-          (c) => !exclude?.includes(c.field)
+          (c) => !exclude?.includes(c.field),
         )}
         rows={completedOrders}
         rowCount={completedOrders.length}
@@ -280,7 +280,7 @@ const OrdersInProgress = ({ exclude }) => {
           cell: { "data-test": "cell-lab" },
           pagination: {
             labelRowsPerPage: `${translation(
-              "utilities.DataGridPro.pagination.labelRowsPerPage"
+              "utilities.DataGridPro.pagination.labelRowsPerPage",
             )}:`,
             labelDisplayedRows: ({ from, to, count }) =>
               `${translation(
@@ -289,7 +289,7 @@ const OrdersInProgress = ({ exclude }) => {
                   from,
                   to,
                   count,
-                }
+                },
               )}`,
           },
         }}
@@ -323,9 +323,9 @@ const OrdersInProgress = ({ exclude }) => {
           "& svg[data-value='true']": { fill: mainColor },
           width: "100%",
         }}
-      />
+      /> */}
     </div>
   );
-};
+}
 
 export default OrdersInProgress;

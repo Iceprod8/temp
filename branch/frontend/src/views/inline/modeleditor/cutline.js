@@ -10,32 +10,32 @@ class Cutline {
     this.lineMaterial = new THREE.MeshLambertMaterial({ color: 0x00ffcc });
 
     // Control points for editing are blue and big
-    this.controlPointsGeometry = new THREE.SphereBufferGeometry(0.4, 16, 16);
+    this.controlPointsGeometry = new THREE.SphereGeometry(0.4, 16, 16);
     this.controlPointsMaterial = new THREE.MeshLambertMaterial({
       color: 0x8800ff,
     });
 
     // Correct points for the cutline are green
-    this.goodCutlinePointGeometry = new THREE.SphereBufferGeometry(0.1, 16, 16);
+    this.goodCutlinePointGeometry = new THREE.SphereGeometry(0.1, 16, 16);
     this.goodCutlinePointMaterial = new THREE.MeshLambertMaterial({
       color: 0x00ff00,
     });
 
     // Notices points for the cutline are yellow - orange and medium
-    this.notiCutlinePointGeometry = new THREE.SphereBufferGeometry(0.2, 16, 16);
+    this.notiCutlinePointGeometry = new THREE.SphereGeometry(0.2, 16, 16);
     this.notiCutlinePointMaterial = new THREE.MeshLambertMaterial({
       color: 0x8888ff,
     });
 
     // Warning points for the cutline are yellow - orange and medium
-    this.warnCutlinePointGeometry = new THREE.SphereBufferGeometry(0.2, 16, 16);
+    this.warnCutlinePointGeometry = new THREE.SphereGeometry(0.2, 16, 16);
     this.warnCutlinePointMaterial = new THREE.MeshLambertMaterial({
       // color: 0xff8855,
       color: 0x4444ff,
     });
 
     // Error points for the cutline are red and medium
-    this.badCutlinePointGeometry = new THREE.SphereBufferGeometry(0.2, 16, 16);
+    this.badCutlinePointGeometry = new THREE.SphereGeometry(0.2, 16, 16);
     this.badCutlinePointMaterial = new THREE.MeshLambertMaterial({
       // color: 0xff4400,
       color: 0x0000ff,
@@ -120,31 +120,31 @@ class Cutline {
         newPoint = this.createNewPoint(
           pointPoistion,
           this.controlPointsGeometry,
-          this.controlPointsMaterial
+          this.controlPointsMaterial,
         );
       } else if (this.errorIndexes.includes(index)) {
         newPoint = this.createNewPoint(
           pointPoistion,
           this.badCutlinePointGeometry,
-          this.badCutlinePointMaterial
+          this.badCutlinePointMaterial,
         );
       } else if (this.warningIndexes.includes(index)) {
         newPoint = this.createNewPoint(
           pointPoistion,
           this.warnCutlinePointGeometry,
-          this.warnCutlinePointMaterial
+          this.warnCutlinePointMaterial,
         );
       } else if (this.noticeIndexes.includes(index)) {
         newPoint = this.createNewPoint(
           pointPoistion,
           this.notiCutlinePointGeometry,
-          this.notiCutlinePointMaterial
+          this.notiCutlinePointMaterial,
         );
       } else {
         newPoint = this.createNewPoint(
           pointPoistion,
           this.goodCutlinePointGeometry,
-          this.goodCutlinePointMaterial
+          this.goodCutlinePointMaterial,
         );
       }
       return newPoint;
@@ -160,12 +160,12 @@ class Cutline {
     /* Create the cutline mesh and load it */
     const displayCurve = new THREE.CatmullRomCurve3(localControlPoints);
 
-    const tubeGeometry = new THREE.TubeBufferGeometry(
+    const tubeGeometry = new THREE.TubeGeometry(
       displayCurve,
       this.controlPointsSize * 2,
       0.05,
       8,
-      this.closed
+      this.closed,
     );
 
     if (this.cutline) {

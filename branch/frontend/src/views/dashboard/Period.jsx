@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { NotificationManager } from "react-notifications";
-
 import BasicSelect from "@inplan/common/BasicSelect";
 import { toISODateString, daysFromDuration } from "@inplan/adapters/functions";
 import { useAppContext } from "@inplan/AppContext";
-
+import { useSnackbar } from "@inplan/contexts/SnackbarContext";
 import { useDashboardContext } from "./Context";
 
 export default function Period({
@@ -18,6 +16,7 @@ export default function Period({
 }) {
   const { t: translation } = useTranslation();
   const { practitioner } = useAppContext();
+  const showSnackbar = useSnackbar();
 
   const {
     patient,
@@ -71,7 +70,8 @@ export default function Period({
     const fmodels = models
       .filter(
         (m) =>
-          m.setup.id === selectedSetup.id && (!m.step || m.step.id === step?.id)
+          m.setup.id === selectedSetup.id &&
+          (!m.step || m.step.id === step?.id),
       )
       .map((m) => ({
         ...m,
@@ -103,7 +103,7 @@ export default function Period({
       const nbAligners = Math.max(maxRank - minRank + 1, 1);
       const dstart = new Date(start);
       const cend = new Date(
-        dstart.getTime() + wearDuration * 1000 * 60 * 60 * 24 * nbAligners
+        dstart.getTime() + wearDuration * 1000 * 60 * 60 * 24 * nbAligners,
       );
       setComputedEnd(toISODateString(cend));
     }
@@ -141,8 +141,9 @@ export default function Period({
     if (e.target.value >= 0) {
       setWearDuration(e.target.value);
     } else {
-      NotificationManager.error(
-        translation("messages.period_information.error_wear_duration")
+      showSnackbar(
+        translation("messages.period_information.error_wear_duration"),
+        "error",
       );
     }
   };
@@ -153,8 +154,9 @@ export default function Period({
       setMinRank(e.target.value);
       setMaxRank(e.target.value);
     } else {
-      NotificationManager.error(
-        translation("messages.period_information.error_min_rank")
+      showSnackbar(
+        translation("messages.period_information.error_min_rank"),
+        "error",
       );
     }
   };
@@ -169,8 +171,9 @@ export default function Period({
       setMaxRank(e.target.value);
       setEnd(null);
     } else {
-      NotificationManager.error(
-        translation("messages.period_information.error_max_rank")
+      showSnackbar(
+        translation("messages.period_information.error_max_rank"),
+        "error",
       );
     }
   };
@@ -182,7 +185,7 @@ export default function Period({
     // Sorting the filtered periods based on their max_rank property in descending order
     filteredPeriods.sort(
       (firstPeriod, secondPeriod) =>
-        secondPeriod.max_rank - firstPeriod.max_rank
+        secondPeriod.max_rank - firstPeriod.max_rank,
     );
     // Checking if there are any periods for the selected setup and
     // if the 'step' does not exist, indicating that it's creating a new period, not updating an existing one
@@ -253,7 +256,7 @@ export default function Period({
         <div className="form-group">
           <label htmlFor="wear_duration" style={{ color: labelColor }}>
             {translation(
-              "dashboard.period_information.create_form.wear_duration"
+              "dashboard.period_information.create_form.wear_duration",
             )}
           </label>
           <input

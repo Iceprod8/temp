@@ -129,73 +129,71 @@ class MaterialSettingInterface extends React.Component {
       }));
 
     return (
-      <>
-        <form onSubmit={this.handleSubmit} style={{ marginTop: "30px" }}>
-          <label style={{ fontSize: "2em" }}>
-            Réglage de puissance par matériau de plaque
-          </label>
+      <form onSubmit={this.handleSubmit} style={{ marginTop: "30px" }}>
+        <label style={{ fontSize: "2em" }}>
+          Réglage de puissance par matériau de plaque
+        </label>
 
-          <div style={{ marginTop: "15px" }}>
-            <Select
-              value={currentSheetId}
-              onChange={this.handleChangeSheet}
-              size="small"
-              sx={{ height: 1 }}
-              native
-              autoFocus
-            >
-              {sheetOptions.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </Select>
+        <div style={{ marginTop: "15px" }}>
+          <Select
+            value={currentSheetId}
+            onChange={this.handleChangeSheet}
+            size="small"
+            sx={{ height: 1 }}
+            native
+            autoFocus
+          >
+            {sheetOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </Select>
 
-            <label htmlFor="currentSheetPower"> Puissance </label>
-            <input
-              type="number"
-              name="currentSheetPower"
-              value={currentSheetPower}
-              onChange={this.handleChange}
-              min="1"
-              max="100"
-              maxLength="2"
-              style={{ width: "60px" }}
-            />
-            <label htmlFor="currentSheetDutyCycle"> - Cycle </label>
-            <input
-              type="number"
-              name="currentSheetDutyCycle"
-              value={currentSheetDutyCycle}
-              onChange={this.handleChange}
-              min="1"
-              max="100"
-              style={{ width: "60px" }}
-            />
-            <label htmlFor="currentSheetFrequency"> - Fréquence </label>
-            <input
-              type="number"
-              name="currentSheetFrequency"
-              value={currentSheetFrequency}
-              onChange={this.handleChange}
-              min="1"
-              max="2000"
-              style={{ width: "60px" }}
-            />
-          </div>
+          <label htmlFor="currentSheetPower"> Puissance </label>
+          <input
+            type="number"
+            name="currentSheetPower"
+            value={currentSheetPower}
+            onChange={this.handleChange}
+            min="1"
+            max="100"
+            maxLength="2"
+            style={{ width: "60px" }}
+          />
+          <label htmlFor="currentSheetDutyCycle"> - Cycle </label>
+          <input
+            type="number"
+            name="currentSheetDutyCycle"
+            value={currentSheetDutyCycle}
+            onChange={this.handleChange}
+            min="1"
+            max="100"
+            style={{ width: "60px" }}
+          />
+          <label htmlFor="currentSheetFrequency"> - Fréquence </label>
+          <input
+            type="number"
+            name="currentSheetFrequency"
+            value={currentSheetFrequency}
+            onChange={this.handleChange}
+            min="1"
+            max="2000"
+            style={{ width: "60px" }}
+          />
+        </div>
 
-          <div>
-            <button
-              className="btn-table-primary text-center"
-              type="button"
-              onClick={this.handleSubmit}
-              style={{ marginTop: "15px" }}
-            >
-              Sauvegarde des réglages de materiaux
-            </button>
-          </div>
-        </form>
-      </>
+        <div>
+          <button
+            className="btn-table-primary text-center"
+            type="button"
+            onClick={this.handleSubmit}
+            style={{ marginTop: "15px" }}
+          >
+            Sauvegarde des réglages de materiaux
+          </button>
+        </div>
+      </form>
     );
   }
 }

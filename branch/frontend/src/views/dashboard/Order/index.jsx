@@ -6,8 +6,6 @@ import SelectField from "@inplan/common/SelectField";
 import NotesField from "@inplan/common/NotesField";
 import styles from "@inplan/common/Form/styles";
 import DateField from "@inplan/common/DateField";
-
-import CustomTranslation from "@inplan/common/translation/CustomTranslation";
 import {
   deadlineTypeChoices,
   orderTypeChoices,
@@ -76,9 +74,9 @@ const FIELDS = {
   6 /* NO_PROCESS */: ["setup", "sheet", "aligners", "upperlower", "note"],
 };
 
-export const OrderForm = ({ control, watch, getValues }) => {
+export default function OrderForm({ control, watch, getValues }) {
   const { t: translation } = useTranslation();
-  const { userData, userRights } = useAppContext();
+  const { userRights } = useAppContext();
   const { setups, sheets, doctors, producers } = useDashboardContext();
   const [open, setOpen] = useState(false);
   const [availableSetups, setAvailableSetups] = useState([]);
@@ -113,9 +111,9 @@ export const OrderForm = ({ control, watch, getValues }) => {
             id: s.id,
             value: s.id,
             display_name: s.name,
-          }))
+          })),
       ),
-    [setups]
+    [setups],
   );
 
   let type = watch("type");
@@ -199,33 +197,29 @@ export const OrderForm = ({ control, watch, getValues }) => {
   );
 
   const pickupPart = (
-    <>
-      <SelectField
-        control={control}
-        data={{
-          name: "pickup_location",
-          label: `${translation("dashboard.orders.form.fields.pickup")}`,
-          choices: pickupLocationChoices,
-        }}
-        open={open}
-        setOpen={setOpen}
-      />
-    </>
+    <SelectField
+      control={control}
+      data={{
+        name: "pickup_location",
+        label: `${translation("dashboard.orders.form.fields.pickup")}`,
+        choices: pickupLocationChoices,
+      }}
+      open={open}
+      setOpen={setOpen}
+    />
   );
 
   const sheetPart = (
-    <>
-      <SelectField
-        control={control}
-        data={{
-          name: "sheet",
-          label: `${translation("dashboard.orders.form.fields.sheet")}`,
-          choices: sheetList,
-        }}
-        open={open}
-        setOpen={setOpen}
-      />
-    </>
+    <SelectField
+      control={control}
+      data={{
+        name: "sheet",
+        label: `${translation("dashboard.orders.form.fields.sheet")}`,
+        choices: sheetList,
+      }}
+      open={open}
+      setOpen={setOpen}
+    />
   );
 
   const deadLinePart = (
@@ -243,7 +237,7 @@ export const OrderForm = ({ control, watch, getValues }) => {
           data={{
             name: "deadline_type",
             label: `${translation(
-              "dashboard.orders.form.fields.deadline_type"
+              "dashboard.orders.form.fields.deadline_type",
             )}`,
             choices: deadlineTypeChoices,
           }}
@@ -276,42 +270,11 @@ export const OrderForm = ({ control, watch, getValues }) => {
   );
 
   return (
-    <>
-      <div
-        className="flex flex-wrap alignItems-center"
-        style={{ justifyContent: "center" }}
-      >
-        {producerList?.length > 0 && producerList[0].value !== "0" && (
-          <div>
-            <div
-              className=""
-              style={{
-                marginLeft: "5px",
-                marginRight: "5px",
-                marginTop: "7px",
-                marginBottom: "10px",
-              }}
-            >
-              {userRights?.order_creation &&
-                isVisible("producer_type") &&
-                producerTypePart}
-            </div>
-            <div
-              className=""
-              style={{
-                marginLeft: "5px",
-                marginRight: "5px",
-                marginTop: "7px",
-                marginBottom: "10px",
-              }}
-            >
-              {userRights?.order_creation &&
-                getValues("producer_type") === 1 &&
-                isVisible("producer") &&
-                producerPart}
-            </div>
-          </div>
-        )}
+    <div
+      className="flex flex-wrap alignItems-center"
+      style={{ justifyContent: "center" }}
+    >
+      {producerList?.length > 0 && producerList[0].value !== "0" && (
         <div>
           <div
             className=""
@@ -322,62 +285,9 @@ export const OrderForm = ({ control, watch, getValues }) => {
               marginBottom: "10px",
             }}
           >
-            {userRights?.order_creation && isVisible("type") && typePart}
-          </div>
-          <div
-            className=""
-            style={{
-              marginLeft: "5px",
-              marginRight: "5px",
-              marginTop: "7px",
-              marginBottom: "10px",
-            }}
-          >
-            {userRights?.order_creation && isVisible("doctor") && doctorPart}
-          </div>
-        </div>
-
-        <div>
-          <div
-            className=""
-            style={{
-              marginLeft: "5px",
-              marginRight: "5px",
-              marginTop: "7px",
-              marginBottom: "10px",
-            }}
-          >
-            {(userRights?.order_creation ||
-              userRights?.reduced_order_creation) &&
-              isVisible("setup") &&
-              setupPart}
-          </div>
-          <div
-            className=""
-            style={{
-              marginLeft: "5px",
-              marginRight: "5px",
-              marginTop: "7px",
-              marginBottom: "10px",
-            }}
-          >
-            {userRights?.order_creation && isVisible("pickup") && pickupPart}
-          </div>
-        </div>
-        <div>
-          <div
-            className=""
-            style={{
-              marginLeft: "5px",
-              marginRight: "5px",
-              marginTop: "7px",
-              marginBottom: "10px",
-            }}
-          >
-            {(userRights?.order_creation ||
-              userRights?.reduced_order_creation) &&
-              isVisible("sheet") &&
-              sheetPart}
+            {userRights?.order_creation &&
+              isVisible("producer_type") &&
+              producerTypePart}
           </div>
           <div
             className=""
@@ -389,25 +299,101 @@ export const OrderForm = ({ control, watch, getValues }) => {
             }}
           >
             {userRights?.order_creation &&
-              isVisible("deadline") &&
-              deadLinePart}
+              getValues("producer_type") === 1 &&
+              isVisible("producer") &&
+              producerPart}
           </div>
         </div>
-        {(userRights?.order_creation || userRights?.reduced_order_creation) &&
-          isVisible("aligners") && (
-            <Aligners control={control} getValues={getValues} setups={setups} />
-          )}
-        {userRights?.order_creation && isVisible("retainers") && (
-          <Retainers control={control} getValues={getValues} setups={setups} />
-        )}
-        <div>
-          {(userRights?.order_creation || userRights?.reduced_order_creation) &&
-            isVisible("note") &&
-            notePart}
+      )}
+      <div>
+        <div
+          className=""
+          style={{
+            marginLeft: "5px",
+            marginRight: "5px",
+            marginTop: "7px",
+            marginBottom: "10px",
+          }}
+        >
+          {userRights?.order_creation && isVisible("type") && typePart}
+        </div>
+        <div
+          className=""
+          style={{
+            marginLeft: "5px",
+            marginRight: "5px",
+            marginTop: "7px",
+            marginBottom: "10px",
+          }}
+        >
+          {userRights?.order_creation && isVisible("doctor") && doctorPart}
         </div>
       </div>
-    </>
-  );
-};
 
-export default OrderForm;
+      <div>
+        <div
+          className=""
+          style={{
+            marginLeft: "5px",
+            marginRight: "5px",
+            marginTop: "7px",
+            marginBottom: "10px",
+          }}
+        >
+          {(userRights?.order_creation || userRights?.reduced_order_creation) &&
+            isVisible("setup") &&
+            setupPart}
+        </div>
+        <div
+          className=""
+          style={{
+            marginLeft: "5px",
+            marginRight: "5px",
+            marginTop: "7px",
+            marginBottom: "10px",
+          }}
+        >
+          {userRights?.order_creation && isVisible("pickup") && pickupPart}
+        </div>
+      </div>
+      <div>
+        <div
+          className=""
+          style={{
+            marginLeft: "5px",
+            marginRight: "5px",
+            marginTop: "7px",
+            marginBottom: "10px",
+          }}
+        >
+          {(userRights?.order_creation || userRights?.reduced_order_creation) &&
+            isVisible("sheet") &&
+            sheetPart}
+        </div>
+        <div
+          className=""
+          style={{
+            marginLeft: "5px",
+            marginRight: "5px",
+            marginTop: "7px",
+            marginBottom: "10px",
+          }}
+        >
+          {userRights?.order_creation && isVisible("deadline") && deadLinePart}
+        </div>
+      </div>
+      {(userRights?.order_creation || userRights?.reduced_order_creation) &&
+        isVisible("aligners") && (
+          <Aligners control={control} getValues={getValues} setups={setups} />
+        )}
+      {userRights?.order_creation && isVisible("retainers") && (
+        <Retainers control={control} getValues={getValues} setups={setups} />
+      )}
+      <div>
+        {(userRights?.order_creation || userRights?.reduced_order_creation) &&
+          isVisible("note") &&
+          notePart}
+      </div>
+    </div>
+  );
+}

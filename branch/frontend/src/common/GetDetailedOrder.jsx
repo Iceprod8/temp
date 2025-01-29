@@ -66,7 +66,7 @@ const completeOrder = (
   sheetDict,
   doctorDict,
   officeName,
-  lastNote
+  lastNote,
 ) => {
   // If sheets or doctors are not updated, wait
   const newOrder = orderInput;
@@ -121,7 +121,7 @@ export default async function getDetailedOrder(order, translation) {
     sheetDict,
     doctorDict,
     officeName,
-    lastNote
+    lastNote,
   );
 
   detailedOrder.hasAlignerTop =

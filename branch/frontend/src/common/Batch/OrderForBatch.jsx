@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { NotificationManager } from "react-notifications";
 import clsx from "clsx";
-
 import { HiMinus, HiPlus } from "react-icons/hi";
 import { BsCart4 } from "react-icons/bs";
-
 import { useAppContext } from "@inplan/AppContext";
 import { useBatchContext } from "@inplan/common/Batch/BatchContext";
-
 import { backend } from "@inplan/adapters/apiCalls";
+import { useSnackbar } from "@inplan/contexts/SnackbarContext";
 
 // One line in the space to prepare batch from orders
 // Describe the order, the remaining aligners to be batched, the aligners about to be added to a batch
@@ -23,6 +20,7 @@ export default function OrderForBatch({
   maxInBatch = 1000,
 }) {
   const { t: translation } = useTranslation();
+  const showSnackbar = useSnackbar();
   const { userData, userRights } = useAppContext();
   const { cart, setCart, fetchBatches } = useBatchContext();
   const [localCart, setLocalCart] = useState([]);
@@ -61,13 +59,14 @@ export default function OrderForBatch({
     const listOfIds = aligners.map((aligner) => aligner.id);
     const { data: res } = await backend.post(
       "cutter_batches/create_all_trays",
-      listOfIds
+      listOfIds,
     );
     if (res?.message) {
-      NotificationManager.error(
+      showSnackbar(
         translation(`messages.cutlines.${res?.message}`, {
           remainder: `${res?.remainder}`,
-        })
+        }),
+        "error",
       );
     }
     fetchBatches();
@@ -99,7 +98,7 @@ export default function OrderForBatch({
             >
               {/* All in InLase trays */}
               {translation(
-                "3d_printing.table_pending_models.columns.actions.buttons.allInTray"
+                "3d_printing.table_pending_models.columns.actions.buttons.allInTray",
               )}
             </button>
           )}
@@ -118,12 +117,12 @@ export default function OrderForBatch({
               {
                 filteredItemsLength: filteredItems.length,
                 subject: translation(`utilities.variables.${subject}`),
-              }
+              },
             )}
           </button>
           <button
             className={clsx(
-              localCart.length > 0 ? "btn-table-primary" : "btn-table-muted"
+              localCart.length > 0 ? "btn-table-primary" : "btn-table-muted",
             )}
             type="button"
             onClick={() => {
@@ -137,7 +136,7 @@ export default function OrderForBatch({
           </button>
           <button
             className={clsx(
-              remain > 0 ? "btn-table-primary" : "btn-table-muted"
+              remain > 0 ? "btn-table-primary" : "btn-table-muted",
             )}
             type="button"
             onClick={() => {

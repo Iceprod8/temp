@@ -338,7 +338,8 @@
   align-items: center;
 }
 
-.dashboard-toolbar__left, .dashboard-toolbar__right {
+.dashboard-toolbar__left,
+.dashboard-toolbar__right {
   flex: none;
 }
 
@@ -363,7 +364,6 @@
   background-color: white; /* Change background color on hover */
   color: darkblue; /* Button text color */
 }
-
 
 .dashboard-body__visualizer {
   position: relative;

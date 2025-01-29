@@ -1,23 +1,23 @@
-import { useEffect, useState } from "react";
-import { useInlineContext } from "@inplan/views/inline/InlineContext";
+import { useEffect, useRef } from "react";
+import { useInlineContext } from "@inplan/contexts/InlineContext";
 
 import useIsMounted from "./useIsMounted";
 
 export default function usePeriodTask(task, delay) {
   const { isMounted } = useIsMounted();
   const { selectedSetup } = useInlineContext();
-  const [refreshTimeId, setRefreshTimeId] = useState(null);
+  const refreshTimeId = useRef(null);
 
   const round = () => {
     if (isMounted.current && task()) {
-      setRefreshTimeId(setTimeout(round, delay));
+      refreshTimeId.current = setTimeout(round, delay);
     }
   };
 
   useEffect(() => {
-    if (refreshTimeId !== null) {
-      clearTimeout(refreshTimeId);
+    if (refreshTimeId.current !== null) {
+      clearTimeout(refreshTimeId.current);
     }
     round();
-  }, [selectedSetup]);
+  }, [selectedSetup, task]);
 }

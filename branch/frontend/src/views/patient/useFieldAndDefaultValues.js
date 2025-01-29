@@ -15,7 +15,7 @@ export default function useFieldAndDefaultValues(patientId, fields) {
       });
       if (data) {
         const flds = Object.entries(data).filter((elem) =>
-          fields.includes(elem[0])
+          fields.includes(elem[0]),
         );
         setPatient(data);
         setShowedFields(formatEntries(flds));

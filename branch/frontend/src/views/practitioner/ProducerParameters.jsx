@@ -28,8 +28,8 @@ const ProducerParameters = ({ idValuesProducers, setIdValuesProducers }) => {
     }
     setIdValuesProducers(producerSetInit);
   };
-  useEffect(async () => {
-    await getProducerList();
+  useEffect(() => {
+    getProducerList();
   }, []);
 
   return (
@@ -39,7 +39,7 @@ const ProducerParameters = ({ idValuesProducers, setIdValuesProducers }) => {
           <div className="page-head__title">
             <h2 className="h2">
               {translation(
-                "navbar.profile.parameters.order_template.settings.producers.title"
+                "navbar.profile.parameters.order_template.settings.producers.title",
               )}
             </h2>
           </div>

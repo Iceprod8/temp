@@ -39,7 +39,7 @@ function setProducerUrl(params) {
       </a>
     );
   }
-  return <>{params.value || ""}</>;
+  return { params };
 }
 
 function producerColumn(translation) {
@@ -68,7 +68,7 @@ const getOrderColumns = (translation) => {
       field: "doctor_name",
       headerName: translation("dashboard.orders.table.titles.doctor"),
       flex: 0.9,
-      valueFormatter: ({ value }) => value,
+      valueFormatter: ({ value }) => value || "", // Vérifie si la valeur existe
     },
     singleSelectColumn(
       "type",
@@ -82,22 +82,23 @@ const getOrderColumns = (translation) => {
       ],
       {
         headerName: translation("dashboard.orders.table.titles.type"),
-      }
+      },
     ),
     {
       field: "setup_name",
       headerName: translation("dashboard.orders.table.titles.setup"),
       flex: 1,
-      valueFormatter: ({ value }) => value && `${value}`,
+      valueFormatter: ({ value }) => (value ? `${value}` : ""), // Vérifie si la valeur existe
     },
-
     {
       field: "ranksDescription",
       headerName: translation("dashboard.orders.table.titles.ranks"),
       flex: 1,
       editable: false,
       sortable: false,
-      valueGetter: ({ row }) => {
+      valueGetter: (params) => {
+        const row = params?.row; // Vérifie si params et params.row existent
+        if (!row) return ""; // Retourne une chaîne vide si row est indéfini
         let result = "";
         const hasTop = row.start_aligner_top >= 0 && row.end_aligner_top >= 0;
         const hasBottom =
@@ -111,7 +112,6 @@ const getOrderColumns = (translation) => {
         if (hasBottom) {
           result += `L ${row.start_aligner_bottom}-${row.end_aligner_bottom}`;
         }
-
         return result;
       },
     },
@@ -123,16 +123,17 @@ const getOrderColumns = (translation) => {
       align: "center",
       headerAlign: "left",
       editable: false,
-      valueGetter: ({ row }) => {
-        return row.aligners.length;
+      valueGetter: (params) => {
+        const row = params?.row;
+        return row && row.aligners ? row.aligners.length : 0;
       },
       renderCell: (params) => (
         <span
           style={{
-            color: params.row.aligners_based ? "green" : "#CC5500",
+            color: params.row?.aligners_based ? "green" : "#CC5500",
           }}
         >
-          {params.row.aligners.length}
+          {params.row?.aligners.length || 0}
         </span>
       ),
     },
@@ -140,10 +141,12 @@ const getOrderColumns = (translation) => {
       field: "sheetDesc",
       headerName: translation("dashboard.orders.table.titles.sheet"),
       flex: 0.8,
-      valueGetter: ({ value }) =>
-        value == null || value === 0 || value.id === "0"
+      valueGetter: (params) => {
+        const value = params?.value;
+        return value == null || value === 0 || value.id === "0"
           ? capitalizeFirstLetter(translation("utilities.variables.undefined"))
-          : `${value.name}`,
+          : `${value.name}`;
+      },
     },
     singleSelectColumn(
       "pickup_location",
@@ -155,10 +158,10 @@ const getOrderColumns = (translation) => {
       ],
       {
         headerName: translation(
-          "dashboard.orders.table.titles.delivery_location"
+          "dashboard.orders.table.titles.delivery_location",
         ),
         editable: true,
-      }
+      },
     ),
     {
       field: "note",
@@ -166,12 +169,15 @@ const getOrderColumns = (translation) => {
       flex: 1,
       editable: true,
       sortable: false,
-      valueSetter: ({ row, value }) => {
+      valueSetter: (params) => {
+        const row = params?.row || {};
+        const value = params?.value || "";
         return { ...row, note: value };
       },
-      valueGetter: ({ row }) =>
-        // row.notes.map((x) => x.body).slice(-1)[0],
-        row.note,
+      valueGetter: (params) => {
+        const row = params?.row;
+        return row ? row.note : "";
+      },
     },
     dateColumn("creation_date", {
       flex: 1,
@@ -192,10 +198,8 @@ const getOrderColumns = (translation) => {
       editable: false,
       sortable: false,
       hide: true,
-      valueGetter: ({ row }) => row.is_started,
+      valueGetter: (params) => params?.row?.is_started || false,
     },
-    /* TODO status are todo, practitioner to laboratory, laboratory to practitioner, done */
-    /* TODO status are to be refined */
     singleSelectColumn(
       "status",
       [
@@ -213,7 +217,7 @@ const getOrderColumns = (translation) => {
       {
         headerName: translation("dashboard.orders.table.titles.progress"),
         editable: false,
-      }
+      },
     ),
     producerColumn(translation),
     singleSelectColumn(
@@ -226,7 +230,7 @@ const getOrderColumns = (translation) => {
         headerName: translation("dashboard.orders.table.titles.producer_type"),
         editable: false,
         hide: true,
-      }
+      },
     ),
     {
       field: "order_label_print",
@@ -235,13 +239,20 @@ const getOrderColumns = (translation) => {
       flex: 1,
       editable: false,
       sortable: false,
-      getActions: (params) => [
-        <div
-          onClick={() => window.open(`/orderlabel/${params.row.id}`, "_blank")}
-        >
-          <GrTag style={{ cursor: "pointer", fontSize: 40, padding: 8 }} />
-        </div>,
-      ],
+      getActions: (params) =>
+        params?.row
+          ? [
+              <div
+                onClick={() =>
+                  window.open(`/orderlabel/${params.row.id}`, "_blank")
+                }
+              >
+                <GrTag
+                  style={{ cursor: "pointer", fontSize: 40, padding: 8 }}
+                />
+              </div>,
+            ]
+          : [],
     },
     {
       field: "bag_label_print",
@@ -250,11 +261,20 @@ const getOrderColumns = (translation) => {
       flex: 1,
       editable: false,
       sortable: false,
-      getActions: (params) => [
-        <div onClick={() => window.open(`/labels1/${params.row.id}`, "_blank")}>
-          <TbPaperBag style={{ cursor: "pointer", fontSize: 40, padding: 8 }} />
-        </div>,
-      ],
+      getActions: (params) =>
+        params?.row
+          ? [
+              <div
+                onClick={() =>
+                  window.open(`/labels1/${params.row.id}`, "_blank")
+                }
+              >
+                <TbPaperBag
+                  style={{ cursor: "pointer", fontSize: 40, padding: 8 }}
+                />
+              </div>,
+            ]
+          : [],
     },
     {
       field: "order_edit",
@@ -263,7 +283,8 @@ const getOrderColumns = (translation) => {
       flex: 0.7,
       editable: false,
       sortable: false,
-      renderCell: (params) => renderEditOrderCell(params),
+      renderCell: (params) =>
+        params?.row ? renderEditOrderCell(params) : null,
     },
   ];
   return columns;

@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-
-import styles, { mainColor } from "@inplan/common/Form/styles";
-
+import { mainColor } from "@inplan/common/Form/styles";
 import AlignerUnit from "./AlignerUnit";
 
-const Aligners = ({ control, getValues }) => {
+export default function Aligners({ control, getValues }) {
   const { t: translation } = useTranslation();
   const [maxAndminAligners, setmaxAndminAligners] = useState({});
 
@@ -57,6 +55,4 @@ const Aligners = ({ control, getValues }) => {
       </div>
     </div>
   );
-};
-
-export default Aligners;
+}

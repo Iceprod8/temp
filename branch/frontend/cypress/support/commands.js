@@ -78,5 +78,5 @@ Cypress.Commands.add("ignoreUncaught", (msg) => {
 });
 
 Cypress.Commands.add("getPatientRow", (name) =>
-  cy.get(`td[value=${name}]`).parent()
+  cy.get(`td[value=${name}]`).parent(),
 );

@@ -20,12 +20,12 @@ export default function ItemsTab({ mode, children }) {
           </th>
           <th style={{ width: "37%" }}>
             {translation(
-              "3d_printing.table_pending_models.titles.select_actions"
+              "3d_printing.table_pending_models.titles.select_actions",
             )}
           </th>
           <th style={{ width: "10%" }}>
             {translation(
-              "3d_printing.table_pending_models.titles.current_selected"
+              "3d_printing.table_pending_models.titles.current_selected",
             )}
           </th>
         </tr>

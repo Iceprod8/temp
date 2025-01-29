@@ -1,42 +1,29 @@
-import React, { useEffect, useState } from "react";
-import { NavLink, useHistory, useLocation } from "react-router-dom";
+import React, { useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import { FiLogOut } from "react-icons/fi";
 import { CgProfile } from "react-icons/cg";
 import { MdOutlineSettings } from "react-icons/md";
 import logo2 from "@inplan/assets/images/Ortho3D_Icon_2.png";
 import { useAppContext } from "@inplan/AppContext";
 import { useTranslation } from "react-i18next";
-
 import { backend } from "@inplan/adapters/apiCalls";
 
-import Fade from "./Fade";
+// import Fade from "./Fade";
 import PractionnerModal from "./PractionnerModal";
 
-const Navbar = () => {
+function Navbar() {
   const [modal, setModal] = useState("");
-  const [cutCount, setCutCount] = useState(0); // Store the cut count
-  const {
-    username,
-    onConnect,
-    setOnConnect,
-    activePatient,
-    userData,
-    userRights,
-    fetchCutCounts,
-  } = useAppContext();
-  const history = useHistory();
-  const location = useLocation();
+  // const [cutCount, setCutCount] = useState(0);
+  const { username, onConnect, activePatient, userData, userRights } =
+    useAppContext();
+  const navigate = useNavigate();
   const { t: translation } = useTranslation();
 
   const handleLogout = async () => {
-    console.info("logging out");
     try {
       const token = localStorage.getItem("access-token");
-
       if (token) {
-        // Call the logout API on the backend
         const response = await backend.post("logout/");
-
         if (!response.ok) {
           throw new Error("Failed to log out on the server.");
         }
@@ -44,47 +31,36 @@ const Navbar = () => {
     } catch (error) {
       console.error("Logout failed:", error);
     } finally {
-      // Clear tokens and disconnect on the frontend
-      localStorage.removeItem("token");
-      localStorage.removeItem("access-token");
-      localStorage.removeItem("refresh-token");
-
-      // Redirect the user to the root
-      history.push("/");
+      localStorage.clear();
+      navigate("/");
     }
   };
-  // FIXME has_inlase_view_access - should be using rights only
-  // To be tested : is the page broken if no inlase exist ? (probably)
 
-  // Determine permissions and route visibility
-  const has_inlase_view_access = userData?.office?.has_inlase > 0;
+  const hasInlaseViewAccess = userData?.office?.has_inlase > 0;
 
-  // Count nbCut
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchCutCounts();
-        const itemCount = Array.isArray(data) ? data.length : 0;
-        setCutCount(itemCount);
-      } catch (error) {
-        console.error("Error fetching cut count:", error);
-      }
-    };
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const data = await fetchCutCounts();
+  //       const itemCount = Array.isArray(data) ? data.length : 0;
+  //       setCutCount(itemCount);
+  //     } catch (error) {
+  //       console.error("Error fetching cut count:", error);
+  //     }
+  //   };
 
-  // Update condition to handle dynamic routes
-  const isExcludedPath =
-    location.pathname.startsWith("/dashboard") ||
-    location.pathname === "/profile";
+  //   fetchData();
 
-  const shouldShowNbCute = !isExcludedPath;
+  //   // Cleanup logic for unmounting (if required in the future)
+  //   return () => {
+  //     console.log("Navbar component unmounted");
+  //   };
+  // }, [fetchCutCounts]);
 
-  // Navigation items with conditions
   const navItems = [
     {
       id: "patients",
-      show: userRights?.patients_list || userRights?.reduced_patients_list,
+      show: userRights?.patients_list,
       to: "/patients",
       label: "navbar.patients",
     },
@@ -108,40 +84,48 @@ const Navbar = () => {
     },
     {
       id: "inlase",
-      show: userRights?.inlase && has_inlase_view_access,
+      show: userRights?.inlase && hasInlaseViewAccess,
       to: "/inlase",
       label: "navbar.inlase",
     },
     {
       id: "users",
-      show: userRights?.handle_users && userRights?.to_read_user,
+      show: userRights?.handle_users,
       to: "/users",
       label: "navbar.users",
     },
     {
       id: "licenses",
-      show: userRights?.handle_licenses && userRights?.to_read,
+      show: userRights?.handle_licenses,
       to: "/licenses",
       label: "navbar.licenses",
     },
     {
       id: "management",
-      show: userRights?.handle_licenses && userRights?.to_read,
+      show: userRights?.handle_licenses,
       to: "/management",
-      label: "Management",
+      label: "navbar.management",
     },
   ];
 
   return (
     <>
-      <Fade
+      {/* <Fade
         visible={modal === "modal-practitionner"}
         duration={300}
         zIndex={10000}
-        from={{ opacity: 0 }}
+        onCleanup={(cleanupFunction) => {
+          if (cleanupFunction && typeof cleanupFunction === "function") {
+            try {
+              cleanupFunction();
+            } catch (error) {
+              console.error("Error during Fade cleanup:", error);
+            }
+          }
+        }}
       >
         <PractionnerModal setModal={setModal} />
-      </Fade>
+      </Fade> */}
       <nav className="header">
         <div className="header-home">
           <NavLink to="/" className="header-home__logo">
@@ -173,26 +157,11 @@ const Navbar = () => {
                   <li key={id}>
                     <NavLink to={to}>{translation(label)}</NavLink>
                   </li>
-                )
+                ),
             )}
           </ul>
         </div>
         <div className="header-auth">
-          {/* 
-          
-          COUNTER 
-
-          {shouldShowNbCute && (
-            <div
-              style={{
-                marginRight: 8,
-                color: "#DADDE2",
-                fontSize: "14px",
-              }}
-            >
-              Total Nb of Cuts: {cutCount}
-            </div>
-          )} */}
           <MdOutlineSettings
             style={{ marginRight: 8 }}
             className="header-auth__user"
@@ -205,6 +174,6 @@ const Navbar = () => {
       </nav>
     </>
   );
-};
+}
 
 export default Navbar;

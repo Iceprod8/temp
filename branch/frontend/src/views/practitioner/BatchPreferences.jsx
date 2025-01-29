@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
-import { NotificationManager } from "react-notifications";
 import { useTranslation } from "react-i18next";
 import { backend } from "@inplan/adapters/apiCalls";
 import { useAppContext } from "@inplan/AppContext";
+import { useSnackbar } from "@inplan/contexts/SnackbarContext";
 
-const BatchPreferences = () => {
+function BatchPreferences() {
   const { t: translation } = useTranslation();
+  const showSnackbar = useSnackbar();
   const {
     preserveBatchOnValidation,
     setPreserveBatchOnValidation,
@@ -13,14 +14,19 @@ const BatchPreferences = () => {
     setPreserveCutterBatchOnValidation,
   } = useAppContext();
 
-  useEffect(async () => {
-    const response = await backend.get("users/current");
-    if (response.data) {
-      setPreserveBatchOnValidation(response.data.preserve_batch_on_validation);
-      setPreserveCutterBatchOnValidation(
-        response.data.preserve_cutter_batch_on_validation
-      );
+  useEffect(() => {
+    async function fetchUser() {
+      const response = await backend.get("users/current");
+      if (response.data) {
+        setPreserveBatchOnValidation(
+          response.data.preserve_batch_on_validation,
+        );
+        setPreserveCutterBatchOnValidation(
+          response.data.preserve_cutter_batch_on_validation,
+        );
+      }
     }
+    fetchUser();
   }, []);
 
   const updateBatchPreferences = async () => {
@@ -29,12 +35,14 @@ const BatchPreferences = () => {
         preserve_batch_on_validation: preserveBatchOnValidation,
         preserve_cutter_batch_on_validation: preserveCutterBatchOnValidation,
       });
-      NotificationManager.success(
-        translation("messages.parameters.batchPreferences.success")
+      showSnackbar(
+        translation("messages.parameters.batchPreferences.success"),
+        "success",
       );
     } catch (error) {
-      NotificationManager.error(
-        translation("messages.parameters.batchPreferences.error")
+      showSnackbar(
+        translation("messages.parameters.batchPreferences.error"),
+        "error",
       );
     }
   };
@@ -58,7 +66,7 @@ const BatchPreferences = () => {
         >
           <span>
             {translation(
-              "navbar.profile.parameters.batch_preferences.keep_printer_batch"
+              "navbar.profile.parameters.batch_preferences.keep_printer_batch",
             )}
           </span>
           <input
@@ -81,7 +89,7 @@ const BatchPreferences = () => {
         >
           <span>
             {translation(
-              "navbar.profile.parameters.batch_preferences.keep_cutter_batch"
+              "navbar.profile.parameters.batch_preferences.keep_cutter_batch",
             )}
           </span>
           <input
@@ -112,6 +120,6 @@ const BatchPreferences = () => {
       </div>
     </div>
   );
-};
+}
 
 export default BatchPreferences;

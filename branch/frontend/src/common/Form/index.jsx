@@ -3,42 +3,50 @@ import { useTranslation } from "react-i18next";
 import { Button } from "@mui/material";
 import { MdSend } from "react-icons/md";
 import { useForm } from "react-hook-form";
-import { NotificationManager } from "react-notifications";
 import { capitalizeFirstLetter } from "@inplan/adapters/functions";
+import { useSnackbar } from "@inplan/contexts/SnackbarContext";
 import { submitFormSx, mainColor } from "./styles";
 
-const Form = ({ FormContent, titles, subject, onSubmit, defaultValues }) => {
+export default function Form({
+  FormContent,
+  titles,
+  subject,
+  onSubmit,
+  defaultValues,
+}) {
   const { handleSubmit, control, reset, watch, getValues } = useForm({
     defaultValues,
   });
   const { t: translation } = useTranslation();
+  const showSnackbar = useSnackbar();
 
   const innerOnSubmit = async (data) => {
     try {
       const isOk = await onSubmit(data);
 
       if (isOk) {
-        NotificationManager.success(
+        showSnackbar(
           `${translation("messages.common.subject_was_created", {
             subject: capitalizeFirstLetter(
-              translation(`utilities.variables.${subject.toLowerCase()}`)
+              translation(`utilities.variables.${subject.toLowerCase()}`),
             ),
-          })}`
-        );
-        // reset(defaultValues); // Reset is not working properly, probably got wrong defaults FIXME
+          })}`,
+          "success",
+        ); // reset(defaultValues); // Reset is not working properly, probably got wrong defaults FIXME
       } else {
-        NotificationManager.error(
+        showSnackbar(
           `${translation("messages.common.subject_was_not_created", {
             subject: capitalizeFirstLetter(
-              translation(`utilities.variables.${subject.toLowerCase()}`)
+              translation(`utilities.variables.${subject.toLowerCase()}`),
             ),
-          })}`
+          })}`,
+          "error",
         );
         console.error("Backend error");
       }
     } catch (err) {
       console.error(err);
-      NotificationManager.error(translation("messages.common.error_occurred"));
+      showSnackbar(translation("messages.common.error_occurred"), "error");
     }
   };
 
@@ -76,6 +84,4 @@ const Form = ({ FormContent, titles, subject, onSubmit, defaultValues }) => {
       />
     </form>
   );
-};
-
-export default Form;
+}

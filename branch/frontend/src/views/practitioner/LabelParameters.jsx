@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { NotificationManager } from "react-notifications";
-import clsx from "clsx";
 import { backend } from "@inplan/adapters/apiCalls";
+import { useSnackbar } from "@inplan/contexts/SnackbarContext";
 
-const LabelParameters = ({ bag_label, order_label }) => {
+function LabelParameters({ bag_label, order_label }) {
   const { t: translation } = useTranslation();
+  const showSnackbar = useSnackbar();
   const [values, setValues] = useState({});
 
   const keyNamesBag = [
@@ -169,13 +169,12 @@ const LabelParameters = ({ bag_label, order_label }) => {
   const updateBackendValues = async () => {
     try {
       await backend.post(`offices/update_label_description`, values);
-      NotificationManager.success(
-        translation("messages.parameters.labels.success")
+      showSnackbar(
+        translation("messages.parameters.labels.success"),
+        "success",
       );
     } catch (error) {
-      NotificationManager.error(
-        translation("messages.parameters.labels.error")
-      );
+      showSnackbar(translation("messages.parameters.labels.error"), "error");
     }
   };
 
@@ -293,6 +292,6 @@ const LabelParameters = ({ bag_label, order_label }) => {
       )}
     </div>
   );
-};
+}
 
 export default LabelParameters;

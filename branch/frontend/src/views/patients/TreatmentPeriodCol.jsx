@@ -4,12 +4,12 @@ export default function TreatmentPeriodCol(
   rowData,
   translation,
   history,
-  language
+  language,
 ) {
   const { patient, activeStep: step } = rowData;
 
   const handleOnClick = () => {
-    history.push({
+    navigate({
       pathname: `/dashboard/${patient.id}/periods`,
       state: { stepId: step.id },
     });

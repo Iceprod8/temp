@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { NotificationManager } from "react-notifications";
 import { useTranslation } from "react-i18next";
-
 import { backend } from "@inplan/adapters/apiCalls";
 import styles from "@inplan/common/Form/styles";
-
 import {
   getPositionOptions,
   getPossibleProcessSteps,
   getSelectableProcessSteps,
 } from "@inplan/views/order/OrderUtilities";
 import CustomTranslation from "@inplan/common/translation/CustomTranslation";
+import { useSnackbar } from "@inplan/contexts/SnackbarContext";
 
-const AlignerEditor = ({ alignerId, order, sheetsDict }) => {
+export default function AlignerEditor({ alignerId, order, sheetsDict }) {
   const [aligner, setAligner] = useState(null);
   const [formData, setFormData] = useState(null);
   const { t: translation } = useTranslation();
+  const showSnackbar = useSnackbar();
   const refreshAligner = async () => {
     // FIXME check reply is ok
     const alignerResponse = await backend.get(`ordered_aligners/${alignerId}`);
@@ -29,10 +28,10 @@ const AlignerEditor = ({ alignerId, order, sheetsDict }) => {
   };
 
   // Initialize
-  useEffect(async () => {
+  useEffect(() => {
     if (!order) return;
     if (!alignerId) return;
-    await refreshAligner();
+    refreshAligner();
   }, [alignerId, order]);
 
   const handleChange = (e) => {
@@ -46,28 +45,29 @@ const AlignerEditor = ({ alignerId, order, sheetsDict }) => {
     e.preventDefault();
 
     if (order.status === 3 || order.status === 4) {
-      NotificationManager.warning(
+      showSnackbar(
         translation(
-          "messages.orders.canceled_or_finished_order_cannot_be_modified"
-        )
+          "messages.orders.canceled_or_finished_order_cannot_be_modified",
+        ),
+        "warning",
       );
     } else if (aligner.process_step >= 16 && formData.process_step === 21) {
-      NotificationManager.warning(
-        translation("messages.orders.already_cut_aligner_cannot_be_canceled")
+      showSnackbar(
+        translation("messages.orders.already_cut_aligner_cannot_be_canceled"),
+        "warning",
       );
     } else {
       try {
         await backend.post(
           `ordered_aligners/${alignerId}/update_aligner`,
-          formData
+          formData,
         );
         refreshAligner();
-        NotificationManager.success(
-          translation("messages.orders.aligner_updated")
-        );
+        showSnackbar(translation("messages.orders.aligner_updated"), "success");
       } catch (error) {
-        NotificationManager.error(
-          translation("messages.orders.error_updating_aligner")
+        showSnackbar(
+          translation("messages.orders.error_updating_aligner"),
+          "error",
         );
         console.error("Error updating Aligner:", error);
       }
@@ -104,7 +104,7 @@ const AlignerEditor = ({ alignerId, order, sheetsDict }) => {
                     <option key={value} value={value}>
                       {label}
                     </option>
-                  )
+                  ),
                 )}
               </select>
             </div>
@@ -142,5 +142,4 @@ const AlignerEditor = ({ alignerId, order, sheetsDict }) => {
       )}
     </div>
   );
-};
-export default AlignerEditor;
+}

@@ -1,22 +1,14 @@
 import React from "react";
-import { Redirect, Route } from "react-router-dom";
-import { useAppContext } from "./AppContext";
+import { Navigate } from "react-router-dom";
 
-function PrivateRoute({ children, ...all }) {
-  const { onConnect } = useAppContext();
-
-  return (
-    <Route
-      {...all}
-      render={() =>
-        onConnect || onConnect == null ? (
-          <>{children}</>
-        ) : (
-          <Redirect to={{ pathname: "/" }} />
-        )
-      }
-    />
-  );
+export default function PrivateRoute({
+  condition,
+  children,
+  redirectTo = "/",
+  loading,
+}) {
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+  return condition ? children : <Navigate to={redirectTo} replace />;
 }
-
-export default PrivateRoute;

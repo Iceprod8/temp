@@ -1,10 +1,8 @@
 import * as THREE from "three";
-
-import { GUI } from "three/examples/jsm/libs/dat.gui.module";
+import { GUI } from "three/examples/jsm/libs/lil-gui.module.min.js";
 import TWEEN from "@tweenjs/tween.js";
 import createModelMesh from "./model";
 import { TransformControls } from "./TransformControls2";
-
 import Cutline from "./cutline";
 import Simulator from "./simulator";
 import { TrackballControls } from "./TrackballControls";
@@ -118,7 +116,7 @@ class Scene {
   initObjectControl() {
     const transformControl = new TransformControls(
       this.camera,
-      this.renderer.domElement
+      this.renderer.domElement,
     );
 
     transformControl.addEventListener("change", this.render);
@@ -161,7 +159,7 @@ class Scene {
   initCameraControl() {
     const controls = new TrackballControls(
       this.camera,
-      this.renderer.domElement
+      this.renderer.domElement,
     );
     controls.enabled = true;
 
@@ -175,7 +173,7 @@ class Scene {
     const controls = new ObjectControl(
       this.modelAndCutline,
       this.group,
-      this.renderer.domElement
+      this.renderer.domElement,
     );
     controls.activeTrans = false;
     controls.activeRot = false;
@@ -208,7 +206,7 @@ class Scene {
       raycaster.setFromCamera(this.mousePosition, this.camera);
 
       const intersects = raycaster.intersectObjects(
-        this.modelAndCutline.children
+        this.modelAndCutline.children,
       );
       this.click(intersects, event);
       this.objectControl.dispatchEvent(event);
@@ -229,7 +227,7 @@ class Scene {
       (event) => {
         this.onDocumentKeyDown(event);
       },
-      false
+      false,
     );
 
     return renderer;
@@ -240,7 +238,7 @@ class Scene {
       30,
       this.width / this.height,
       0.5,
-      1000
+      1000,
     );
     camera.position.x = 0;
     camera.position.y = 0;
@@ -279,7 +277,7 @@ class Scene {
     const quat = new THREE.Quaternion();
     quat.setFromUnitVectors(
       normal.clone().normalize(),
-      this.camera.position.clone().normalize()
+      this.camera.position.clone().normalize(),
     );
     const translationSource = {
       x: this.group.position.x,
@@ -295,7 +293,7 @@ class Scene {
 
     const tween = new TWEEN.Tween(translationSource).to(
       translationTarget,
-      1000
+      1000,
     );
     tween.onUpdate(() => {
       this.group.position.x = translationSource.x;
@@ -355,7 +353,7 @@ class Scene {
   moveCameraFront = () =>
     this.moveCameraTo(
       new THREE.Vector3(0, -65, 0),
-      new THREE.Vector3(0, -1, 0)
+      new THREE.Vector3(0, -1, 0),
     );
 
   moveCameraRight = () =>
@@ -364,7 +362,7 @@ class Scene {
   moveCameraLeft = () =>
     this.moveCameraTo(
       new THREE.Vector3(-65, 0, 0),
-      new THREE.Vector3(-1, 0, 0)
+      new THREE.Vector3(-1, 0, 0),
     );
 
   moveCameraBack = () =>
@@ -373,7 +371,7 @@ class Scene {
   moveCameraBelow = () =>
     this.moveCameraTo(
       new THREE.Vector3(0, 0, -65),
-      new THREE.Vector3(0, 0, -1)
+      new THREE.Vector3(0, 0, -1),
     );
 
   initGui = () => {
@@ -466,7 +464,7 @@ class Scene {
       this.cutControl = this.cutline.isControlPoint(objects[i].object);
       this.archControl = this.archline.isControlPoint(objects[i].object);
       this.initPointsControl = this.initPoints.isControlPoint(
-        objects[i].object
+        objects[i].object,
       );
 
       if (this.cutControl || this.archControl || this.initPointsControl) {
@@ -623,7 +621,7 @@ class Scene {
         mesh.geometry.boundingBox.getCenter(this.modelCenter);
 
         this.render();
-      }
+      },
     );
   }
 
@@ -639,35 +637,35 @@ class Scene {
     this.render();
   }
 
-  loadSimulator(points, start, setSimulator) {
-    this.simulator.load(points, start, setSimulator);
+  loadSimulator(points, start, setState) {
+    this.simulator.load(points, start, setState);
   }
 
-  loadOrientation(orientation, setOrientation) {
+  loadOrientation(orientation, setState) {
     switch (orientation) {
       case "top":
         this.moveObjectAbove();
-        setOrientation("");
+        setState((prev) => ({ ...prev, orientation: "" }));
         break;
       case "bottom":
         this.moveObjectBelow();
-        setOrientation("");
+        setState((prev) => ({ ...prev, orientation: "" }));
         break;
       case "left":
         this.moveObjectLeft();
-        setOrientation("");
+        setState((prev) => ({ ...prev, orientation: "" }));
         break;
       case "right":
         this.moveObjectRight();
-        setOrientation("");
+        setState((prev) => ({ ...prev, orientation: "" }));
         break;
       case "front":
         this.moveObjectFront();
-        setOrientation("");
+        setState((prev) => ({ ...prev, orientation: "" }));
         break;
       case "back":
         this.moveObjectBack();
-        setOrientation("");
+        setState((prev) => ({ ...prev, orientation: "" }));
         break;
       default:
         break;

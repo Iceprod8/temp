@@ -23,10 +23,15 @@ const smoothing = (g) => {
 
 function createModelMesh(modelUrl, material, smooth, meshOpacity) {
   const loader = new STLLoader();
-  console.log(modelUrl, material, smooth, meshOpacity);
+  console.group("ThreeComponent - Debug Info");
+  console.log("Model URL:", modelUrl.decimate);
+  console.log("Material:", material);
+  console.log("Smooth:", smooth);
+  console.log("Mesh Opacity:", meshOpacity);
+  console.groupEnd();
   return new Promise((resolve, reject) => {
     loader.load(
-      modelUrl,
+      modelUrl.decimate,
       (geometry) => {
         // const mesh = new THREE.Mesh(
         //   smooth ? smoothing(geometry) : geometry,
@@ -38,14 +43,14 @@ function createModelMesh(modelUrl, material, smooth, meshOpacity) {
         });
         const mesh = new THREE.Mesh(
           smooth ? smoothing(geometry) : geometry,
-          phongMat
+          phongMat,
         );
         resolve(mesh);
       },
       () => null,
       (error) => {
         reject(error);
-      }
+      },
     );
   });
 }

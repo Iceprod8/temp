@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { NotificationManager } from "react-notifications";
 import { useTranslation } from "react-i18next";
 import { backend } from "@inplan/adapters/apiCalls";
 import { useAppContext } from "@inplan/AppContext";
@@ -9,13 +8,15 @@ import {
   orderTypeChoices,
   pickupLocationChoices,
 } from "@inplan/common/orderTemplateChoices";
+import { useSnackbar } from "@inplan/contexts/SnackbarContext";
 import SheetParameters from "./SheetParameters";
 import ProducerParameters from "./ProducerParameters";
 import DoctorParameters from "./DoctorParameters";
 import SimpleSelect from "./SimpleSelect";
 
-const OrderParameters = ({ userRights }) => {
+export default function OrderParameters({ userRights }) {
   const { t: translation } = useTranslation();
+  const showSnackbar = useSnackbar();
   const {
     defaultOrderType,
     setDefaultOrderType,
@@ -34,50 +35,57 @@ const OrderParameters = ({ userRights }) => {
   const [idValuesProducers, setIdValuesProducers] = useState({});
   const [idValuesSheets, setIdValuesSheets] = useState({});
 
-  useEffect(async () => {
-    const response = await checkUser();
-    if (response.data.order_template) {
-      setDefaultOrderType(response.data.order_template.type);
-      setDefaultPickupLocation(response.data.order_template.pickup_location);
-      setDefaultDeadlineType(response.data.order_template.deadline_type);
-      setDefaultTemplateSheet(response.data.order_template.template_sheet);
-      setDefaultSheet(response.data.order_template.sheet);
-      setDefaultDoctor(response.data.order_template.doctor);
-    } else {
-      setDefaultOrderType(1); // aligner
-      setDefaultPickupLocation(0); // clinic
-      setDefaultDeadlineType(1); // appointment
+  useEffect(() => {
+    async function fetchUser() {
+      const response = await checkUser();
+      if (response.data.order_template) {
+        setDefaultOrderType(response.data.order_template.type);
+        setDefaultPickupLocation(response.data.order_template.pickup_location);
+        setDefaultDeadlineType(response.data.order_template.deadline_type);
+        setDefaultTemplateSheet(response.data.order_template.template_sheet);
+        setDefaultSheet(response.data.order_template.sheet);
+        setDefaultDoctor(response.data.order_template.doctor);
+      } else {
+        setDefaultOrderType(1); // aligner
+        setDefaultPickupLocation(0); // clinic
+        setDefaultDeadlineType(1); // appointment
+      }
     }
+    fetchUser();
   }, []);
 
   const updateProducerList = async () => {
     const keys_to_update = Object.keys(idValuesProducers).filter(
-      (key) => idValuesProducers[key] === 1
+      (key) => idValuesProducers[key] === 1,
     );
     try {
       await backend.post(`offices/update_producer_list`, keys_to_update);
-      NotificationManager.success(
-        translation("messages.parameters.producerList.success")
+      showSnackbar(
+        translation("messages.parameters.producerList.success"),
+        "success",
       );
     } catch (error) {
-      NotificationManager.error(
-        translation("messages.parameters.producerList.error")
+      showSnackbar(
+        translation("messages.parameters.producerList.error"),
+        "error",
       );
     }
   };
 
   const updateUsedSheetList = async () => {
     const keys_to_update = Object.keys(idValuesSheets).filter(
-      (key) => idValuesSheets[key] === 1
+      (key) => idValuesSheets[key] === 1,
     );
     try {
       await backend.post(`offices/update_sheet_list`, keys_to_update);
-      NotificationManager.success(
-        translation("messages.parameters.sheetsList.success")
+      showSnackbar(
+        translation("messages.parameters.sheetsList.success"),
+        "success",
       );
     } catch (error) {
-      NotificationManager.error(
-        translation("messages.parameters.sheetsList.error")
+      showSnackbar(
+        translation("messages.parameters.sheetsList.error"),
+        "error",
       );
     }
   };
@@ -92,12 +100,14 @@ const OrderParameters = ({ userRights }) => {
         sheet_id: defaultSheet?.id,
         template_sheet_id: defaultTemplateSheet?.id,
       });
-      NotificationManager.success(
-        translation("messages.parameters.order_template.success")
+      showSnackbar(
+        translation("messages.parameters.order_template.success"),
+        "success",
       );
     } catch (error) {
-      NotificationManager.error(
-        translation("messages.parameters.order_template.error")
+      showSnackbar(
+        translation("messages.parameters.order_template.error"),
+        "error",
       );
     }
   };
@@ -122,7 +132,7 @@ const OrderParameters = ({ userRights }) => {
           <div style={{ marginTop: "10px", marginBottom: "10px" }}>
             <h2 className="h2">
               {translation(
-                "navbar.profile.parameters.order_template.settings.order_type.default_order_type"
+                "navbar.profile.parameters.order_template.settings.order_type.default_order_type",
               )}
             </h2>
             <SimpleSelect
@@ -138,7 +148,7 @@ const OrderParameters = ({ userRights }) => {
           <div style={{ marginTop: "10px", marginBottom: "10px" }}>
             <h2 className="h2">
               {translation(
-                "navbar.profile.parameters.order_template.settings.pickup_location.default_pickup_location"
+                "navbar.profile.parameters.order_template.settings.pickup_location.default_pickup_location",
               )}
             </h2>
             <SimpleSelect
@@ -154,7 +164,7 @@ const OrderParameters = ({ userRights }) => {
           <div style={{ marginTop: "10px", marginBottom: "10px" }}>
             <h2 className="h2">
               {translation(
-                "navbar.profile.parameters.order_template.settings.deadline_type.default_deadline_type"
+                "navbar.profile.parameters.order_template.settings.deadline_type.default_deadline_type",
               )}
             </h2>
             <SimpleSelect
@@ -198,6 +208,4 @@ const OrderParameters = ({ userRights }) => {
       </div>
     </div>
   );
-};
-
-export default OrderParameters;
+}

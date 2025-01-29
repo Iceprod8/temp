@@ -7,9 +7,8 @@ import {
   CircularProgress,
   TextField,
 } from "@mui/material";
-import { NotificationManager } from "react-notifications";
 import { useBeforeunload } from "react-beforeunload";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import { useParams } from "react-router-dom";
 import DownloadLink from "react-download-link";
 import {
   capitalizeFirstLetter,
@@ -23,11 +22,11 @@ import usePeriodicTask from "@inplan/common/usePeriodicTask";
 import uploadModels from "@inplan/common/uploadModels";
 import uploadCutlines from "@inplan/common/uploadCutlines";
 import { useAppContext } from "@inplan/AppContext";
-
+import { useInlineContext } from "@inplan/contexts/InlineContext";
+import { useSnackbar } from "@inplan/contexts/SnackbarContext";
 import CustomTranslation from "@inplan/common/translation/CustomTranslation";
 import ControlCards from "./ControlCards";
 import { CardBodyProgressAndEdit } from "./CardModelBodies";
-import { useInlineContext } from "./InlineContext";
 
 // Control for the list of aligners cards
 // Used next to the vizualizer
@@ -67,6 +66,7 @@ export default function DashboardControlCutlines({
     applySmooth,
     setApplySmooth,
   } = useInlineContext();
+  const showSnackbar = useSnackbar();
   const { idPatient } = useParams();
   const [isValidatingModels, setIsValidatingModels] = useState(false);
 
@@ -102,7 +102,7 @@ export default function DashboardControlCutlines({
   const [loading, setloading] = useState(false);
 
   const setupModels = models.filter(
-    (model) => model.setup === selectedSetup?.id
+    (model) => model.setup === selectedSetup?.id,
   );
 
   const filteredModels = getGeneratedModels("all", setupModels);
@@ -122,18 +122,22 @@ export default function DashboardControlCutlines({
     setloading(true);
     try {
       await uploadModels(
+        showSnackbar,
         files,
         setup,
         {
           is_original: false,
           is_template: false,
         },
-        translation
+        translation,
       );
     } catch (e) {
       console.error(e);
-      NotificationManager.error(
-        translation("messages.cutlines.something_went_wrong_when_uploading_stl")
+      showSnackbar(
+        translation(
+          "messages.cutlines.something_went_wrong_when_uploading_stl",
+        ),
+        "error",
       );
     } finally {
       await fetchModelsCutline();
@@ -147,8 +151,11 @@ export default function DashboardControlCutlines({
       await uploadCutlines(files, setup, {}, translation);
     } catch (e) {
       console.error(e);
-      NotificationManager.error(
-        translation("messages.cutlines.something_went_wrong_when_uploading_pts")
+      showSnackbar(
+        translation(
+          "messages.cutlines.something_went_wrong_when_uploading_pts",
+        ),
+        "error",
       );
     } finally {
       setloading(false);
@@ -175,7 +182,7 @@ export default function DashboardControlCutlines({
   if (![0, 1, 2].includes(cutlineStep)) return null;
 
   const allModelsToValidateInSection = models.filter(
-    (model) => model.setup === selectedSetup?.id
+    (model) => model.setup === selectedSetup?.id,
   );
 
   const [isSelectedUpperJaw, setIsSelectedUpperJaw] = useState(false);
@@ -191,9 +198,7 @@ export default function DashboardControlCutlines({
       setIsSelectedUpperJaw(false);
       setIsSelectedLowerJaw(false);
     } else {
-      NotificationManager.error(
-        translation("messages.cutlines.no_model_selected")
-      );
+      showSnackbar(translation("messages.cutlines.no_model_selected"), "error");
     }
   };
 
@@ -202,7 +207,7 @@ export default function DashboardControlCutlines({
 
     if (modelsList?.length > 0) {
       const message = `${translation(
-        "messages.cutlines.delete_all_selected_models_confirmation"
+        "messages.cutlines.delete_all_selected_models_confirmation",
       )}\n${modelsList.map((model) => `- ${model.filename}`).join("\n")}`;
       const confirmed = window.confirm(message);
       if (confirmed) {
@@ -216,9 +221,7 @@ export default function DashboardControlCutlines({
         setIsSelectedLowerJaw(false);
       }
     } else {
-      NotificationManager.error(
-        translation("messages.cutlines.no_model_selected")
-      );
+      showSnackbar(translation("messages.cutlines.no_model_selected"), "error");
     }
   };
 
@@ -277,26 +280,28 @@ export default function DashboardControlCutlines({
       const isOk = await onSubmit(data);
 
       if (isOk) {
-        NotificationManager.success(
+        showSnackbar(
           `${translation("messages.common.subject_was_created", {
             subject: capitalizeFirstLetter(
-              translation(`utilities.variables.setup`)
+              translation(`utilities.variables.setup`),
             ),
-          })}`
+          })}`,
+          "success",
         );
       } else {
-        NotificationManager.error(
+        showSnackbar(
           `${translation("messages.common.subject_was_not_created", {
             subject: capitalizeFirstLetter(
-              translation(`utilities.variables.setup`)
+              translation(`utilities.variables.setup`),
             ),
-          })}`
+          })}`,
+          "error",
         );
         console.error("Backend error");
       }
     } catch (err) {
       console.error(err);
-      NotificationManager.error(translation("messages.common.error_occurred"));
+      showSnackbar(translation("messages.common.error_occurred"), "error");
     }
   };
 
@@ -309,11 +314,11 @@ export default function DashboardControlCutlines({
     setZipName(`${data.last_name}_${data.first_name}_ready_models_export.zip`);
   };
   // Initialize
-  useEffect(async () => {
+  useEffect(() => {
     if (!idPatient) {
       return;
     }
-    await refreshPage();
+    refreshPage();
   }, [idPatient]);
   return (
     <div className="dashboard-control__body">
@@ -437,8 +442,9 @@ export default function DashboardControlCutlines({
               if (selectedSetup?.id) {
                 ref1.current.click();
               } else {
-                NotificationManager.error(
-                  translation("messages.cutlines.select_a_setup")
+                showSnackbar(
+                  translation("messages.cutlines.select_a_setup"),
+                  "error",
                 );
               }
             }}
@@ -480,8 +486,9 @@ export default function DashboardControlCutlines({
               if (selectedSetup?.id) {
                 ref2.current.click();
               } else {
-                NotificationManager.error(
-                  translation("messages.cutlines.select_a_setup")
+                showSnackbar(
+                  translation("messages.cutlines.select_a_setup"),
+                  "error",
                 );
               }
             }}

@@ -1,19 +1,19 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { DataGridPro, GridToolbar } from "@mui/x-data-grid-pro";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import CustomNoRowsOverlay from "@inplan/common/CustomNoRowsOverlay";
 import { mainColor } from "@inplan/common/Form/styles";
 
-const DataGridProLicenses = ({
+function DataGridProLicenses({
   columns,
   userLicenses,
   selectedRows,
   setSelectedRows,
-}) => {
+}) {
   const { t: translation } = useTranslation();
   return (
     <div className="dashboard-table-container">
-      <DataGridPro
+      <DataGrid
         columns={columns}
         rows={userLicenses}
         checkboxSelection
@@ -32,7 +32,7 @@ const DataGridProLicenses = ({
           cell: { "data-test": "cell-lab" },
           pagination: {
             labelRowsPerPage: `${translation(
-              "utilities.DataGridPro.pagination.labelRowsPerPage"
+              "utilities.DataGridPro.pagination.labelRowsPerPage",
             )}:`,
             labelDisplayedRows: ({ from, to, count }) =>
               `${translation(
@@ -41,7 +41,7 @@ const DataGridProLicenses = ({
                   from,
                   to,
                   count,
-                }
+                },
               )}`,
           },
         }}
@@ -57,6 +57,6 @@ const DataGridProLicenses = ({
       />
     </div>
   );
-};
+}
 
 export default DataGridProLicenses;

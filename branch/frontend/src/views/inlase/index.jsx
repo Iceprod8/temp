@@ -1,22 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { NotificationManager } from "react-notifications";
 import { useTranslation } from "react-i18next";
-
 import { Plate6 } from "@inplan/views/inlase/Plates";
 import { FaRegHandPointLeft } from "react-icons/fa";
 import { FiEdit } from "react-icons/fi";
-
+import { useSnackbar } from "@inplan/contexts/SnackbarContext";
 import { inlase } from "@inplan/adapters/inlaseCalls";
 import { backend } from "@inplan/adapters/apiCalls";
 import { useAppContext } from "@inplan/AppContext";
 import BatchView from "@inplan/common/Batch/BatchView";
 import { createBatchName } from "@inplan/adapters/functions";
-
 import {
   BatchContextProvider,
   useBatchContext,
 } from "@inplan/common/Batch/BatchContext";
-
 import AlignersModalManager from "../aligners/ModalManager";
 
 function Main() {
@@ -29,6 +25,7 @@ function Main() {
     sheets,
   } = useBatchContext();
   const { t: translation } = useTranslation();
+  const showSnackbar = useSnackbar();
   const [inlaseStatus, setInlaseStatus] = useState(null);
 
   const handleValidate = () => {
@@ -70,14 +67,14 @@ function Main() {
 
     try {
       const laserSettingsResponse = await backend.get(
-        `cutter_batches/${selectedBatch.id}/laserPower`
+        `cutter_batches/${selectedBatch.id}/laserPower`,
       );
 
       // message
       laserSettings.push(...laserSettingsResponse.data);
 
       const { data } = await backend.get(
-        `cutter_batches/${selectedBatch.id}/export`
+        `cutter_batches/${selectedBatch.id}/export`,
       );
       setLoading(false);
 
@@ -89,7 +86,7 @@ function Main() {
             .split("\n")
             .splice(1)
             .map((l) => l.split(/\s+/).map((v) => parseFloat(v)))
-            .filter((l) => l.length === 4)
+            .filter((l) => l.length === 4),
         )
         .filter((s) => s.length > 0);
 
@@ -116,8 +113,9 @@ function Main() {
       refreshState();
     } catch (error) {
       setLoading(false);
-      NotificationManager.error(
-        translation("messages.inlase.error_check_inlase_is_turned_on")
+      showSnackbar(
+        translation("messages.inlase.error_check_inlase_is_turned_on"),
+        "error",
       );
     }
   };
@@ -175,7 +173,7 @@ function Main() {
     },
   ];
   const availableSlotOffsetOptions = allSlotOffsetOptions.filter(
-    (option, index) => index <= maxSlotOffset
+    (option, index) => index <= maxSlotOffset,
   );
 
   // Changing the sheet material
@@ -203,7 +201,7 @@ function Main() {
     const promises = selectedBatch.aligners.map((aligner) =>
       backend.patch(`ordered_aligners/${aligner.id}`, {
         sheet: selectedSheetOption,
-      })
+      }),
     );
     await Promise.all(promises);
     await fetchBatches();

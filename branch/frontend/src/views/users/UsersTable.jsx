@@ -1,51 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { NotificationManager } from "react-notifications";
-import { DataGridPro, GridToolbar } from "@mui/x-data-grid-pro";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { BsFillPenFill } from "react-icons/bs";
-import { TiUserAdd, TiUserDelete } from "react-icons/ti";
-
+import { TiUserAdd } from "react-icons/ti";
 import { useAppContext } from "@inplan/AppContext";
-
 import UserModal from "@inplan/views/users/UserModal";
 import CustomNoRowsOverlay from "@inplan/common/CustomNoRowsOverlay";
 import { mainColor } from "@inplan/common/Form/styles";
 import { Button } from "@mui/material";
-import { IoMdTrash } from "react-icons/io";
-import CustomTranslation from "../../common/translation/CustomTranslation";
-import Fade from "../../common/Fade";
 
-const UsersTable = () => {
+function UsersTable() {
   const { t: translation } = useTranslation();
-  const { getUserRights, users, fetchUsers, deleteUser, offices } =
-    useAppContext();
-
+  const { users, offices } = useAppContext();
   const [selectedRows, setSelectedRows] = useState([]);
   const [modal, setModal] = useState("");
   const [selectedUser, setSelectedUser] = useState(null);
   const [seletedOffice, setSeletedOffice] = useState({ id: "" });
 
-  // Update seletedOffice after changing option in select component
   useEffect(() => {
     if (offices && offices.length > 0) {
       setSeletedOffice(offices[0]);
     }
   }, [offices]);
-
-  // Used for handle delete, to add a confirmation
-  // DISABLED
-  const handleOneDelete = async (row) => {
-    const message = translation("messages.users.delete_confirmation", {
-      username: row?.username,
-    });
-    const confirmedDelete = window.confirm(message);
-    if (confirmedDelete) {
-      const updatedRights = await getUserRights();
-      if (updatedRights?.to_delete_user) {
-        deleteUser(row);
-      }
-    }
-  };
 
   const handleModal = (row) => {
     setSelectedUser(row);
@@ -108,69 +84,20 @@ const UsersTable = () => {
         >
           <BsFillPenFill size={15} />
         </div>,
-        // <div
-        //   role="button"
-        //   tabIndex="0"
-        //   style={{
-        //     cursor: "pointer",
-        //     margin: 8,
-        //     color: "Crimson",
-        //   }}
-        //   onClick={() => handleOneDelete(params.row)}
-        // >
-        //   <IoMdTrash size={20} />
-        // </div>,
       ],
     },
   ];
 
-  const handleDeleteUsers = async () => {
-    try {
-      if (selectedRows?.length === 0) {
-        NotificationManager.error(
-          translation("messages.users.no_user_selected")
-        );
-        return;
-      }
-      const message = translation("messages.users.delete_selected_users");
-      const confirmed = window.confirm(message);
-      if (confirmed) {
-        const updatedRights = await getUserRights();
-        if (updatedRights?.to_delete_user) {
-          const rowToDelete = users.filter((user) =>
-            selectedRows.includes(user.id)
-          );
-          const futurs = rowToDelete.map((row) => deleteUser(row));
-          await Promise.all(futurs);
-          await fetchUsers();
-          if (selectedRows?.length > 0) {
-            NotificationManager.success(
-              translation("messages.users.users_have_been_deleted")
-            );
-          }
-        }
-      }
-    } catch (error) {
-      console.error("Error handleDeleteUsers:", error);
-    }
-  };
   return (
     <div>
-      <Fade
-        visible={modal === "modal-user"}
-        duration={300}
-        zIndex={1000}
-        from={{ opacity: 0 }}
-      >
-        <UserModal
-          seletedOffice={seletedOffice}
-          setSeletedOffice={setSeletedOffice}
-          setSelectedUser={setSelectedUser}
-          selectedUser={selectedUser}
-          setModal={setModal}
-          labelColor="#4b525f"
-        />
-      </Fade>
+      <UserModal
+        seletedOffice={seletedOffice}
+        setSeletedOffice={setSeletedOffice}
+        setSelectedUser={setSelectedUser}
+        selectedUser={selectedUser}
+        setModal={setModal}
+        labelColor="#4b525f"
+      />
       <div style={{ padding: "30px" }}>
         <div className="page">
           <div
@@ -206,25 +133,6 @@ const UsersTable = () => {
                   {translation("users.buttons.create")}
                 </Button>
               </div>
-              {/* <div>
-                <Button
-                  style={{
-                    border: "2px solid #ef5350",
-                    backgroundColor: "#ef5350",
-                    color: "white",
-                    fontFamily: "Source Sans Pro",
-                    fontWeight: 600,
-                    marginLeft: "10px",
-                  }}
-                  variant="outlined"
-                  onClick={() => handleDeleteUsers()}
-                >
-                  <TiUserDelete
-                    style={{ fontSize: "130%", marginRight: "10px" }}
-                  />
-                  <CustomTranslation text="users.buttons.delete" />
-                </Button>
-              </div> */}
             </div>
           </div>
         </div>
@@ -237,10 +145,9 @@ const UsersTable = () => {
             flexDirection: "column",
           }}
         >
-          <DataGridPro
+          <DataGrid
             columns={columns}
             rows={users}
-            // checkboxSelection
             components={{
               NoRowsOverlay: CustomNoRowsOverlay,
               Toolbar: GridToolbar,
@@ -258,7 +165,7 @@ const UsersTable = () => {
               cell: { "data-test": "cell-lab" },
               pagination: {
                 labelRowsPerPage: `${translation(
-                  "utilities.DataGridPro.pagination.labelRowsPerPage"
+                  "utilities.DataGridPro.pagination.labelRowsPerPage",
                 )}:`,
                 labelDisplayedRows: ({ from, to, count }) =>
                   `${translation(
@@ -267,12 +174,12 @@ const UsersTable = () => {
                       from,
                       to,
                       count,
-                    }
+                    },
                   )}`,
               },
             }}
             autoHeight
-            getRowClassName={(params) => {
+            getRowClassName={() => {
               const className = "order-in-progress-allrows";
               return className;
             }}
@@ -285,6 +192,6 @@ const UsersTable = () => {
       </div>
     </div>
   );
-};
+}
 
 export default UsersTable;

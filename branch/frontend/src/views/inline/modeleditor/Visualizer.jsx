@@ -1,53 +1,38 @@
 import React, { useState } from "react";
-import { useTranslation } from "react-i18next";
-import LoadingOverlay from "react-loading-overlay";
+import { css } from "@emotion/react";
+import ClipLoader from "react-spinners/ClipLoader";
 import ThreeComponent from "./ThreeComponent";
 
-export default function Visualizer({
-  path,
-  currentCutline,
-  setPendingCutline,
-  simulator,
-  setSimulator,
-  orientation,
-  setOrientation,
-  transOrRot,
-  editing,
-  creating,
-  saveInitPoints,
-  loading,
-  collisionIndexes,
-  isSavingRequested,
-  saveCurrentCutlineCallback,
-  meshOpacity,
-}) {
-  const [iloading, setIloading] = useState(false);
-  const { t: translation } = useTranslation();
+const override = css`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
+
+export default function Visualizer({ loading, meshOpacity }) {
+  const [Iloading, setIloading] = useState();
   return (
-    <LoadingOverlay
-      active={loading || iloading}
-      spinner
-      text={translation("messages.common.loading")}
-      styles={{ wrapper: { height: "100%" } }}
-    >
-      <ThreeComponent
-        model={path}
-        cutline={currentCutline}
-        cutlineUpdate={setPendingCutline}
-        editing={editing}
-        creating={creating}
-        saveInitPoints={saveInitPoints}
-        simulator={simulator}
-        orientation={orientation}
-        setOrientation={setOrientation}
-        transOrRot={transOrRot}
-        setSimulator={setSimulator}
-        setLoading={setIloading}
-        collisionIndexes={collisionIndexes}
-        isSavingRequested={isSavingRequested}
-        saveCurrentCutlineCallback={saveCurrentCutlineCallback}
-        meshOpacity={meshOpacity}
-      />
-    </LoadingOverlay>
+    <div style={{ position: "relative", height: "100%" }}>
+      {loading && (
+        <div
+          style={{
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+            background: "rgba(0,0,0,0.5)",
+            zIndex: 999,
+          }}
+        >
+          <ClipLoader
+            css={override}
+            color="#ffffff"
+            loading={loading}
+            size={50}
+          />
+        </div>
+      )}
+      <ThreeComponent setLoading={setIloading} meshOpacity={meshOpacity} />
+    </div>
   );
 }

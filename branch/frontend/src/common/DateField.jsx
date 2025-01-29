@@ -45,14 +45,14 @@ export default function DateField({ data, control }) {
                 <ReactDatePicker
                   locale={ln}
                   dateFormat={translation(
-                    "utilities.ReactDatePicker.dateFormat"
+                    "utilities.ReactDatePicker.dateFormat",
                   )}
                   showTimeSelect
                   timeCaption={translation(
-                    "utilities.ReactDatePicker.timeCaption"
+                    "utilities.ReactDatePicker.timeCaption",
                   )}
                   timeFormat={translation(
-                    "utilities.ReactDatePicker.timeFormat"
+                    "utilities.ReactDatePicker.timeFormat",
                   )}
                   timeIntervals={15}
                   selected={field.value ? new Date(field.value) : new Date()}
@@ -66,7 +66,7 @@ export default function DateField({ data, control }) {
                       inputProps={{
                         type: "text",
                         placeholder: translation(
-                          "utilities.ReactDatePicker.placeholder"
+                          "utilities.ReactDatePicker.placeholder",
                         ),
                         sx: {
                           ...styles.fontSettings,

@@ -1,15 +1,15 @@
 import React, { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-
-import { NotificationManager } from "react-notifications";
+import { BsDownload } from "react-icons/bs";
 import { useBeforeunload } from "react-beforeunload";
 import { CircularProgress } from "@mui/material";
 import uploadModels from "@inplan/common/uploadModels";
-import { BsDownload } from "react-icons/bs";
+import { useSnackbar } from "@inplan/contexts/SnackbarContext";
 
 export default function ButtonUploadModelSimple({ selectedSetup }) {
   const [loading, setloading] = useState(false);
   const { t: translation } = useTranslation();
+  const showSnackbar = useSnackbar();
   const ref1 = useRef();
   const download = translation("messages.common.loading");
 
@@ -25,18 +25,20 @@ export default function ButtonUploadModelSimple({ selectedSetup }) {
     setloading(true);
     try {
       await uploadModels(
+        showSnackbar,
         files,
         selectedSetup,
         {
           is_original: false,
           is_template: false,
         },
-        translation
+        translation,
       );
     } catch (e) {
       console.error(e);
-      NotificationManager.error(
-        translation("messages.cutlines.something_went_wrong_when_uploading")
+      showSnackbar(
+        translation("messages.cutlines.something_went_wrong_when_uploading"),
+        "error",
       );
     } finally {
       setloading(false);

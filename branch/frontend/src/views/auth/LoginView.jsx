@@ -36,7 +36,7 @@ const styles = {
   },
 };
 
-const LoginView = ({ handleLogin }) => {
+export default function LoginView({ handleLogin }) {
   const { t: translation } = useTranslation();
   const { control, handleSubmit } = useForm({
     defaultValues: {
@@ -132,6 +132,4 @@ const LoginView = ({ handleLogin }) => {
       </Link>
     </form>
   );
-};
-
-export default LoginView;
+}

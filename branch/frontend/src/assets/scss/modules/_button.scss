@@ -187,28 +187,28 @@
 }
 
 .btn-table-danger {
-    @extend %btn;
-    font-size: 16px;
-    line-height: 16px;
-    padding: 10px 16px;
-    border-radius: 4px;
-  
-    color: var(--background-card);
-    background: var(--background-light);
-    border: 1px solid var(--background-light);
+  @extend %btn;
+  font-size: 16px;
+  line-height: 16px;
+  padding: 10px 16px;
+  border-radius: 4px;
 
-    &:hover {
-      filter: inherit;
-      color: var(--color-white);
-      background: var(--color-error);
-      border: 1px solid var(--color-error);
-    }
-  
-    &:focus {
-      border: 1px solid var(--color-error);
-      box-shadow: 0 0 0 3px #0ca67833;
-    }
+  color: var(--background-card);
+  background: var(--background-light);
+  border: 1px solid var(--background-light);
+
+  &:hover {
+    filter: inherit;
+    color: var(--color-white);
+    background: var(--color-error);
+    border: 1px solid var(--color-error);
   }
+
+  &:focus {
+    border: 1px solid var(--color-error);
+    box-shadow: 0 0 0 3px #0ca67833;
+  }
+}
 
 .btn-table-muted {
   font-size: 16px;

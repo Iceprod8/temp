@@ -17,7 +17,7 @@ function reducer(state, action) {
       return {
         ...state,
         patients: state.patients.map((p) =>
-          p === action.target ? action.payload : p
+          p === action.target ? action.payload : p,
         ),
       };
     case "FETCHING_PATIENT":
@@ -67,7 +67,7 @@ export default function useBatchViewPatients() {
           console.debug("The component is not mounted anymore");
         }
       },
-      [state.patients]
+      [state.patients],
     ),
 
     createPatient: useCallback(async (data) => {
@@ -78,7 +78,7 @@ export default function useBatchViewPatients() {
     updatePatient: useCallback(async (patient, data) => {
       const { data: newPatient } = await backend.patch(
         `patients/${patient.id}`,
-        data
+        data,
       );
 
       /*

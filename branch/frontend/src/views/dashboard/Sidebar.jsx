@@ -1,17 +1,14 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useLocation, useNavigate } from "react-router-dom";
 import clsx from "clsx";
 import { IoIosArrowDown, IoIosCube } from "react-icons/io";
-import { FaTeethOpen } from "react-icons/fa";
 import { BsInfo } from "react-icons/bs";
 import { RiFlag2Fill, RiUser3Line } from "react-icons/ri";
 import { MdSend } from "react-icons/md";
 import { BiCalendarCheck } from "react-icons/bi";
-
-import Fade from "@inplan/common/Fade";
 import { SidebarSeparator } from "@inplan/common/Icon";
 import { useAppContext } from "@inplan/AppContext";
-
 import { useDashboardContext } from "./Context";
 import FollowUp from "./FollowUp";
 
@@ -28,10 +25,10 @@ function Option({
   dropdownState,
 }) {
   const { page, setPage } = useDashboardContext();
-
   const [dropdown, setDropdown] = dropdownState;
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  // Reset submenu in sidebar
   const handleDropdown = (name) => {
     if (name === dropdown) {
       setDropdown("");
@@ -67,8 +64,15 @@ function Option({
     setHidden(false);
     setIsTranslate(false);
     handleDropdown(opage);
+    const newPath =
+      location.pathname
+        .split("/")
+        .map((p, i) => (i === 3 ? opage : p))
+        .join("/") || `/${opage}`;
+    navigate(newPath);
     setPage(opage);
     handleAnimate(opage);
+    console.log(opage);
   };
 
   return (
@@ -77,7 +81,7 @@ function Option({
         onClick={handleClick}
         className={clsx(
           "flex alignItems-center",
-          page === opage ? "is-primary" : null
+          page === opage ? "is-primary" : null,
         )}
         data-test={opage}
       >
@@ -91,20 +95,14 @@ function Option({
             name="arrow-bottom"
             className={clsx(
               "icon icon-arrow-bottom",
-              dropdown === opage ? "icon-up" : null
+              dropdown === opage ? "icon-up" : null,
             )}
             heigh="14"
             width="14"
           />
         ) : null}
       </li>
-      <Fade
-        visible={animate && page === opage}
-        from={{ opacity: 0 }}
-        duration={page === opage ? 300 : 0}
-      >
-        {children}
-      </Fade>
+      {children}
     </>
   );
 }
@@ -128,7 +126,7 @@ export default function DashboardSidebar(props) {
               <Option
                 {...props}
                 dropdownState={dropdownState}
-                opage="informations"
+                opage="periods"
                 title={translation("dashboard.period_information.title")}
                 icon={BsInfo}
               />
