@@ -1,0 +1,95 @@
+// Variables
+// ==================
+$font: "Source Sans Pro", sans-serif;
+
+// Font face
+// ==================
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap");
+
+%h1,
+.h1 {
+  font-size: 28px;
+  line-height: 32px;
+  font-weight: 600;
+}
+
+%h2,
+.h2 {
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 600;
+}
+
+%h3,
+.h3 {
+  font-size: 18px;
+  line-height: 22px;
+  font-weight: 600;
+}
+
+%h4,
+.h4 {
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 600;
+}
+
+.auth-hero {
+  width: 100%;
+  display: inline-block;
+  color: var(--background-header);
+  font-size: 28px;
+  font-weight: 600;
+  text-align: center;
+  line-height: 60px;
+  margin-bottom: 30px;
+
+  span {
+    font-size: 28px;
+    line-height: 22px;
+    color: var(--background-download);
+    font-weight: 400;
+    text-decoration: underline;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+.text-primary {
+  color: var(--color-primary);
+}
+
+.text-secondary {
+  color: var(--color-secondary);
+}
+
+.text-danger {
+  color: var(--color-danger);
+}
+
+.text-muted {
+  color: var(--color-grey);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-small {
+  font-size: 0.9rem;
+}
+
+.normal {
+  font-weight: normal;
+}
+
+.bold {
+  font-weight: 600;
+}

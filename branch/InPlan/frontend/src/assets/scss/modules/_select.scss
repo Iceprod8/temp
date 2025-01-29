@@ -1,0 +1,142 @@
+// Container of select box
+.grid-filter {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+.grid-filter__group {
+  min-width: 200px;
+  background: var(--background-patient);
+  border: 1px solid var(--background-download);
+  padding-left: 16px;
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+}
+
+.grid-filter__group label {
+  margin-right: 8px;
+  display: flex;
+  align-items: center;
+  color: var(--color-white);
+  white-space: nowrap;
+  letter-spacing: 2px;
+}
+
+// Base
+.ts-control {
+  position: relative;
+  width: 100%;
+  cursor: pointer;
+}
+
+.ts-input {
+  display: flex !important;
+  align-items: center;
+  padding: 8px 8px !important;
+  color: var(--color-white);
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: normal;
+  background: var(--background-patient) !important;
+  border: inherit !important;
+  overflow: hidden;
+}
+
+.ts-input.focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px #2061d133;
+  border-radius: 4px;
+}
+
+.ts-control .ts-input input {
+  border: none;
+  padding: 0;
+  background-color: transparent;
+  width: auto;
+  outline: none !important;
+  box-shadow: none !important;
+  display: inline-block;
+  min-width: 7rem;
+  max-width: 100%;
+  flex: 1 1 auto;
+}
+
+// Dropdown
+// =============
+.ts-dropdown {
+  white-space: nowrap;
+  position: absolute;
+  z-index: 100;
+  min-width: 100%;
+  width: 100%;
+  right: -1px;
+  font-size: 0.9rem;
+  background: var(--background-patient);
+  border: 1px solid var(--background-download);
+  color: var(--color-white);
+}
+
+.ts-dropdown-content {
+  overflow-x: hidden;
+  max-height: 115px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+.ts-dropdown .option,
+.ts-dropdown .create,
+.ts-dropdown .optgroup-header,
+.ts-dropdown .no-results {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.ts-dropdown .option:hover,
+.ts-dropdown .option.active {
+  background: var(--background-download);
+  color: var(--color-white);
+}
+
+.ts-dropdown .dropdown-input {
+  right: -1px;
+  font-size: 0.9rem;
+  background: var(--background-patient);
+  border: 1px solid var(--background-download);
+  color: var(--color-white);
+  height: 32px;
+  padding-left: 8px;
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .ts-dropdown .option {
+    padding-right: 80px;
+  }
+}
+
+// Single
+// =============
+.ts-control.single .ts-input {
+  padding-right: 32px !important;
+}
+.ts-control.single .ts-input::after {
+  border-color: var(--color-white) transparent transparent;
+  border-style: solid;
+  border-width: 4px 4px 0;
+  content: " ";
+  display: block;
+  height: 0;
+  margin-top: -1px;
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  width: 0;
+  transition: border 0.3s;
+}
+.ts-control.single .ts-input.focus::after {
+  border-color: var(--color-white) transparent transparent;
+}
+.ts-control.single .ts-input input {
+  margin-left: 0.5rem;
+}

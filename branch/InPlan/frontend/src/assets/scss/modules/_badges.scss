@@ -1,0 +1,38 @@
+%badge-little {
+  color: var(--color-white);
+  padding: 2px 6px;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: normal;
+  border-radius: 4px;
+}
+
+.badge-little-success {
+  @extend %badge-little;
+  background: var(--color-secondary);
+}
+
+.badge-little-error {
+  @extend %badge-little;
+  background: var(--color-error);
+}
+
+.badge-little-warning {
+  @extend %badge-little;
+  background: var(--color-danger);
+}
+
+.badge-little-waiting {
+  @extend %badge-little;
+  background: var(--color-waiting);
+}
+
+.badge-little-info {
+  @extend %badge-little;
+  color: var(--color-white);
+}
+
+.badge-little-notice {
+  @extend %badge-little;
+  background: var(--color-primary);
+}

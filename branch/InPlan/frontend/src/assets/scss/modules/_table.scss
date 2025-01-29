@@ -1,0 +1,135 @@
+.table {
+  width: 100%;
+  line-height: 1.2;
+  background: var(--color-white);
+
+  svg {
+    width: 40px;
+    height: 40px;
+    margin-right: 16px;
+  }
+
+  .icon-star {
+    width: 22px;
+    height: 22px;
+    color: var(--color-primary);
+    margin-right: 32px;
+    cursor: pointer;
+  }
+}
+
+.table.table__patients th,
+.table.table__patients td {
+  padding-left: 32px;
+}
+
+.table thead th {
+  text-transform: uppercase;
+  font-size: 14px;
+  line-height: 14px;
+  font-weight: 600;
+  vertical-align: middle;
+  color: var(--label-form);
+  text-align: left;
+}
+
+.table thead tr {
+  border-bottom: 2px solid var(--background-light);
+}
+
+.table tbody tr:nth-child(even) {
+  background: var(--background-visualizer);
+}
+
+.table th,
+.table td {
+  padding: 16px 8px;
+
+  &:first-child {
+    padding-left: 16px;
+  }
+
+  &:last-child {
+    padding-right: 16px;
+  }
+}
+
+.table td {
+  font-size: 18px;
+  line-height: 22px;
+  font-weight: normal;
+  vertical-align: middle;
+
+  strong {
+    font-weight: 600;
+  }
+}
+
+.table td span > * {
+  margin-right: 6px;
+}
+
+.table__actions > * {
+  margin-right: 6px;
+}
+
+.table__actions > * * {
+  margin-right: 6px;
+}
+
+.table__actions {
+  display: flex;
+  /* align-items: center; */
+  /* justify-content: center;*/
+}
+
+.table__actions svg {
+  width: 12px;
+  height: 12px;
+  margin: 0;
+}
+
+.td__actions {
+  svg {
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+    margin: 0;
+  }
+
+  .icon-eye {
+    height: 24px;
+    width: 24px;
+  }
+}
+
+.td__actions > * {
+  &:first-child,
+  &:last-child {
+    margin: 0;
+  }
+
+  margin: 0 8px;
+}
+
+.td__loading svg {
+  width: 24px;
+  height: 24px;
+  margin: 0;
+}
+
+.td-alignItems {
+  display: flex;
+  align-items: center;
+}
+
+// Slots
+
+.table.table-slots tbody tr {
+  height: 78px;
+  border: 2px solid var(--background-light);
+}
+
+.table.table-slots tbody td {
+  border-right: 2px solid var(--background-light);
+}

@@ -1,0 +1,7 @@
+{
+  "entry": ["src/index.js"],
+  "ignoreUnimported": ["src/index.js"],
+  "aliases": {
+    "@inplan/*": ["./src", "./src/*"]
+  }
+}

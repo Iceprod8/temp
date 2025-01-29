@@ -1,0 +1,27 @@
+.auth-page {
+  @extend %container-auto;
+  position: relative;
+}
+
+.auth-image {
+  height: 100%;
+  //background: url("../../images/sign-v4-bitmap-1-p-800.png") no-repeat center center;
+}
+
+.auth-form > * + * {
+  margin-top: 32px;
+}
+
+.auth-forgot {
+  font-size: 28px;
+  line-height: 32px;
+  color: var(--background-download);
+  font-weight: 400;
+  text-align: center;
+  text-decoration: underline;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: none;
+  }
+}

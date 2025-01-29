@@ -1,0 +1,199 @@
+%card {
+  color: var(--color-white);
+  cursor: pointer;
+  text-align: center;
+}
+
+// Period
+%cardPeriod,
+.cardPeriod {
+  @extend %card;
+  border: 1px solid var(--background-patient);
+  border-radius: 4px;
+  min-width: 230px;
+  margin-right: 24px;
+
+  &:hover {
+    border: 1px solid var(--color-secondary);
+    box-shadow: 0 0 0 3px #0ca67833;
+    border-radius: 4px;
+  }
+}
+
+.cardPeriod__head {
+  position: relative;
+  font-size: 12px;
+  line-height: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 10px 0;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  text-align: center;
+  letter-spacing: 1px;
+  background: var(--background-card);
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.cardPeriod__head.is-selected {
+  background: var(--color-secondary);
+  border: 1px solid var(--color-secondary);
+  box-shadow: 0 0 0 3px #0ca67833;
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
+}
+
+.cardPeriod-head__info {
+  position: absolute;
+  opacity: 0.56;
+  letter-spacing: normal;
+  left: 8px;
+}
+
+.cardPeriod-head__actions {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  cursor: pointer;
+
+  .icon-delete {
+    color: var(--color-danger);
+  }
+}
+
+.is-selected .cardPeriod-head__actions .icon-delete {
+  color: var(--color-white);
+}
+
+.cardPeriod-main {
+  padding: 16px 8px;
+  background: var(--background-patient);
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+.cardPeriod-main p > * {
+  margin: 0 3px;
+}
+
+.cardPeriod-main p {
+  font-weight: 600;
+  margin-right: 3px;
+
+  span {
+    font-weight: 400;
+    color: var(--color-grey);
+  }
+}
+
+// Maxi / Mandi
+.card {
+  @extend %card;
+  position: relative;
+  width: 280px;
+  margin-top: 16px;
+  border: 1px solid var(--background-patient);
+  border-radius: 4px;
+}
+
+.card.is-selected,
+.card:hover {
+  border: 1px solid var(--color-secondary);
+  box-shadow: 0 0 0 3px #0ca67833;
+  border-radius: 4px;
+}
+
+.card-head {
+  background: var(--background-card);
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.card-head__more {
+  position: relative;
+  height: 22px;
+  width: 12px;
+  margin-right: 0 !important;
+}
+
+.card-head__more .icon-more {
+  transform: rotate(90deg);
+  position: absolute;
+  top: 9px;
+  right: -4px;
+}
+
+.card-head__actions.flex > * {
+  &:first-child {
+    margin-right: 8px;
+  }
+}
+
+.card-head__actions .icon-delete {
+  color: var(--color-danger);
+}
+
+.card-head__actions .icon-export {
+  color: var(--color-secondary);
+}
+
+.card-head__actions svg {
+  cursor: pointer;
+}
+
+.card-body {
+  color: var(--color-white);
+  padding: 16px 16px 20px 16px;
+  background: var(--background-patient);
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+.card-link {
+  display: block;
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2 !important;
+  border: 1px solid transparent;
+  transition: 0.3s;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+// Batch
+.cardBatch {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid var(--color-secondary);
+  background: var(--color-secondary);
+  color: var(--color-white);
+
+  .icon-delete {
+    color: var(--color-danger);
+    cursor: pointer;
+  }
+
+  .icon-download {
+    color: var(--color-white);
+    cursor: pointer;
+  }
+}
+
+.cardBatch__title {
+  cursor: pointer;
+}

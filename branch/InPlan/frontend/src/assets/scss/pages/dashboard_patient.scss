@@ -1,0 +1,471 @@
+$primary-color: #0056b3;
+$secondary-color: #6c757d;
+$background-color: #ffffff;
+$text-color: #333;
+$border-radius: 12px;
+$box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+$transition: 0.3s ease-in-out;
+$spacing-unit: 16px;
+
+// Dashboard Control Body
+.dashboard-control__body-patient {
+    width: 100%;
+    max-width: 1000px;
+    margin: $spacing-unit auto;
+    padding: 24px;
+    background: $background-color !important;
+    background-color: $background-color;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+
+    @media (max-width: 768px) {
+        max-width: 95%;
+        padding: 16px;
+    }
+}
+
+// Section Titre
+.page-head__title {
+    text-align: center;
+    margin-bottom: $spacing-unit;
+
+    h1 {
+        font-size: 28px;
+        color: $primary-color;
+        font-weight: bold;
+        margin: 0;
+
+        @media (max-width: 768px) {
+            font-size: 24px;
+        }
+    }
+
+    .patient-identifier {
+        margin-top: 8px;
+        font-size: 14px;
+        color: $secondary-color;
+
+        @media (max-width: 768px) {
+            font-size: 12px;
+        }
+    }
+}
+
+// Order Container
+.order-container-archive {
+    margin: 24px 0;
+    text-align: center;
+
+    // Archive Button
+    .archive-button {
+        background-color: #e63946;
+        color: white;
+        font-weight: bold;
+        border: none;
+        border-radius: $border-radius;
+        padding: 12px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        box-shadow: $box-shadow;
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+            background-color: lighten(#e63946, 10%);
+            transform: scale(1.05);
+        }
+
+        &:active {
+            background-color: darken(#e63946, 10%);
+        }
+    }
+}
+
+// Dashboard Table Container
+.dashboard-table-container {
+    margin-top: 40px;
+
+    h2 {
+        font-size: 22px;
+        color: $primary-color;
+        margin-bottom: $spacing-unit;
+        text-align: left;
+
+        @media (max-width: 768px) {
+            font-size: 18px;
+            text-align: center;
+        }
+    }
+}
+
+// Patient Editor
+.patient-editor {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 24px;
+    background: #f9f9f9;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+
+    @media (max-width: 768px) {
+        max-width: 95%;
+        padding: 16px;
+    }
+
+    &__header {
+        text-align: center;
+        font-size: 24px;
+        color: $primary-color;
+        margin-bottom: $spacing-unit;
+        font-weight: bold;
+
+        @media (max-width: 768px) {
+            font-size: 20px;
+        }
+    }
+
+    &__form {
+        display: grid;
+        gap: $spacing-unit;
+
+        @media (max-width: 768px) {
+            gap: 12px;
+        }
+
+        &-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 2fr;
+            align-items: center;
+            gap: $spacing-unit;
+
+            @media (max-width: 768px) {
+                grid-template-columns: 1fr;
+            }
+
+            label {
+                font-weight: bold;
+                color: $secondary-color;
+
+                @media (max-width: 768px) {
+                    font-size: 14px;
+                }
+            }
+
+            .value {
+                font-size: 14px;
+                color: $text-color;
+
+                @media (max-width: 768px) {
+                    font-size: 12px;
+                }
+            }
+
+            input,
+            select,
+            textarea {
+                width: 100%;
+                padding: 12px;
+                border: 1px solid #ddd;
+                border-radius: $border-radius;
+                transition: border-color $transition;
+
+                &:focus {
+                    border-color: $primary-color;
+                    outline: none;
+                }
+
+                @media (max-width: 768px) {
+                    padding: 10px;
+                }
+            }
+        }
+    }
+
+    &__buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: $spacing-unit;
+
+        @media (max-width: 768px) {
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        button {
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: $border-radius;
+            cursor: pointer;
+            transition: background-color $transition;
+
+            &.btn-primary {
+                background-color: $primary-color;
+                color: white;
+
+                &:hover {
+                    background-color: lighten($primary-color, 5%);
+                }
+            }
+
+            &.btn-secondary {
+                display: flex;
+                flex-direction: row;
+                background-color: $secondary-color;
+                color: white;
+
+                &:hover {
+                    background-color: lighten($secondary-color, 5%);
+                }
+            }
+
+            @media (max-width: 768px) {
+                width: 100%;
+            }
+        }
+    }
+}
+
+// Section Adresse
+.patient-editor__address {
+    &-title {
+        font-size: 20px;
+        font-weight: bold;
+        color: $primary-color;
+        margin-bottom: 10px;
+
+        @media (max-width: 768px) {
+            font-size: 18px;
+            text-align: center;
+        }
+    }
+
+    &-row {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: $spacing-unit;
+
+        @media (max-width: 768px) {
+            grid-template-columns: 1fr;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border-radius: $border-radius;
+            border: 1px solid #ddd;
+            transition: border-color $transition;
+
+            &:focus {
+                border-color: $primary-color;
+            }
+
+            @media (max-width: 768px) {
+                padding: 10px;
+            }
+        }
+    }
+}
+
+// Notes Section 
+.notes-section {
+    margin-top: 40px;
+    padding: 24px;
+    background-color: #f9f9f9;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+
+    h2 {
+        font-size: 22px;
+        color: $primary-color;
+        margin-bottom: $spacing-unit;
+        text-align: left;
+        border-bottom: 2px solid $primary-color;
+        padding-bottom: 8px;
+    }
+
+    .notes-actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+
+        .add-note-button {
+            background-color: $primary-color;
+            color: white;
+            border: none;
+            border-radius: $border-radius;
+            padding: 10px 20px;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: $box-shadow;
+
+            &:hover {
+                background-color: lighten($primary-color, 10%);
+                transform: scale(1.05);
+            }
+        }
+
+        textarea {
+            width: 100%;
+            margin-top: $spacing-unit;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: $border-radius;
+            font-size: 14px;
+            color: $text-color;
+            background-color: $background-color;
+            transition: border-color $transition;
+
+            &:focus {
+                border-color: $primary-color;
+                outline: none;
+                box-shadow: 0 0 5px $primary-color;
+            }
+        }
+
+        .delete-icon {
+            color: $secondary-color;
+            font-size: 24px;
+            cursor: pointer;
+
+            &:hover {
+                color: darken($secondary-color, 15%);
+            }
+        }
+    }
+
+    .notes-list {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+
+        .note-item {
+            display: flex;
+            flex-direction: column;
+            padding: 16px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+            cursor: pointer;
+
+            &:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+                background-color: #f4f6f8;
+            }
+
+            &.selected {
+                border: 2px solid #0056b3;
+                background-color: #e3f2fd;
+            }
+
+            .note-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                .note-author {
+                    font-size: 16px;
+                    font-weight: bold;
+                    color: #0056b3;
+                }
+
+                .note-date {
+                    font-size: 14px;
+                    color: #6c757d;
+                }
+            }
+
+            .note-content {
+                margin-top: 8px;
+                font-size: 14px;
+                color: #333;
+                line-height: 1.6;
+            }
+
+            .hidden-checkbox {
+                display: none;
+            }
+        }
+    }
+
+    .download-button {
+        margin-top: $spacing-unit;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: $border-radius;
+        padding: 10px 15px;
+        font-size: 14px;
+        cursor: pointer;
+        text-align: center;
+
+        &:hover {
+            background-color: lighten(#4caf50, 10%);
+        }
+    }
+}
+
+// TextField Improvements
+textarea {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+    border: 1px solid $secondary-color;
+    border-radius: $border-radius;
+    background-color: #fff;
+    color: $text-color;
+    transition: all $transition;
+
+    &:focus {
+        border-color: $primary-color;
+        box-shadow: 0 0 5px rgba(0, 86, 179, 0.4);
+        outline: none;
+    }
+}
+
+// Button Model Container
+.order-container-model {
+    margin: 24px 0;
+    text-align: center;
+    justify-items: center;
+
+    // Download Model Button
+    .download-model-button {
+        text-decoration: none !important;
+        display: flex;
+        flex: auto;
+        align-items: center;
+        justify-content: center;
+        width: 30%;
+        background-color: #4caf50;
+        color: white !important;
+        font-weight: bold;
+        border: none;
+        border-radius: $border-radius;
+        padding: 12px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        box-shadow: $box-shadow;
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+            background-color: lighten(#4caf50, 10%);
+            transform: scale(1.05);
+        }
+
+        &:active {
+            background-color: darken(#4caf50, 10%);
+        }
+
+        &.disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+    }
+}

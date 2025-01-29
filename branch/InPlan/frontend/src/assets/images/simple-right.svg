@@ -1,0 +1,25 @@
+<svg width="30" height="30" xmlns="http://www.w3.org/2000/svg">
+
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="402" width="582" y="-1" x="-1"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <g transform="rotate(179.98806762695312 15.000000000000002,15) " stroke="null" id="svg_1">
+   <g stroke="null" id="svg_2" transform="matrix(-1,0,0,1,30,0) ">
+    <g stroke="null" id="svg_3">
+     <path stroke="null" id="svg_4" d="m0,15c0,-8.284 6.716,-15 15,-15c8.284,0 15,6.716 15,15c0,8.284 -6.716,15 -15,15c-8.284,0 -15,-6.716 -15,-15z" fill="#e2ebfb"/>
+    </g>
+    <g stroke="null" id="svg_5">
+     <g stroke="null" id="svg_6"/>
+     <g stroke="null" id="svg_7">
+      <g stroke="null" id="svg_8">
+       <path stroke="null" id="svg_9" d="m12.644,7.998l8.17,6.124a1.021,1.021 0 0 1 0,1.634l-8.17,6.128a1.022,1.022 0 0 1 -1.634,-0.817l0,-12.252c0,-0.845 0.96,-1.325 1.634,-0.817" fill="#2061d1"/>
+      </g>
+     </g>
+    </g>
+   </g>
+  </g>
+ </g>
+</svg>

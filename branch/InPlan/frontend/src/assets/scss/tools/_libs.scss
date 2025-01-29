@@ -1,0 +1,298 @@
+// Visualizer gui
+.dg,
+.main {
+  margin: 8px !important;
+  border-radius: 2px !important;
+  font-family: $font !important;
+  width: 200px !important;
+}
+
+.dg .cr.function {
+  border-left: 3px solid var(--color-primary);
+  border-radius: 2px;
+}
+
+.dg li:not(.folder) {
+  padding: 4px 8px;
+  height: 35px;
+  background: var(--background-control) !important;
+  border-bottom: 1px solid var(--background-card);
+  font-size: 14px;
+}
+
+.dg .cr.function:hover,
+.dg .cr.boolean:hover {
+  filter: brightness(1.2) !important;
+}
+
+.dg .closed {
+  display: none !important;
+}
+
+.close-button,
+.close-bottom {
+  height: 35px !important;
+  padding: 8px !important;
+  font-size: 16px !important;
+  line-height: 20px !important;
+  width: 200px !important;
+  background: var(--background-patient) !important;
+  color: var(--color-white);
+  border-radius: 4px !important;
+
+  &:hover {
+    filter: brightness(1.2);
+  }
+}
+
+// Visualizer
+.css-df17o1 {
+  font-size: 16px !important;
+  background: var(--background-patient) !important;
+  color: var(--color-white) !important;
+}
+
+.css-42igfv {
+  font-size: 20px !important;
+  line-height: 24px !important;
+}
+
+.css-50etie {
+  width: 32px !important;
+  margin-bottom: 10px !important;
+}
+
+// Circular loader
+.MuiCircularProgress-root {
+  color: var(--color-white) !important;
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+}
+
+.td__loading .MuiCircularProgress-root {
+  color: var(--label-form) !important;
+}
+
+.btn-tertiary .MuiCircularProgress-root {
+  width: 14.5px !important;
+  height: 14.5px !important;
+  color: var(--color-primary) !important;
+}
+
+.badge-little-waiting .MuiCircularProgress-root {
+  color: var(--color-white) !important;
+  width: 14px !important;
+  height: 14px !important;
+  margin-right: 5px;
+}
+
+// Select
+.css-2b097c-container {
+}
+
+.css-yk16xz-control {
+  border: 1px solid var(--border-form) !important;
+  color: var(--background-header) !important;
+  max-width: 300px !important;
+}
+
+.css-g1d714-ValueContainer {
+}
+
+.css-1pahdxg-control {
+  border: 1px solid var(--color-primary) !important;
+  box-shadow: 0 0 0 3px #2061d133 !important;
+}
+
+.css-g1d714-ValueContainer {
+  min-height: 48px !important;
+  padding: 4px 8px !important;
+}
+
+.css-b8ldur-Input {
+  height: 0 !important;
+  visibility: hidden !important;
+}
+
+.css-g1d714-ValueContainer,
+.css-26l3qy-menu {
+  font-size: 16px !important;
+  line-height: 16px !important;
+  color: var(--background-header) !important;
+}
+
+.css-tj5bde-Svg {
+  width: 16px !important;
+  height: 16px !important;
+  margin: 0 !important;
+  cursor: pointer !important;
+}
+
+.css-26l3qy-menu:hover {
+  cursor: pointer !important;
+}
+
+.css-1rhbuit-multiValue {
+  color: var(--color-white) !important;
+  background: var(--color-secondary) !important;
+  border-radius: 4px !important;
+  font-size: 14px !important;
+  line-height: 14px !important;
+}
+
+.css-xb97g8 {
+  cursor: pointer !important;
+
+  &:hover {
+    background-color: #ff8855 !important;
+    color: var(--color-white) !important;
+  }
+}
+
+.css-tlfecz-indicatorContainer {
+  color: hsl(0, 0%, 80%) !important;
+
+  &:hover {
+    color: var(--color-danger) !important;
+  }
+}
+
+.css-4ljt47-MenuList > * {
+  font-size: 14px !important;
+  line-height: 14px !important;
+  cursor: pointer !important;
+  background: var(--color-white) !important;
+
+  &:hover {
+    background: var(--color-secondary) !important;
+    color: var(--color-white) !important;
+  }
+}
+
+.css-4ljt47-MenuList {
+  cursor: pointer !important;
+  padding: 0 !important;
+  max-width: 300px !important;
+}
+
+.css-12jo7m5 {
+  color: var(--color-white) !important;
+}
+
+.css-g1d714-ValueContainer > * {
+  &:last-child {
+    margin-bottom: 0 !important;
+  }
+}
+
+.css-1rhbuit-multiValue:last-child {
+  margin-bottom: 0 !important;
+}
+
+// Notifications
+.notification-container {
+  box-sizing: border-box !important;
+  position: fixed !important;
+  top: 0 !important;
+  right: 0 !important;
+  z-index: 999999 !important;
+  max-width: 360px !important;
+  padding: 0px 16px !important;
+  max-height: calc(100% - 30px) !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+}
+
+.notification {
+  box-sizing: border-box !important;
+  padding: 16px 16px 16px 58px !important;
+  border-radius: 4px !important;
+  color: #fff !important;
+  opacity: 1;
+  box-shadow: none;
+  cursor: pointer !important;
+  font-size: 16px !important;
+  line-height: 20px !important;
+  position: relative !important;
+  margin-top: 16px !important;
+}
+
+.notification .title {
+  font-size: 16px !important;
+  line-height: 20px !important;
+  font-weight: bold !important;
+  margin: 0 0 5px 0 !important;
+}
+
+.notification:hover,
+.notification:focus {
+  opacity: 1 !important;
+}
+
+.notification-enter {
+  visibility: hidden !important;
+  transform: translate3d(100%, 0, 0) !important;
+}
+
+.notification-enter.notification-enter-active {
+  visibility: visible !important;
+  transform: translate3d(0, 0, 0) !important;
+  transition: all 0.4s !important;
+}
+
+.notification-leave {
+  visibility: visible !important;
+  transform: translate3d(0, 0, 0) !important;
+}
+
+.notification-leave.notification-leave-active {
+  visibility: hidden !important;
+  transform: translate3d(100%, 0, 0) !important;
+  transition: all 0.4s !important;
+}
+
+.notification:before {
+  position: absolute !important;
+  top: 50% !important;
+  left: 16px !important;
+  margin-top: -14px !important;
+  display: block !important;
+  width: 28px !important;
+  height: 28px !important;
+  font-size: 28px !important;
+  text-align: center !important;
+  line-height: 28px !important;
+}
+
+.notification-info {
+  background-color: #2f96b4 !important;
+}
+
+.notification-info:before {
+  content: "" !important;
+}
+
+.notification-success {
+  background-color: #0ca678 !important;
+}
+
+.notification-success:before {
+  content: "" !important;
+}
+
+.notification-warning {
+  background-color: #ff9100 !important;
+}
+
+.notification-warning:before {
+  content: "" !important;
+}
+
+.notification-error {
+  background-color: #ff8855 !important;
+}
+
+.notification-error:before {
+  content: "" !important;
+}

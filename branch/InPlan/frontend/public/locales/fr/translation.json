@@ -1,0 +1,1014 @@
+{
+  "login": {
+    "form": {
+      "title": "Se connecter",
+      "fields": {
+        "username": "Nom d'utilisateur",
+        "password": "Mot de passe"
+      },
+      "button": "Entrer"
+    },
+    "forgot_password": "Mot de passe oublié ?",
+    "not_account_yet": "Vous n'avez pas encore de compte ?",
+    "register": "S'inscrire"
+  },
+  "navbar": {
+    "patients": "Patients",
+    "laboratory": "Commandes",
+    "models": "Impression 3D",
+    "aligners": "Thermoformage",
+    "inlase": "InLase",
+    "licenses": "Gestion des licences",
+    "users": "Gestion des utilisateurs",
+    "profile": {
+      "title": "Paramètres d'étiquetage",
+      "button": "Enregistrer les paramètres d'étiquetage",
+      "parameters": {
+        "bag_label": "Paramètres d'étiquetage des sachets",
+        "order_label": "Paramètres d'étiquetage des commandes",
+        "options": {
+          "last_name": "Nom",
+          "first_name": "Prénom",
+          "identifier": "Identifiant",
+          "office": "Office",
+          "doctor": "Docteur",
+          "rank": "Étape",
+          "upper_serie_detail": "Détails de la série supérieure",
+          "lower_serie_detail": "Détails de la série inférieure",
+          "sheet": "Matériau",
+          "deadline": "Date butoir",
+          "delivery_place": "Lieux",
+          "text_display": "Afficher le texte {{ nbr }}",
+          "upper_text_content": "Contenu du texte supérieur {{ nbr }}",
+          "lower_text_content": "Contenu du texte inférieur {{ nbr }}"
+        },
+        "language": {
+          "title": "Définir la langue",
+          "button": "Enregistrer les paramètres de langue",
+          "name": "Langage",
+          "options": {
+            "english": "Anglais",
+            "french": "Français"
+          }
+        },
+        "order_template": {
+          "title": "Paramètres des commandes",
+          "settings": {
+            "producers": {
+              "title": "Sélectionnez les producteurs"
+            },
+            "order_type": {
+              "title": "Sélectionnez le type de commande",
+              "default_order_type": "Type de commande par défaut"
+            },
+            "pickup_location": {
+              "title": "Sélectionnez le lieu",
+              "default_pickup_location": "Lieu par défaut"
+            },
+            "deadline_type": {
+              "title": "Sélectionnez le type de date butoir",
+              "default_deadline_type": "Date butoir par défaut"
+            },
+            "sheets": {
+              "title": "Sélectionnez les matériaux",
+              "default_sheet": "Matériau par défaut",
+              "default_template_sheet": "Matériau du template par défaut",
+              "warning_default_sheet": "ATTENTION : Le matériau par défaut n'est pas sélectionné dans la liste des matériaux utilisés.",
+              "legend": "Votre machine InLase est réglée pour ces matériaux"
+            },
+            "doctors": {
+              "title": "Sélectionnez les doctors",
+              "default_doctor": "Doctor par défaut",
+              "add_doctor": "Add Doctor",
+              "cancel": "Cancel",
+              "doctor_name": "Doctor Name",
+              "save_doctor": "Save Doctor"
+            }
+          },
+          "button": "Enregistrer les paramètres des commandes"
+        },
+        "batch_preferences": {
+          "title": "Gestion des lots",
+          "keep_printer_batch": "Conserver les lots d'impression 3D partiels après validation",
+          "keep_cutter_batch": "Conserver les lots de découpe partiels après validation",
+          "button": "Enregistrer les paramètres des lots"
+        }
+      },
+      "licenses": {
+        "title": "Ma liste de licences",
+        "contact_us": "Pour toute question relative à nos produits et services, n'hésitez pas à nous contacter à l'adresse suivante : "
+      },
+      "not_connected": "Non connecté"
+    }
+  },
+  "patients": {
+    "title": "Patients",
+    "button_archived": {
+      "hidden": "Afficher/Masquer les patients archivés",
+      "displayed": "Afficher/Masquer les patients archivés"
+    },
+    "new_patient_button": "Ajouter un nouveau patient",
+    "new_patient_form": {
+      "title": "Nouveau patient",
+      "fields": {
+        "first_name": "Prénom",
+        "last_name": "Nom de famille",
+        "birth_date": "Date de naissance",
+        "identifier": "Identifiant"
+      },
+      "buttons": {
+        "cancel": "Annuler",
+        "confirm": "Confirmer",
+        "save": "Enregistrer"
+      }
+    },
+    "table": {
+      "search": "Rechercher",
+      "titles": {
+        "patient": "Patient",
+        "favorite": "Favori",
+        "identifier": "Identifiant",
+        "first_name": "Prénom",
+        "last_name": "Nom de famille",
+        "birth_date": "Date de naissance",
+        "treatment_period": "Période de traitement",
+        "existing_orders": "Commandes en cours",
+        "progress_status": "État d'avancement",
+        "actions": "Actions"
+      },
+      "treatment_period_options": {
+        "no_defined": "Aucune période définie",
+        "archived": "Archivé",
+        "to": "\u00A0à\u00A0",
+        "start": "Début",
+        "end": "Fin"
+      },
+      "existing_orders_options": {
+        "orders_terminated": "commandes terminées",
+        "not_order_yet": "Aucune commande"
+      },
+      "progress_status_options": {
+        "no_order_requested": "Aucune commande",
+        "setup_to_be_done": "Setup à faire",
+        "setup_in_progress": "Setup en cours",
+        "aligners_to_be_started": "Aligneurs à commencer",
+        "aligners_to_print": "Aligners à imprimer",
+        "aligners_to_thermoform": "Aligners à thermoformer",
+        "aligners_to_cut": "Aligners à couper",
+        "aligners_cutted": "Aligners coupés",
+        "retainers_to_be_started": "Contentions à commencer",
+        "retainers_to_print": "Contentions à imprimer",
+        "retainers_to_thermoform": "Contentions à thermoformer",
+        "retainers_to_cut": "Contentions à couper",
+        "retainers_cutted": "Contentions coupés",
+        "other_order_to_be_done": "Autre commande à faire",
+        "other_order_in_progress": "Autre commande en cours",
+        "no_order_left_in_progress": "Aucune commande restante en cours"
+      },
+      "actions_options": {
+        "new_order": "Nouvelle commande",
+        "start_treatment": "Commencer le traitement",
+        "restore_patient": "Désarchiver le patient"
+      },
+      "note_form": {
+        "title": "Note",
+        "fields": {
+          "title": "Titre",
+          "description": "Saisissez vos notes..."
+        },
+        "buttons": {
+          "cancel": "Annuler",
+          "confirm": "Confirmer"
+        }
+      },
+      "no_notes": "Vous n'avez aucune note sur ce patient."
+    }
+  },
+  "patient_profile": {
+    "title": "Dossier du patient",
+    "header": {
+      "archive": "Archiver le patient"
+    },
+    "table": {
+      "name": "Édition",
+      "titles": {
+        "element": "ELEMENT",
+        "current_value": "VALEUR ACTUELLE",
+        "new_value": "NOUVELLE VALEUR"
+      },
+      "columns": {
+        "element": {
+          "identifier": "Identifiant",
+          "last_name": "Nom de famille",
+          "first_name": "Prénom",
+          "birth_date": "Date de naissance",
+          "address": {
+            "title": "Adresse et informations postales",
+            "address-line1": "Adresse",
+            "address-line2": "Compléments d'adresse",
+            "zip": "Code postal",
+            "city": "Ville",
+            "state": "Département",
+            "country": "Pays"
+          },
+          "email": "Courrier électronique"
+        }
+      }
+    },
+    "buttons": {
+      "save": "Enregistrer les modifications du patient",
+      "print_address": "Imprimer l'adresse"
+    },
+    "table_notes": {
+      "name": "Notes",
+      "titles": {
+        "title": "Titre",
+        "body": "Description",
+        "update": "Mis à jour"
+      },
+      "buttons": {
+        "add": "Ajouter une note",
+        "text": "Écrivez une nouvelle note...",
+        "download_notes": "Télécharger toutes les notes",
+        "download_models": "Télécharger tous les modèles"
+      }
+    }
+  },
+  "dashboard": {
+    "patient_profile": "Profil du patient",
+    "button_close": "Fermer le suivi du patient",
+    "period_information": {
+      "title": "Suivi du traitement",
+      "follow_up": {
+        "title": "Suivi",
+        "period": "Période",
+        "start": "Start",
+        "no_active_period": "Aucune période active"
+      },
+      "select_period": "Veuillez sélectionner une période",
+      "add_note_button": "Ajouter une note",
+      "add_new_period_button": "Créer une nouvelle période",
+      "create_form": {
+        "title": "Créer une période",
+        "title_update": "Modifier la période",
+        "ranks": {
+          "from": "Numéro aligneur initial",
+          "to": "Numéro aligneur final"
+        },
+        "setup": "Setup",
+        "wear_duration": "Durée de port en jours",
+        "start_date": "Date de début de port",
+        "end_date": "Date de fin de port",
+        "buttons": {
+          "cancel": "Annuler",
+          "create": "Créer la période",
+          "update": "Mettre à jour la période",
+          "reset": "Réinitialiser"
+        }
+      },
+      "delete_form": {
+        "title": "Supprimer {{ period }}",
+        "buttons": {
+          "cancel": "Annuler",
+          "confirm": "Confirmer"
+        }
+      },
+      "card": {
+        "weeks": "S",
+        "rank_text": "Aligneur de  {{ min_rank }} à {{ max_rank }}",
+        "from": "\u00A0Du\u00A0",
+        "to": "\u00A0au\u00A0"
+      }
+    },
+    "orders": {
+      "title": "Commandes",
+      "form": {
+        "fields": {
+          "producer_type": "Type producteur",
+          "producer": "Producteur",
+          "type": "Type",
+          "doctor": "Docteur",
+          "setup": "Setup",
+          "pickup": "Lieux",
+          "sheet": "Matériau",
+          "deadline_type": "Type date butoir",
+          "aligners_detail": {
+            "title": "Aligneurs",
+            "from": "Du",
+            "to": "au",
+            "upper_start": "Supérieur/Début",
+            "upper_end": "Supérieur/Fin",
+            "lower_start": "Inférieur/Début",
+            "lower_end": "Inférieur/Fin"
+          },
+          "retainers_detail": {
+            "title": "Gouttières de contention",
+            "rank_in_setup": "Contention",
+            "upper_rank": "Supérieure",
+            "lower_rank": "Inférieure",
+            "quantity": "Quantité",
+            "quantity_upper": "Quantité",
+            "quantity_lower": "Quantité"
+          },
+          "note": "Note"
+        },
+        "button": "Nouvelle commande"
+      },
+      "table": {
+        "name": "HISTORIQUE DES COMMANDES",
+        "titles": {
+          "identifier": "Identifiant",
+          "patient": "Patient",
+          "last_name": "Nom de famille",
+          "first_name": "Prénom",
+          "type": "Type",
+          "progress": "Progression",
+          "doctor": "Docteur",
+          "producer": "Producteur",
+          "producer_type": "Type producteur",
+          "deadline": "Date butoir",
+          "creation_date": "Date de création",
+          "done_date": "Date de clôture",
+          "setup": "Setup",
+          "delivery_location": "Lieux",
+          "sheet": "Matériau",
+          "note": "Note",
+          "nb_aligners": "Nb aligneurs",
+          "ranks": "Étapes",
+          "in_production": "En production",
+          "order_label": "Étiquette de laboratoire",
+          "bag_labels": "Étiquettes des sachets",
+          "edit": "Modifier"
+        }
+      }
+    },
+    "setups": {
+      "title": "Setups",
+      "form": {
+        "fields": {
+          "name": "Nom du setup"
+        },
+        "button": "Créer le Setup"
+      },
+      "table": {
+        "name": "SETUPS",
+        "titles": {
+          "name": "Nom",
+          "number": "Numéro",
+          "creation_date": "Date de création",
+          "aligners": "# aligneurs",
+          "ready": "# prêts"
+        }
+      }
+    },
+    "appointments": {
+      "title": "Rendez-vous",
+      "form": {
+        "fields": {
+          "appointment_date": "Date du rendez-vous",
+          "type": "Type",
+          "task": "Tâche"
+        },
+        "button": "Ajouter un rendez-vous"
+      },
+      "table": {
+        "name": "RENDEZ-VOUS",
+        "titles": {
+          "appointment_date": "Date du rendez-vous",
+          "type": "Type",
+          "task": "Tâche"
+        }
+      }
+    },
+    "cutlines": {
+      "title": "Lignes de découpe",
+      "buttons": {
+        "upload_model_files": "Importer les modèles 3D (STL)",
+        "upload_cutline_files": "Importer les lignes de découpe (PTS)",
+        "validate_all_selected": "Valider les lignes de découpe sélectionnées",
+        "delete_all_selected": "Effacer les modèles sélectionnés",
+        "new_setup": "Créer",
+        "download_models": "Téléchargez les modèles prêts"
+      },
+      "smooth_line": "Ligne souple",
+      "transparence_toggle": "Transparence",
+      "upper_jaw": "Maxillaire",
+      "lower_jaw": "Mandibule",
+      "select_all": "Tout sélectionner",
+      "card_model": {
+        "line_preparation": "Préparation de la ligne",
+        "no_line": "Pas de ligne",
+        "line_validated": "Ligne validée",
+        "line_edition": "Édition de la ligne",
+        "base_error": "Erreur de base",
+        "ready_for_printing": "Prêt pour l'impression",
+        "ready_with_errors": "Ligne optimisable",
+        "base_preparation": "Préparation de la base",
+        "existing_base": "Base existante",
+        "no_base": "Aucune base",
+        "printed": "Imprimé",
+        "cut": "Découpé",
+        "unprinted": "Pas encore imprimé",
+        "rank": "Étape"
+      },
+      "form": {
+        "fields": {
+          "title": "Paramètre du modèle\u00A0",
+          "note": "Note",
+          "delete_message": "Supprimer ce modèle ?"
+        },
+        "buttons": {
+          "cancel": "Annuler",
+          "confirm": "Confirmer",
+          "add_note": "Ajouter une note"
+        }
+      },
+      "toolbar": {
+        "initialize": "Initialiser la ligne",
+        "validate": "Valider la ligne",
+        "edit": "Editer la ligne",
+        "delete": "Supprimer la ligne",
+        "save": "Sauvegarder"
+      }
+    }
+  },
+  "laboratory": {
+    "title": "Liste des commandes",
+    "buttons": {
+      "show_filter": "Afficher le filtre. Utilisez uniquement pour ouvrir rapidement le menu de filtre.",
+      "launch_printing": "Lancer la commande",
+      "terminate_orders": "Terminer la commande",
+      "pending_orders": "Afficher/Masquer commandes terminées",
+      "finished_orders": "Afficher/Masquer commandes terminées",
+      "delay_orders_on": "Afficher/Masquer les retards",
+      "delay_orders_off": "Afficher/Masquer les retards"
+    },
+    "print": {
+      "title": "Imprimer",
+      "patient": "Patient",
+      "identifier": "Identifiant",
+      "deadline": "Date butoir",
+      "practitioner": "Praticien",
+      "no_top_aligner": "Aucun aligneur supérieur",
+      "no_bottom_aligner": "Aucun aligneur inférieur",
+      "material": "Matériau",
+      "delivery": "Lieux"
+    }
+  },
+  "licenses": {
+    "title": "Liste des licences",
+    "table": {
+      "titles": {
+        "id": "Id",
+        "office": "Office",
+        "username": "Nom d'utilisateur",
+        "name": "Licence",
+        "description": "Description",
+        "start_date": "Date de début",
+        "end_date": "Date de fin",
+        "status": "Statut",
+        "actions": "Actions"
+      },
+      "status": {
+        "active": "Active",
+        "no_active_yet": "Pas encore active",
+        "expired": "Expirée",
+        "inconsistency_of_dates": "Incohérence des dates"
+      }
+    },
+    "form": {
+      "create": "Créer une license",
+      "update": "Mettre à jour la licence",
+      "username": "Nom d'utilisateur",
+      "license_type": "Type de Licence",
+      "description": "Description",
+      "start_date": "Date de début",
+      "end_date": "Date de fin",
+      "no_ending": "Pas de date de fin"
+    },
+    "buttons": {
+      "delete": "Supprimer licences",
+      "create": "Ajouter une nouvelle licence",
+      "cancel": "Annuler",
+      "confirm": "Confirmer",
+      "save": "Enregistrer"
+    }
+  },
+  "users": {
+    "title": "Liste des utilisateurs",
+    "table": {
+      "titles": {
+        "id": "Id",
+        "office": "Office",
+        "username": "Nom d'utilisateur",
+        "first_name": "Prénom",
+        "last_name": "Nom de famille",
+        "email": "Email",
+        "actions": "Actions"
+      }
+    },
+    "form": {
+      "create": "Créer un utilisateur",
+      "update": "Mettre à jour l'utilisateur",
+      "office": "Office",
+      "username": "Nom d'utilisateur",
+      "first_name": "Prénom",
+      "last_name": "Nom de famille",
+      "email": "Email",
+      "password": "Mot de passe",
+      "password_confirm": "Confirmation du mot de passe",
+      "fields_rules": {
+        "letters_digits_and_characters": "Requis. 150 caractères ou moins. Lettres, chiffres et @/./+/-/_ uniquement.",
+        "email_is_not_valid": "L'email n'est pas valide",
+        "at_least_8_characters_max_128_characters": "Il doit contenir au moins 8 caractères. Maximum 128 caractères.",
+        "at_least_one_special_character": "Il doit contenir au moins un caractère spécial : !@#$%^&*()-_=+[{]}|;:',<.>?",
+        "at_least_one_uppercase": "Il doit contenir au moins une majuscule",
+        "at_least_one number": "Il doit contenir au moins un chiffre",
+        "password_and_password_confirmation_do_not_match": "Le mot de passe et la confirmation du mot de passe ne correspondent pas"
+      }
+    },
+    "buttons": {
+      "delete": "Supprimer utilisateurs",
+      "create": "Ajouter un nouvel utilisateur",
+      "cancel": "Annuler",
+      "confirm": "Confirmer",
+      "save": "Enregistrer"
+    }
+  },
+  "orderedit": {
+    "patient_profile": "Liste des commandes du patient",
+    "title": "Édition de commande\u00A0",
+    "header": {
+      "order_created": "\u00A0commande, créé le\u00A0",
+      "identifier": "Identifiant",
+      "last_name": "Nom",
+      "first_name": "Prénom",
+      "order_status": "État de la commande",
+      "producer": "Producteur",
+      "production_not_started": "\u00A0production non démarrée",
+      "production_started": "\u00A0production démarrée",
+      "deadline": "Date butoir",
+      "no_deadline": "Prochain rendez-vous",
+      "upper_aligner": "Aligneurs supérieurs {{ start_aligner_top }} à {{ end_aligner_top }}",
+      "bottom_aligner": "Aligneurs inférieurs {{ start_aligner_bottom }} à {{ end_aligner_bottom }}",
+      "upper_retainer": "Gouttière de contention supérieure étape {{ start_aligner_top }} avec une multiplicité de {{ multiplicity_top }}",
+      "bottom_retainer": "Gouttière de contention supérieure étape {{ start_aligner_bottom }} avec une multiplicité de {{ multiplicity_bottom }}",
+      "no_upper_aligner": "Aucun aligneur supérieur",
+      "no_bottom_aligner": "Aucun aligneur inférieur",
+      "no_upper_retainer": "Aucune gouttière de contention supérieur",
+      "no_bottom_retainer": "Aucune gouttières de contention inférieur"
+    },
+    "table": {
+      "titles": {
+        "element": "ELEMENT",
+        "current_value": "VALEUR ACTUELLE",
+        "new_value": "NOUVELLE VALEUR"
+      },
+      "columns": {
+        "element": {
+          "doctor": "Docteur",
+          "setup": "Setup",
+          "deadline": "Date butoire",
+          "pickup": "Lieux",
+          "sheet": "Matériau"
+        }
+      }
+    },
+    "current_note": "Note actuelle",
+    "updated_note": "Note mise à jour",
+    "buttons": {
+      "save": "Enregistrer les modifications de commande",
+      "launch_printing": "Lancer la commande",
+      "terminate_orders": "Terminer la commande",
+      "cancel_order": "Annuler la commande",
+      "order_label": "Étiquette de laboratoire",
+      "bag_labels": "Étiquettes des sachets"
+    },
+    "table_edition": {
+      "name": "Modification des aligneurs",
+      "titles": {
+        "position": "Position",
+        "rank": "Étape",
+        "current_status": "Statut actuel",
+        "new_status": "Nouveau statut",
+        "current_sheet": "Matériau actuel",
+        "new_sheet": "Nouveau matériau",
+        "save": "Enregistrer"
+      },
+      "buttons": {
+        "save": "Enregistrer les modifications du aligneur"
+      }
+    }
+  },
+  "3d_printing": {
+    "table_pending_models": {
+      "models": "Modèles à Imprimer",
+      "aligners": "Aligneurs à Thermoformer",
+      "titles": {
+        "orders": "Commandes",
+        "edit": "Modifier",
+        "remaining": "Restant",
+        "select_actions": "Sélectionner des modèles",
+        "current_selected": "Sélection actuelle"
+      },
+      "columns": {
+        "actions": {
+          "buttons": {
+            "add_models": "Ajouter {{ filteredItemsLength }} {{ subject }}",
+            "allInTray": "Créer les plateaux InLase"
+          }
+        }
+      }
+    },
+    "table_pending_printer_beds": {
+      "name": "Plateaux d'impression en attente",
+      "titles": {
+        "printer_beds": "Plateaux d'impression",
+        "actions": "Actions"
+      },
+      "search": "Rechercher par nom",
+      "batch_name": "Nom du lot",
+      "batch_modal_validate": {
+        "name": "Succès de la tâche pour ce lot",
+        "message": "Veuillez désélectionner les cas échoués",
+        "table": {
+          "titles": {
+            "aligners": "Aligneurs",
+            "actions": "Actions"
+          }
+        },
+        "buttons": {
+          "cancel": "Annuler",
+          "confirm": "Confirmer"
+        }
+      },
+      "batch_modal_edit": {
+        "name": "Modèles sélectionnés",
+        "table": {
+          "titles": {
+            "aligners": "Aligneurs",
+            "remove": "Supprimer",
+            "order": "Commande"
+          }
+        },
+        "buttons": {
+          "delete": "Supprimer ce lot ?",
+          "close": "Fermer"
+        }
+      }
+    }
+  },
+  "cutting": {
+    "table_pending_cutting_batches": {
+      "name": "Lots de découpe en attente",
+      "titles": {
+        "cutting_batches": "Lots de découpe",
+        "actions": "Actions"
+      },
+      "batch_modal_view": {
+        "name": "Lot de découpe",
+        "table": {
+          "titles": {
+            "aligner": "Aligneur",
+            "sheet": "Matériau",
+            "remove": "Supprimer",
+            "order": "Commande",
+            "labels": "Étiquettes"
+          }
+        }
+      }
+    }
+  },
+  "inlase": {
+    "title": "Contrôle InLase",
+    "buttons": {
+      "refresh": "Actualiser le statut InLase",
+      "stop": "Arrêter InLase",
+      "reset": "Réinitialiser InLase",
+      "cut": "Découper avec InLase",
+      "confirm": "Confirmer le succès de la découpe",
+      "edit_selected_batch": "Éditer le lot",
+      "apply_new_slot": "Appliquer un nouveau emplacement de démarrage pour ce lot",
+      "apply_sheet": "Appliquer le matériau à tous les emplacements"
+    },
+    "warning": "ATTENTION - Attendre 10 minutes avant de découper après avoir démarré la machine",
+    "table": {
+      "name": "État de la machine",
+      "titles": {
+        "status": "Statut"
+      },
+      "rows": {
+        "available": "Disponible",
+        "doors": "Portes",
+        "cutting": "Découpe",
+        "cutlines_ready": "Lignes de découpe prêtes"
+      },
+      "options": {
+        "ok": "ok",
+        "ko": "ko",
+        "close": "Fermé",
+        "open": "Ouverte",
+        "not_cutting": "Non en cours de découpe",
+        "cutting": "En cours de découpe",
+        "loaded": "Chargé",
+        "not_loaded": "Non chargé"
+      }
+    },
+    "slots_available": "Emplacement {{ nbr }} disponible",
+    "undefined_sheet": "Matériau non défini"
+  },
+  "not_found": {
+    "name": "404 - Page non trouvée",
+    "title": "Page non trouvée",
+    "sorry_no_result_found": "Aucun résultat trouvé pour votre recherche.",
+    "click_here_to_go_back_to_home_page": "Pour retourner à la page d'accueil, cliquez ici."
+  },
+  "no_rights": {
+    "you_do_not_have_permission": "Vous n'avez pas la permission d'accéder à cette vue.",
+    "contact": "Pour obtenir de l'aide, veuillez contacter ORTHOiN3D à l'adresse suivante : "
+  },
+  "utilities": {
+    "deliveryOptions": {
+      "clinic": "Cabinet",
+      "reception": "Secretariat",
+      "home": "Domicile",
+      "other": "Autre"
+    },
+    "orderTypeOptions": {
+      "setup": "Setup",
+      "aligner": "Aligneur",
+      "check": "Validation setup",
+      "retainer": "Contention",
+      "import": "Import",
+      "custom": "Custom",
+      "other": "Autre"
+    },
+    "orderStatusOptions": {
+      "new_order": "Nouvelle commande",
+      "laboratory": "En attente",
+      "doctor": "Docteur",
+      "done": "Terminée",
+      "canceled": "Annulée",
+      "ordered": "Commandée",
+      "in_progress": "En cours",
+      "in_printing": "En impression",
+      "in_thermofoming": "En thermoformage",
+      "in_cutting": "En découpe",
+      "in_progress_externally": "En cours en externe"
+    },
+    "producerTypeOptions": {
+      "locally": "Local",
+      "externally": "Externe"
+    },
+    "positionOptions": {
+      "upper": "Supérieur",
+      "lower": "Inférieur"
+    },
+    "possibleProcessSteps": {
+      "incorrect_value": "Valeur incorrecte",
+      "error": "Erreur",
+      "initialized": "Initialisé",
+      "in_upload": "En cours de téléchargement",
+      "uploaded": "Téléchargé",
+      "initializing_cutline": "Initialisation de la ligne de coupe",
+      "cutline_editing": "Édition de la ligne de coupe",
+      "base_in_creation": "Base en cours de création",
+      "base_ready": "Base prête",
+      "ordered": "Commandé",
+      "to_be_printed": "À imprimer",
+      "in_printing_batch": "Dans le lot d'impression",
+      "to_be_thermoformed": "À thermoformer",
+      "in_thermoformed_batch": "Dans le lot de thermoformage",
+      "to_be_cut": "À découper",
+      "in_cutting_batch": "Dans le lot de découpe",
+      "already_cut": "Déjà découpé",
+      "stored": "Stocké",
+      "delivered": "Livré",
+      "archived": "Archivé",
+      "other": "Autre",
+      "canceled": "Annulé"
+    },
+    "selectableProcessSteps": {
+      "no_change": "Aucune modification",
+      "ordered": "Commandé",
+      "to_be_printed": "À imprimer",
+      "to_be_cut": "À découper",
+      "already_cut": "Déjà découpé",
+      "canceled": "Annulé"
+    },
+    "deadline_type": {
+      "today": "Aujourd'hui",
+      "next_appointment": "Prochain RDV",
+      "select_date": "Sélectionner une date"
+    },
+    "taskTypeOptions": {
+      "scan": "Scanner",
+      "treatment_plan": "Validation setup",
+      "aligner": "Aligneur",
+      "retainer": "Contention"
+    },
+    "placeAppointmentOptions": {
+      "other": "Autre",
+      "sit": "Fauteuil",
+      "reception": "Secretariat"
+    },
+    "slotOffsetOptions": "Commencer à partir de l'emplacement {{ nbr }}",
+    "time_delay": {
+      "milliseconds": "Il y a {{ nbr }} ms",
+      "seconds": "Il y a {{ nbr }} s",
+      "minutes": "Il y a {{ nbr }} min",
+      "hours": "Il y a {{ nbr }} heures",
+      "days": "Il y a {{ nbr }} jours"
+    },
+    "variables": {
+      "machining_table": "Emplacements des mâchoires sur le plateau",
+      "of": "pour",
+      "batch": "lot de",
+      "aligners": "aligneurs",
+      "models": "modèles",
+      "order": "commande",
+      "setup": "setup",
+      "orders": "commandes",
+      "print": "Préparer un lot de",
+      "prepare tray of": "Préparer un lot de",
+      "format_date": "{{ year }}.{{ month }}.{{ day }} à {{ hours }}h{{ minutes }}",
+      "undefined": "indéfini",
+      "unspecified": "non spécifié",
+      "no_rows": "Aucune ligne",
+      "time": "Heure",
+      "or": "ou"
+    },
+    "ReactDatePicker": {
+      "timeCaption": "Heure",
+      "timeFormat": "HH'h'mm",
+      "dateFormat": "dd/MM/yyyy HH'h'mm",
+      "placeholder": "dd/mm/aaaa HHhmm"
+    },
+    "DataGridPro": {
+      "pagination": {
+        "footerTotalRows": "Nombre de lignes",
+        "labelRowsPerPage": "Lignes par page",
+        "labelRowsSelect": "Lignes",
+        "labelDisplayedRows": "{{from}}-{{to}} de {{count}}"
+      }
+    },
+    "MaterialTable": {
+      "pagination": {
+        "labelRowsPerPage": "Lignes par page",
+        "labelRowsSelect": "Lignes",
+        "labelDisplayedRows": "{from}-{to} de {count}"
+      }
+    }
+  },
+  "messages": {
+    "common": {
+      "error_batch": "Erreur dans le lot",
+      "select_batch_between": "Sélectionnez entre {{ minBatch }} et {{ maxBatch }} nombre de\u00A0",
+      "loading": "Chargement en cours...",
+      "loading_in_progress": "Chargement en cours...",
+      "batch_name_updated": "Nom du lot mis à jour",
+      "error_saving_batch_name": "Erreur lors de l'enregistrement du nom du lot",
+      "subject_was_created": "{{ subject }} a été créé",
+      "subject_was_not_created": "{{ subject }} n'a pas été créé",
+      "error_occurred": "Une erreur s'est produite",
+      "choose_a_date": "Veuillez choisir une date",
+      "note_added": "La note a été ajoutée",
+      "note_updated": "La note a été mise à jour",
+      "backend_issue": "Problème avec le serveur",
+      "invalid_credentials": "Identifiants invalides",
+      "unknown_user_or_application_not_available": "Utilisateur inconnu ou l'application n'est pas disponible",
+      "passwords_not_match": "Les mots de passe ne correspondent pas",
+      "you_do_not_have_permission_to_execute_this_action": "Vous n'avez pas l'autorisation d'effectuer cette action",
+      "already_connected_elsewhere": "Vous êtes déjà connecté ailleurs. Poursuivre vous déconnectera de l'autre emplacement. Continuer ?",
+      "force_disconnect_failed": "Échec de la déconnexion des autres sessions.",
+      "token_refresh_failed": "Votre session a expiré. Veuillez vous reconnecter.",
+      "logout_failed": "Échec de la déconnexion. Veuillez réessayer.",
+      "logout_successful": "Vous avez été déconnecté avec succès."
+    },
+    "cutlines": {
+      "validated_models": "{{ value1 }}/{{ value2 }} modèle(s) validé(s)",
+      "error_during_validation": "Une erreur est survenue lors de la validation, il reste {{ nbr }} modèle(s)",
+      "no_file_selected": "Aucun fichier sélectionné.",
+      "files_size": "Les fichiers doivent avoir une taille maximale de {{ size }}",
+      "file_downloaded": "{{ file }} téléchargé",
+      "not_enough_points": "Pas assez de points : Veuillez sélectionner 3 points.",
+      "too_many_points": "Trop de points : Veuillez sélectionner seulement 3 points.",
+      "file_uploading": "Les fichiers sont en cours de téléchargement",
+      "something_went_wrong_when_uploading_stl": "Un problème est survenu lors du téléchargement du fichier STL. Veuillez vérifier le nom du fichier, la position et le rang.",
+      "something_went_wrong_when_uploading_pts": "Un problème est survenu lors du téléchargement du fichier PTS. Peut-être que le modèle n'est pas encore entièrement téléchargé. Sinon, veuillez vérifier le nom du fichier, la position et le rang.",
+      "something_went_wrong_when_uploading": "Un problème est survenu lors du téléchargement.",
+      "select_a_setup": "Veuillez sélectionner un setup",
+      "delete_model_confirmation": "Êtes-vous sûr de vouloir supprimer le modèle ?",
+      "model_removed": "Le modèle a été supprimé.",
+      "delete_all_selected_models_confirmation": "Êtes-vous sûr de vouloir supprimer les modèles suivants ?",
+      "no_model_selected": "Aucun modèle sélectionné",
+      "order_has_a_remainder": "Il reste {{ remainder }} aligneur(s) sur cette commande",
+      "order_has_less_than_6_aligners": "La commande a moins de 6 aligneurs. Veuillez les inclure dans le plateau  d'une autre commande ou créer un plateau manuel pour {{ remainder }} aligneur(s)"
+    },
+    "patients": {
+      "patient_already_exists": "Le patient existe déjà.",
+      "patient_with_same_name_already_exist_check_birth_dates": "Des patients portant le même nom existent déjà. Veuillez faire attention aux dates de naissance pour les différencier.",
+      "error_during_patient_creation": "Erreur lors de la création du patient.",
+      "patient_updated": "Patient mis à jour.",
+      "error_updating_patient": "Erreur lors de la mise à jour du patient.",
+      "no_note_selected": "Aucune note sélectionnée.",
+      "archive_patient_confirmation": "Êtes-vous sûr de vouloir archiver le patient {{ last_name }} {{ first_name }} ? Cela fermera toutes les commandes associées.",
+      "unarchive_patient_confirmation": "Êtes-vous sûr de vouloir désarchiver le patient {{ last_name }} {{ first_name }} ?",
+      "email_is_not_valid": "Le courrier électronique n'est pas valide"
+    },
+    "inlase": {
+      "order_fully_cut": "La commande {{ description }} de {{ nb_aligners }} aligneur(s) a été entièrement découpée. Voulez-vous terminer cette commande ?",
+      "batch_cut": "Le lot a été découpé",
+      "batch_partially_cut": "Le lot a été partiellement découpé",
+      "no_actual_cut_succeed": "Aucune découpe n'a réussi",
+      "error_check_inlase_is_turned_on": "Erreur - Veuillez vérifier que le InLase est allumé, que le pilote InLase est en cours d'exécution et la validité du matériau. Si le problème persiste, utilisez la fonction de réinitialisation."
+    },
+    "period_information": {
+      "period_created": "Le période a été créée.",
+      "period_updated": "Le période a été mise à jour.",
+      "period_deleted": "Le période a été supprimée avec succès.",
+      "error_wear_duration": "La valeur pour le champ de durée de port n'est pas valide.",
+      "error_min_rank": "La valeur pour le champ de l'étape de début n'est pas valide.",
+      "error_max_rank": "La valeur pour le champ de l'étape de fin n'est pas valide."
+    },
+    "orders": {
+      "cancel_order_confirmation": "Êtes-vous sûr de vouloir annuler la/les commande(s) ? Cette action est irréversible.",
+      "finished_order_cannot_be_canceled": "Une commande terminée ne peut pas être annulée.",
+      "order_already_canceled": "La commande est déjà annulée.",
+      "canceling_the_order": "Annulation de la commande.",
+      "canceled_or_finished_order_cannot_be_modified": "Une commande annulée ou terminée ne peut pas être modifiée.",
+      "already_cut_aligner_cannot_be_canceled": "Un aligneur déjà découpé ne peut pas être annulé.",
+      "aligner_updated": "Aligneur mis à jour.",
+      "error_updating_aligner": "Erreur lors de la mise à jour de l'aligneur.",
+      "order_updated": "Commande mise à jour.",
+      "error_updating_order": "Erreur lors de la mise à jour de la commande.",
+      "models_available_in_models_tabs": "Les modèles sont désormais disponibles dans l'onglet Impression 3D",
+      "order_started": "Commande(s) type {{ type }} commencée(s)",
+      "reset_the_status_of_all_aligners_confirmation": "Cela réinitialisera le statut de tous les aligneurs à 'à imprimer'. Êtes-vous sûr ?",
+      "finished_or_canceled_order_cannot_be_reset": "Une commande terminée ou annulée ne peut pas être réinitialisée. Veuillez créer une nouvelle commande.",
+      "order_terminated": "La commande est terminée.",
+      "mark_order_as_terminated_confirmation": "Êtes-vous sûr de vouloir marquer cette commande comme terminée ?",
+      "order_already_finished_or_canceled": "La commande est déjà terminée ou annulée.",
+      "all_models_must_be_ready": "Tous les modèles doivent être prêts.",
+      "orders_have_been_canceled": "Les commandes ont été annulées",
+      "orders_have_been_terminated": "Les commandes ont été terminées",
+      "order_creation_requires_a_setup": "La création de commande nécessite un setup.",
+      "no_order_selected": "Aucune commande sélectionnée",
+      "launch_printing_confirmation": "Êtes-vous sûr de vouloir lancer la/les commande(s) ?",
+      "terminate_order_confirmation": "Êtes-vous sûr de vouloir terminer la/les commande(s) ? Cette action est irréversible.",
+      "error_starting_order": "Erreur lors du lancement de la commande. Veuillez vérifier que le setup existe et que des aligneurs sont sélectionnés."
+    },
+    "setup": {
+      "delete_setup_confirmation": "ATTENTION! Êtes-vous certain(e) de vouloir supprimer le setup et toutes les données associées, y compris les modèles 3D ? Cette action annulera les commandes associées. Il ne sera pas possible de revenir en arrière."
+    },
+    "3d_printing": {
+      "batch_printed": "Le lot a été correctement imprimé.",
+      "downloading_models_only_available_using_inlase": "Le téléchargement des modèles n'est disponible que lors de l'utilisation de la machine InLase.",
+      "error_downloading_models": "Impossible de télécharger les modèles. Veuillez vérifier que le setup correct est sélectionné et que tous les aligneurs de ce lot sont prêts avec une ligne de découpe validée."
+    },
+    "parameters": {
+      "sheetsList": {
+        "success": "La liste des matériaux a été enregistrée",
+        "error": "Une erreur s'est produite lors de l'enregistrement de la liste des matériaux"
+      },
+      "defaultSheet": {
+        "success": "Le matériau par défaut a été enregistré",
+        "error": "Une erreur s'est produite lors de l'enregistrement de la le matériau par défaut"
+      },
+      "producerList": {
+        "success": "La liste des producteurs a été enregistrée",
+        "error": "Une erreur s'est produite lors de l'enregistrement de la liste des producteurs"
+      },
+      "labels": {
+        "success": "Les paramètres d'étiquetage ont été enregistrés",
+        "error": "Une erreur s'est produite lors de l'enregistrement des paramètres d'étiquetage"
+      },
+      "order_template": {
+        "success": "Les paramètres du template de commande ont été enregistrés",
+        "error": "Une erreur s'est produite lors de l'enregistrement des paramètres du template de commande"
+      },
+      "batchPreferences": {
+        "success": "Préférences de lots mises à jour.",
+        "error": "Erreur lors de la mise à jour des préférences de lots."
+      }
+    },
+    "licenses": {
+      "delete_confirmation": "ATTENTION! Êtes-vous certain(e) de vouloir supprimer cette licence ?. Il ne sera pas possible de revenir en arrière.\nLicence: {{ license_name }} - Nom d'utilisateur: {{ username }} ",
+      "no_license_selected": "Aucune licence sélectionnée",
+      "licenses_have_been_deleted": "Les licences ont été supprimées",
+      "delete_selected_licenses": "ATTENTION! Êtes-vous certain(e) de vouloir supprimer les licences sélectionnées ?. Il ne sera pas possible de revenir en arrière.",
+      "license_was_created": "La licence a été créée",
+      "license_was_updated": "La licence a été mise à jour",
+      "dates_cannot_be_empty": "La date de début et la date de fin ne peuvent pas être vides"
+    },
+    "users": {
+      "delete_confirmation": "ATTENTION! Êtes-vous certain(e) de vouloir supprimer cet utilisateur ?. Il ne sera pas possible de revenir en arrière.\nUtilisateur: {{ username }}",
+      "no_user_selected": "Aucun utilisateur sélectionné",
+      "users_have_been_deleted": "Les utilisateurs ont été supprimés",
+      "delete_selected_users": "ATTENTION! Êtes-vous certain(e) de vouloir supprimer les utilisateurs sélectionnés ?. Il ne sera pas possible de revenir en arrière.",
+      "user_was_created": "L'utilisateur a été créé",
+      "user_was_updated": "L'utilisateur a été mis à jour",
+      "invalid_information_provided": "Informations invalides fournies. Veuillez vérifier le nom d'utilisateur et l'e-mail. Assurez-vous qu'aucun autre utilisateur n'a les mêmes informations."
+    }
+  }
+}
