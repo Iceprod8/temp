@@ -1,0 +1,83 @@
+:root {
+  --color-muted: #747577;
+  --color-grey: #838b9d;
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  --color-primary: #2061d1;
+  --color-secondary: #0ca678;
+  --color-tertiary: #e2ebfb;
+  --color-danger: #ff8855;
+  --color-waiting: #ff9100;
+  --color-error: red;
+
+  --label-form: #5c6475;
+  --border-form: #dadde2;
+  --border-visualizer: #e5e7eb;
+  --color-form: #afb4bf;
+
+  --color-btn-muted: #f0f1f3;
+
+  --background-light: #f0f1f3;
+  --background-header: #17191d;
+  --background-patient: #202228;
+  --background-nav: #282c33;
+  --background-card: #17191d;
+  --background-control: #31353e;
+  --background-download: #4b525f;
+  --background-visualizer: #fbfbfc;
+
+  // --background-dashboard-component: #f0f1f3;
+  --background-dashboard-component: rgb(199, 199, 199);
+  --color-main: #282c33;
+  --background-edit: #a2afbe79;
+  // --background-nav: #f6f6f6dc;
+}
+
+// Tools
+@import "tools/reset";
+@import "tools/layout";
+@import "tools/typography";
+@import "tools/libs";
+@import "tools/animation";
+
+body {
+  font-family: $font;
+  font-size: 16px;
+  color: var(--color-white);
+  line-height: 20px;
+  font-weight: normal;
+  background: var(--background-light);
+  scroll-margin: 100px 0 0 0;
+  word-break: break-word;
+  height: 100vh;
+}
+
+#root {
+  height: 100vh;
+}
+
+// Modules
+@import "modules/header";
+@import "modules/card";
+@import "modules/button";
+@import "modules/modal";
+@import "modules/form";
+@import "modules/page";
+@import "modules/table";
+@import "modules/pagination";
+@import "modules/patient";
+@import "modules/badges";
+@import "modules/select";
+
+// Pages
+@import "pages/dashboard";
+@import "pages/auth";
+@import "pages/models";
+@import "pages/patients";
+@import "pages/labels";
+@import "pages/management";
+
+.infoPopAligner {
+  margin-top: 0.2vw;
+}

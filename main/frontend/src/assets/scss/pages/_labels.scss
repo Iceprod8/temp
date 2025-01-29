@@ -1,0 +1,62 @@
+.printer-label {
+  display: grid;
+  grid-template-columns: 100%;
+  grid-gap: 10px;
+  grid-auto-rows: minmax(10px, auto);
+  padding: 10%;
+}
+
+.label-print-action {
+  margin: 0 auto;
+  width: 200px;
+}
+.label-print-action button {
+  width: 100%;
+}
+
+@media screen {
+  .printer-labels {
+    margin: 0 auto;
+    width: 500px;
+  }
+
+  .printer-label {
+    color: black;
+    border: 1rem solid blue;
+  }
+}
+
+@media print {
+  // Hack for papercups to not print papercups
+  .Papercups-toggleButton {
+    display: none;
+  }
+  .Papercups-toggleButtonContainer {
+    display: none;
+  }
+
+  .header {
+    display: none;
+  }
+
+  .notinprint {
+    display: none;
+  }
+
+  :root {
+    --background-light: white;
+  }
+
+  @page {
+    /* size: portrait; */
+    margin: 0;
+  } /* disable header and footer */
+  .printer-label {
+    clear: both;
+    page-break-after: always;
+    break-after: page;
+    /*text-align: center;*/
+    /* font-size: 5vw; */
+    color: black;
+  }
+}

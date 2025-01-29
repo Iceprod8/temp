@@ -1,0 +1,9 @@
+{
+  "baseUrl": "http://localhost:3000",
+  "defaultCommandTimeout": 10000,
+  "video": false,
+  "screenshotOnRunFailure": false,
+  "ignoreTestFiles": ["*~", "*.orig", "#*"],
+  "viewportWidth": 1920,
+  "viewportHeight": 1080
+}

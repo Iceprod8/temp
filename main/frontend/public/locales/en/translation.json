@@ -1,0 +1,1016 @@
+{
+  "login": {
+    "form": {
+      "title": "Sign in",
+      "fields": {
+        "username": "Username",
+        "password": "Password"
+      },
+      "button": "Enter"
+    },
+    "forgot_password": "Forgot password ?",
+    "not_account_yet": "Doesn't have an account yet ?",
+    "register": "Register"
+  },
+  "navbar": {
+    "patients": "Patients",
+    "laboratory": "Orders",
+    "models": "3D Printing",
+    "aligners": "Thermoforming",
+    "inlase": "InLase",
+    "licenses": "License management",
+    "users": "User management",
+    "profile": {
+      "title": "Label parameters",
+      "button": "Save label parameters",
+      "parameters": {
+        "bag_label": "Bag label parameters",
+        "order_label": "Order label parameters",
+        "options": {
+          "last_name": "Last name",
+          "first_name": "First name",
+          "identifier": "Identifier",
+          "office": "Office",
+          "doctor": "Doctor",
+          "rank": "Rank",
+          "upper_serie_detail": "Upper serie detail",
+          "lower_serie_detail": "Lower serie detail",
+          "sheet": "Sheet",
+          "deadline": "Deadline",
+          "delivery_place": "Delivery place",
+          "text_display": "text {{ nbr }} display",
+          "upper_text_content": "Upper text {{ nbr }} content",
+          "lower_text_content": "Lower text {{ nbr }} content"
+        },
+        "language": {
+          "title": "Set language",
+          "button": "Save language settings",
+          "name": "Language",
+          "options": {
+            "english": "English",
+            "french": "French"
+          }
+        },
+        "order_template": {
+          "title": "Order template settings",
+          "settings": {
+            "producers": {
+              "title": "Select producers"
+            },
+            "order_type": {
+              "title": "Select Order Type",
+              "default_order_type": "Default Order Type"
+            },
+            "pickup_location": {
+              "title": "Select Pickup location",
+              "default_pickup_location": "Default Pickup location"
+            },
+            "deadline_type": {
+              "title": "Select Deadline type",
+              "default_deadline_type": "Default Deadline type"
+            },
+            "sheets": {
+              "title": "Select materials",
+              "default_sheet": "Default sheet",
+              "default_template_sheet": "Default Template sheet",
+              "warning_default_sheet": "WARNING: The default sheet is not selected in the sheet list.",
+              "legend": "Your InLase is set for these materials"
+            },
+            "doctors": {
+              "title": "Select doctors",
+              "default_doctor": "Default Doctor",
+              "add_doctor": "Add Doctor",
+              "cancel": "Cancel",
+              "doctor_name": "Doctor Name",
+              "save_doctor": "Save Doctor"
+            }
+          },
+          "button": "Save the parameters of the order template"
+        },
+        "batch_preferences": {
+          "title": "Batch Preferences",
+          "keep_printer_batch": "Keep Printer Batches After Validation",
+          "keep_printer_batch_option": "Enable keeping printer batches.",
+          "keep_cutter_batch": "Keep Cutter Batches After Validation",
+          "keep_cutter_batch_option": "Enable keeping cutter batches.",
+          "button": "Save Preferences"
+        }
+      },
+      "licenses": {
+        "title": "License History",
+        "contact_us": "For inquiries related to our products and services, please feel free to contact us at "
+      },
+      "not_connected": "Not connected"
+    }
+  },
+  "patients": {
+    "title": "Patients",
+    "button_archived": {
+      "hidden": "Display / hide archived patients",
+      "displayed": "Display / hide archived patients"
+    },
+    "new_patient_button": "Add new patient",
+    "new_patient_form": {
+      "title": "New patient",
+      "fields": {
+        "first_name": "First name",
+        "last_name": "Last name",
+        "birth_date": "Birth date",
+        "identifier": "Identifier"
+      },
+      "buttons": {
+        "cancel": "Cancel",
+        "confirm": "Confirm",
+        "save": "Save"
+      }
+    },
+    "table": {
+      "search": "Search",
+      "titles": {
+        "patient": "Patient",
+        "favorite": "Favorite",
+        "identifier": "Identifier",
+        "first_name": "First name",
+        "last_name": "Last name",
+        "birth_date": "Birth date",
+        "treatment_period": "Treatment period",
+        "existing_orders": "Existing orders",
+        "progress_status": "Progress status",
+        "actions": "Actions"
+      },
+      "treatment_period_options": {
+        "no_defined": "No period defined",
+        "archived": "Archived",
+        "to": "\u00A0to\u00A0",
+        "start": "Start",
+        "end": "End"
+      },
+      "existing_orders_options": {
+        "orders_terminated": "orders terminated",
+        "not_order_yet": "No order yet"
+      },
+      "progress_status_options": {
+        "no_order_requested": "No order requested",
+        "setup_to_be_done": "Setup to be done",
+        "setup_in_progress": "Setup in progress",
+        "aligners_to_be_started": "Aligners to be started",
+        "aligners_to_print": "Aligners to print",
+        "aligners_to_thermoform": "Aligners to thermoform",
+        "aligners_to_cut": "Aligners to cut",
+        "aligners_cutted": "Aligners cutted",
+        "retainers_to_be_started": "Retainers to be started",
+        "retainers_to_print": "Retainers to print",
+        "retainers_to_thermoform": "Retainers to thermoform",
+        "retainers_to_cut": "Retainers to cut",
+        "retainers_cutted": "Retainers cutted",
+        "other_order_to_be_done": "Other order to be done",
+        "other_order_in_progress": "Other order in progress",
+        "no_order_left_in_progress": "No order left in progress"
+      },
+      "actions_options": {
+        "new_order": "New order",
+        "start_treatment": "Start treatment",
+        "restore_patient": "Restore patient"
+      },
+      "note_form": {
+        "title": "Note",
+        "fields": {
+          "title": "Title",
+          "description": "Type your notes..."
+        },
+        "buttons": {
+          "cancel": "Cancel",
+          "confirm": "Confirm"
+        }
+      },
+      "no_notes": "You have no notes on this patient"
+    }
+  },
+  "patient_profile": {
+    "title": "Patient file",
+    "header": {
+      "archive": "Archive patient"
+    },
+    "table": {
+      "name": "Edition",
+      "titles": {
+        "element": "ELEMENT",
+        "current_value": "CURRENT VALUE",
+        "new_value": "NEW VALUE"
+      },
+      "columns": {
+        "element": {
+          "identifier": "Identifier",
+          "last_name": "Last Name",
+          "first_name": "First name",
+          "birth_date": "Birth date",
+          "address": {
+            "title": "Address and postal information",
+            "address-line1": "Address line 1",
+            "address-line2": "Address line 2",
+            "zip": "Zip code",
+            "city": "City",
+            "state": "State",
+            "country": "Country"
+          },
+          "email": "Email"
+        }
+      }
+    },
+    "buttons": {
+      "save": "Save patient modifications",
+      "print_address": "Print the address"
+    },
+    "table_notes": {
+      "name": "Notes",
+      "titles": {
+        "title": "Title",
+        "body": "Body",
+        "update": "Update"
+      },
+      "buttons": {
+        "add": "Add Note",
+        "text": "Write a new note...",
+        "download_notes": "Download all notes",
+        "download_models": "Download all models"
+      }
+    }
+  },
+  "dashboard": {
+    "patient_profile": "Patient file",
+    "button_close": "Close patient",
+    "period_information": {
+      "title": "Period information",
+      "follow_up": {
+        "title": "Follow-up",
+        "period": "Period",
+        "start": "Start",
+        "no_active_period": "No active period"
+      },
+      "select_period": "Please select a period",
+      "add_note_button": "Add Note",
+      "add_new_period_button": "Create a period",
+      "create_form": {
+        "title": "Create a period",
+        "title_update": "Edit period",
+        "ranks": {
+          "from": "Ranks from",
+          "to": "to"
+        },
+        "setup": "Setup",
+        "wear_duration": "Wear duration",
+        "start_date": "Start date",
+        "end_date": "End date",
+        "buttons": {
+          "cancel": "Cancel",
+          "create": "Create the period",
+          "update": "Update the period",
+          "reset": "Reset"
+        }
+      },
+      "delete_form": {
+        "title": "Delete {{ period }}",
+        "buttons": {
+          "cancel": "Cancel",
+          "confirm": "Confirm"
+        }
+      },
+      "card": {
+        "weeks": "W",
+        "rank_text": "Ranks {{ min_rank }} to {{ max_rank }}",
+        "from": "\u00A0From\u00A0",
+        "to": "\u00A0to\u00A0"
+      }
+    },
+    "orders": {
+      "title": "Orders",
+      "form": {
+        "fields": {
+          "producer_type": "Producer type",
+          "producer": "Producer",
+          "type": "Type",
+          "doctor": "Doctor",
+          "setup": "Setup",
+          "pickup": "Pickup location",
+          "sheet": "Sheet",
+          "deadline_type": "Deadline type",
+          "aligners_detail": {
+            "title": "Aligners",
+            "from": "From",
+            "to": "To",
+            "upper_start": "Upper/Start",
+            "upper_end": "Upper/End",
+            "lower_start": "Lower/Start",
+            "lower_end": "Lower/End"
+          },
+          "retainers_detail": {
+            "title": "Retainers",
+            "rank_in_setup": "Rank in setup",
+            "upper_rank": "Upper rank",
+            "lower_rank": "Lower rank",
+            "quantity": "Quantity",
+            "quantity_upper": "Quantity upper",
+            "quantity_lower": "Quantity lower"
+          },
+          "note": "Note"
+        },
+        "button": "New order"
+      },
+      "table": {
+        "name": "PENDING ORDERS",
+        "titles": {
+          "identifier": "Patient ID",
+          "patient": "Patient",
+          "last_name": "Last name",
+          "first_name": "First name",
+          "type": "Type",
+          "progress": "Progress",
+          "doctor": "Doctor",
+          "producer": "Producer",
+          "producer_type": "Producer type",
+          "deadline": "Deadline",
+          "creation_date": "Creation date",
+          "done_date": "Done date",
+          "setup": "Setup",
+          "delivery_location": "Delivery location",
+          "sheet": "Sheet",
+          "note": "Note",
+          "nb_aligners": "Nb aligners",
+          "ranks": "Ranks",
+          "in_production": "In production",
+          "order_label": "Order label",
+          "bag_labels": "Bag labels",
+          "edit": "Edit"
+        }
+      }
+    },
+    "setups": {
+      "title": "Setups",
+      "form": {
+        "fields": {
+          "name": "Setup Name"
+        },
+        "button": "Create Setup"
+      },
+      "table": {
+        "name": "SETUPS",
+        "titles": {
+          "name": "Name",
+          "number": "Number",
+          "creation_date": "Creation date",
+          "aligners": "# aligners",
+          "ready": "# ready"
+        }
+      }
+    },
+    "appointments": {
+      "title": "Appointments",
+      "form": {
+        "fields": {
+          "appointment_date": "Appointment date",
+          "type": "Type",
+          "task": "Task"
+        },
+        "button": "Add Appointment"
+      },
+      "table": {
+        "name": "APPOINTMENTS",
+        "titles": {
+          "appointment_date": "Appointment date",
+          "type": "Type",
+          "task": "Task"
+        }
+      }
+    },
+    "cutlines": {
+      "title": "Cutlines",
+      "buttons": {
+        "upload_model_files": "Upload model files (STL)",
+        "upload_cutline_files": "Upload cutline files (PTS)",
+        "validate_all_selected": "Validate all selected cutlines",
+        "delete_all_selected": "Delete all selected models",
+        "new_setup": "Create",
+        "download_models": "Download the ready models"
+      },
+      "smooth_line": "Smooth line",
+      "transparence_toggle": "Transparency",
+      "upper_jaw": "Upper jaw",
+      "lower_jaw": "Lower jaw",
+      "select_all": "Select all",
+      "card_model": {
+        "line_preparation": "Line preparation",
+        "no_line": "No line",
+        "line_validated": "Line validated",
+        "line_edition": "Line edition",
+        "base_error": "Base error",
+        "ready_for_printing": "Ready for printing",
+        "ready_with_errors": "Optimisable line",
+        "base_preparation": "Base preparation",
+        "existing_base": "Existing base",
+        "no_base": "No base",
+        "printed": "Printed",
+        "cut": "Cut",
+        "unprinted": "Unprinted",
+        "rank": "Rank"
+      },
+      "form": {
+        "fields": {
+          "title": "Model parameter\u00A0",
+          "note": "Note",
+          "delete_message": "Delete this model ?"
+        },
+        "buttons": {
+          "cancel": "Cancel",
+          "confirm": "Confirm",
+          "add_note": "Add Note"
+        }
+      },
+      "toolbar": {
+        "initialize": "Initialize cutline",
+        "validate": "Validate cutline",
+        "edit": "Edit cutline",
+        "delete": "Delete cutline",
+        "save": "Save"
+      }
+    }
+  },
+  "laboratory": {
+    "title": "Laboratory Tasks",
+    "buttons": {
+      "show_filter": "Show Filter. Use only by test to shortcut the filter menu opening",
+      "launch_printing": "Launch printing",
+      "terminate_orders": "Terminate orders",
+      "pending_orders": "Display/Hide Finished orders",
+      "finished_orders": "Display/Hide Finished orders",
+      "delay_orders_on": "Display/Hide Delayed orders",
+      "delay_orders_off": "Display/Hide Delayed orders"
+    },
+    "print": {
+      "title": "Print",
+      "patient": "Patient",
+      "identifier": "Identifier",
+      "deadline": "Deadline",
+      "practitioner": "Practitioner",
+      "no_top_aligner": "No top aligner",
+      "no_bottom_aligner": "No bottom aligner",
+      "material": "Material",
+      "delivery": "Delivery"
+    }
+  },
+  "licenses": {
+    "title": "License List",
+    "table": {
+      "titles": {
+        "id": "Id",
+        "office": "Office",
+        "username": "Username",
+        "name": "License",
+        "description": "Description",
+        "start_date": "Start date",
+        "end_date": "End date",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "status": {
+        "active": "Active",
+        "no_active_yet": "No active yet",
+        "expired": "Expired",
+        "inconsistency_of_dates": "Inconsistency of dates"
+      }
+    },
+    "form": {
+      "create": "Create a license",
+      "update": "Update license",
+      "username": "Username",
+      "license_type": "License type",
+      "description": "Description",
+      "start_date": "Start date",
+      "end_date": "End date",
+      "no_ending": "No end date"
+    },
+    "buttons": {
+      "delete": "Delete licenses",
+      "create": "Add new license",
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "save": "Save"
+    }
+  },
+  "users": {
+    "title": "My User List",
+    "table": {
+      "titles": {
+        "id": "Id",
+        "office": "Office",
+        "username": "Username",
+        "first_name": "First name",
+        "last_name": "Last name",
+        "email": "Email",
+        "actions": "Actions"
+      }
+    },
+    "form": {
+      "create": "Create a user",
+      "update": "Update user",
+      "office": "Office",
+      "username": "Username",
+      "first_name": "First name",
+      "last_name": "Last Name",
+      "email": "Email",
+      "password": "Password",
+      "password_confirm": "Password confirmation",
+      "fields_rules": {
+        "letters_digits_and_characters": "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.",
+        "email_is_not_valid": "Email is not valid",
+        "at_least_8_characters_max_128_characters": "It must contain at least 8 characters. Max 128 characters",
+        "at_least_one_special_character": "It must contain at least one special character: !@#$%^&*()-_=+[{]}|;:',<.>?",
+        "at_least_one_uppercase": "It must contain at least one uppercase",
+        "at_least_one number": "It must contain at least one number",
+        "password_and_password_confirmation_do_not_match": "Password and Password confirmation do not match."
+      }
+    },
+    "buttons": {
+      "delete": "Delete users",
+      "create": "Add new user",
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "save": "Save"
+    }
+  },
+  "orderedit": {
+    "patient_profile": "Patient Order List",
+    "title": "Order edition\u00A0",
+    "header": {
+      "order_created": "\u00A0order, created on\u00A0",
+      "identifier": "Patient ID",
+      "last_name": "Last name",
+      "first_name": "First name",
+      "order_status": "Order status",
+      "producer": "Producer",
+      "production_not_started": "\u00A0production not started",
+      "production_started": "\u00A0production started",
+      "deadline": "Deadline",
+      "no_deadline": "Next appointment",
+      "upper_aligner": "Upper aligners {{ start_aligner_top }} to {{ end_aligner_top }}",
+      "bottom_aligner": "Bottom aligners {{ start_aligner_bottom }} to {{ end_aligner_bottom }}",
+      "upper_retainer": "Upper retainer rank {{ start_aligner_top }} with multiplicity {{ multiplicity_top }}",
+      "bottom_retainer": "Lower retainer rank {{ start_aligner_bottom }} with multiplicity {{ multiplicity_bottom }}",
+      "no_upper_aligner": "No upper aligner",
+      "no_bottom_aligner": "No bottom aligner",
+      "no_upper_retainer": "No upper retainer",
+      "no_bottom_retainer": "No bottom retainer"
+    },
+    "table": {
+      "titles": {
+        "element": "ELEMENT",
+        "current_value": "CURRENT VALUE",
+        "new_value": "NEW VALUE"
+      },
+      "columns": {
+        "element": {
+          "doctor": "Doctor",
+          "setup": "Setup",
+          "deadline": "Deadline",
+          "pickup": "Pickup Location",
+          "sheet": "Sheet"
+        }
+      }
+    },
+    "current_note": "Current note",
+    "updated_note": "Updated note",
+    "buttons": {
+      "save": "Save order modifications",
+      "launch_printing": "Launch printing",
+      "terminate_orders": "Terminate orders",
+      "cancel_order": "Cancel order",
+      "order_label": "Order label",
+      "bag_labels": "Bag labels"
+    },
+    "table_edition": {
+      "name": "Aligners edition",
+      "titles": {
+        "position": "Position",
+        "rank": "Rank",
+        "current_status": "Current status",
+        "new_status": "New status",
+        "current_sheet": "Current sheet",
+        "new_sheet": "New sheet",
+        "save": "Save"
+      },
+      "buttons": {
+        "save": "Save aligner modifications"
+      }
+    }
+  },
+  "3d_printing": {
+    "table_pending_models": {
+      "models": "Printable Models",
+      "aligners": "Thermoforming Aligners",
+      "titles": {
+        "orders": "Orders",
+        "edit": "Edit",
+        "remaining": "Remaining",
+        "select_actions": "Select actions",
+        "current_selected": "Current seleted"
+      },
+      "columns": {
+        "actions": {
+          "buttons": {
+            "add_models": "Add the {{ filteredItemsLength }} {{ subject }}",
+            "allInTray": "Create InLase trays"
+          }
+        }
+      }
+    },
+    "table_pending_printer_beds": {
+      "name": "Pending printer beds",
+      "titles": {
+        "printer_beds": "Printer beds",
+        "actions": "Actions"
+      },
+      "search": "Search name",
+      "batch_name": "Batch name",
+      "batch_modal_validate": {
+        "name": "Batch success",
+        "message": "Please unselect failed cases",
+        "table": {
+          "titles": {
+            "aligners": "Aligners",
+            "actions": "Actions"
+          }
+        },
+        "buttons": {
+          "cancel": "Cancel",
+          "confirm": "Confirm"
+        }
+      },
+      "batch_modal_edit": {
+        "name": "Selected models",
+        "table": {
+          "titles": {
+            "aligners": "Aligners",
+            "remove": "Remove",
+            "order": "Order"
+          }
+        },
+        "buttons": {
+          "delete": "Delete this batch ?",
+          "close": "Close"
+        }
+      }
+    }
+  },
+  "cutting": {
+    "table_pending_cutting_batches": {
+      "name": "Pending cutting batches",
+      "titles": {
+        "cutting_batches": "Cutting Batches",
+        "actions": "Actions"
+      },
+      "batch_modal_view": {
+        "name": "Cutting batch",
+        "table": {
+          "titles": {
+            "aligner": "Aligner",
+            "sheet": "Sheet",
+            "remove": "Remove",
+            "order": "Order",
+            "labels": "Labels"
+          }
+        }
+      }
+    }
+  },
+  "inlase": {
+    "title": "InLase control",
+    "buttons": {
+      "refresh": "Refresh InLase Status",
+      "stop": "Stop InLase",
+      "reset": "Reset InLase",
+      "cut": "Cut with InLase",
+      "confirm": "Confirm cutting success",
+      "edit_selected_batch": "Edit batch",
+      "apply_new_slot": "Apply new starting slot for this batch",
+      "apply_sheet": "Apply sheet to all slots"
+    },
+    "warning": "WARNING - Wait 10 minutes before cutting after turning on the machine",
+    "table": {
+      "name": "Machine State",
+      "titles": {
+        "status": "Status"
+      },
+      "rows": {
+        "available": "Available",
+        "doors": "Doors",
+        "cutting": "Cutting",
+        "cutlines_ready": "Cutlines ready"
+      },
+      "options": {
+        "ok": "ok",
+        "ko": "ko",
+        "close": "Closed",
+        "open": "Opened",
+        "not_cutting": "Not cutting",
+        "cutting": "cutting",
+        "loaded": "Loaded",
+        "not_loaded": "Not loaded"
+      }
+    },
+    "slots_available": "Slot {{ nbr }} available",
+    "undefined_sheet": "undefined sheet"
+  },
+  "not_found": {
+    "name": "404 - Not found",
+    "title": "Page not found",
+    "sorry_no_result_found": "Sorry, no result found.",
+    "click_here_to_go_back_to_home_page": "Click here to go back to home page"
+  },
+  "no_rights": {
+    "you_do_not_have_permission": "You do not have permission to access this view.",
+    "contact": "For assistance, please contact ORTHOiN3D at"
+  },
+  "utilities": {
+    "deliveryOptions": {
+      "clinic": "Clinic",
+      "reception": "Reception",
+      "home": "Home",
+      "other": "Other"
+    },
+    "orderTypeOptions": {
+      "setup": "Setup",
+      "aligner": "Aligner",
+      "check": "Setup validation",
+      "retainer": "Retainer",
+      "import": "Import",
+      "custom": "Custom",
+      "other": "Other"
+    },
+    "orderStatusOptions": {
+      "new_order": "New Order",
+      "laboratory": "Pending",
+      "doctor": "Doctor",
+      "done": "Done",
+      "canceled": "Canceled",
+      "ordered": "Ordered",
+      "in_progress": "In progress",
+      "in_printing": "Printing",
+      "in_thermofoming": "Thermofoming",
+      "in_cutting": "Cutting",
+      "in_progress_externally": "In progress externally"
+    },
+    "producerTypeOptions": {
+      "locally": "Locally",
+      "externally": "Externally"
+    },
+    "positionOptions": {
+      "upper": "Upper",
+      "lower": "Lower"
+    },
+    "possibleProcessSteps": {
+      "incorrect_value": "Incorrect value",
+      "error": "Error",
+      "initialized": "Initialized",
+      "in_upload": "In upload",
+      "uploaded": "Uploaded",
+      "initializing_cutline": "Initializing cutline",
+      "cutline_editing": "Cutline editing",
+      "base_in_creation": "Base in creation",
+      "base_ready": "Base ready",
+      "ordered": "Ordered",
+      "to_be_printed": "To be printed",
+      "in_printing_batch": "In printing batch",
+      "to_be_thermoformed": "To be thermoformed",
+      "in_thermoformed_batch": "In thermoformed batch",
+      "to_be_cut": "To be cut",
+      "in_cutting_batch": "In cutting batch",
+      "already_cut": "Already Cut",
+      "stored": "Stored",
+      "delivered": "Delivered",
+      "archived": "Archived",
+      "other": "Other",
+      "canceled": "Canceled"
+    },
+    "selectableProcessSteps": {
+      "no_change": "No change",
+      "ordered": "Ordered",
+      "to_be_printed": "To be printed",
+      "to_be_cut": "To be cut",
+      "already_cut": "Already Cut",
+      "canceled": "Canceled"
+    },
+    "deadline_type": {
+      "today": "Today",
+      "next_appointment": "next appointment",
+      "select_date": "Select date"
+    },
+    "taskTypeOptions": {
+      "scan": "Scan",
+      "treatment_plan": "Treatment Plan",
+      "aligner": "Aligner",
+      "retainer": "Retainer"
+    },
+    "placeAppointmentOptions": {
+      "other": "Other",
+      "sit": "Sit",
+      "reception": "Reception"
+    },
+    "slotOffsetOptions": "Start from slot {{ nbr }}",
+    "time_delay": {
+      "milliseconds": "{{ nbr }} ms ago",
+      "seconds": "{{ nbr }} s ago",
+      "minutes": "{{ nbr }} min ago",
+      "hours": "{{ nbr }} hours ago",
+      "days": "{{ nbr }} days ago"
+    },
+    "variables": {
+      "machining_table": "Jaws disposition on trays",
+      "of": "of",
+      "batch": "batch",
+      "aligners": "aligners",
+      "models": "models",
+      "order": "order",
+      "setup": "setup",
+      "orders": "orders",
+      "print": "Print",
+      "prepare tray of": "Prepare batch of",
+      "format_date": "{{ year }}.{{ month }}.{{ day }} at {{ hours }}:{{ minutes }}",
+      "undefined": "undefined",
+      "unspecified": "unspecified",
+      "no_rows": "No Rows",
+      "time": "Time",
+      "or": "or"
+    },
+    "ReactDatePicker": {
+      "timeCaption": "Time",
+      "timeFormat": "HH':'mm",
+      "dateFormat": "yyyy/MM/dd HH':'mm",
+      "placeholder": "yyyy/mm/dd HH:mm"
+    },
+    "DataGridPro": {
+      "pagination": {
+        "footerTotalRows": "Total Rows",
+        "labelRowsPerPage": "Rows per page",
+        "labelRowsSelect": "Rows",
+        "labelDisplayedRows": "{{from}}-{{to}} of {{count}}"
+      }
+    },
+    "MaterialTable": {
+      "pagination": {
+        "labelRowsPerPage": "Rows per page",
+        "labelRowsSelect": "Rows",
+        "labelDisplayedRows": "{from}-{to} of {count}"
+      }
+    }
+  },
+  "messages": {
+    "common": {
+      "error_batch": "Error Batch",
+      "select_batch_between": "Select between {{ minBatch }} and {{ maxBatch }} number of\u00A0",
+      "loading": "Loading...",
+      "loading_in_progress": "Loading in progress...",
+      "batch_name_updated": "Batch name updated",
+      "error_saving_batch_name": "Error saving batch name",
+      "subject_was_created": "{{ subject }} was created",
+      "subject_was_not_created": "{{ subject }} was not created",
+      "error_occurred": "An error occurred",
+      "choose_a_date": "Please choose a date",
+      "note_added": "Note has been add",
+      "note_updated": "Note has been update",
+      "backend_issue": "Backend issue",
+      "invalid_credentials": "Invalid Credentials",
+      "unknown_user_or_application_not_available": "Unknown user or application is not available",
+      "passwords_not_match": "Passwords do not match",
+      "you_do_not_have_permission_to_execute_this_action": "You do not have permission to perform this action",
+      "already_connected_elsewhere": "You are already connected elsewhere. This action will disconnect you from the other location. Keep going?",
+      "force_disconnect_failed": "Failed to disconnect other sessions.",
+      "token_refresh_failed": "Your session has expired. Please log in again.",
+      "logout_failed": "Failed to log out. Please try again.",
+      "logout_successful": "You have been successfully logged out."
+    },
+    "cutlines": {
+      "validated_models": "{{ value1 }}/{{ value2 }} validated model(s)",
+      "error_during_validation": "An error occurred during validation, {{ nbr }} model(s) left",
+      "no_file_selected": "No file selected.",
+      "files_size": "Files must be a maximum size of {{ size }}",
+      "file_downloaded": "{{ file }} downloaded",
+      "not_enough_points": "Not enough points: Please select 3 points.",
+      "too_many_points": "Too many points: Please select only 3 points.",
+      "file_uploading": "File are uploading",
+      "something_went_wrong_when_uploading_stl": "Something went wrong when uploading stl. Please check file name, position and rank.",
+      "something_went_wrong_when_uploading_pts": "Something went wrong when uploading pts. Maybe the model is not fully uploaded yet. Otherwise please check file name, position and rank.",
+      "something_went_wrong_when_uploading": "Something went wrong when uploading",
+      "select_a_setup": "Please select a setup",
+      "delete_model_confirmation": "Are you sure you want to delete the model?",
+      "model_removed": "The model has been removed.",
+      "delete_all_selected_models_confirmation": "Are you sure you want to delete the following models?",
+      "no_model_selected": "No model selected",
+      "order_has_a_remainder": "There is/are {{ remainder }} aligner(s) left on this order",
+      "order_has_less_than_6_aligners": "The order contains less than 6 aligners. Please include them in the tray of another order or create a manual tray for {{ remainder }} aligner(s)"
+    },
+    "patients": {
+      "patient_already_exists": "The patient already exists.",
+      "patient_with_same_name_already_exist_check_birth_dates": "Patients with the same name already exist. Please take care birth dates to differentiate.",
+      "error_during_patient_creation": "Error during patient creation.",
+      "patient_updated": "Patient updated",
+      "error_updating_patient": "Error updating patient.",
+      "no_note_selected": "No note selected",
+      "archive_patient_confirmation": "Are you sure to archive the patient {{ last_name }} {{ first_name }} ? This will close all related orders.",
+      "unarchive_patient_confirmation": "Are you sure to unarchive the patient {{ last_name }} {{ first_name }} ?",
+      "email_is_not_valid": "The email is not valid"
+    },
+    "inlase": {
+      "order_fully_cut": "The order {{ description }} of {{ nb_aligners }} aligner has been fully cut. Do you want to terminate this order?",
+      "batch_cut": "The batch has been cut",
+      "batch_partially_cut": "The batch has been partially cut",
+      "no_actual_cut_succeed": "No actual cut succeed",
+      "error_check_inlase_is_turned_on": "Error - Please check that the InLase is turned on, InLase driver is running, and the validity of the material. If the problem persist use the reset function."
+    },
+    "period_information": {
+      "period_created": "The period has been created.",
+      "period_updated": "The period has been updated.",
+      "period_deleted": "The period has been deleted successfully.",
+      "error_wear_duration": "The value for the wear duration field is not valid.",
+      "error_min_rank": "The value for the start rank field is not valid.",
+      "error_max_rank": "The value for the end rank field is not valid."
+    },
+    "orders": {
+      "cancel_order_confirmation": "Are you sure to cancel the order(s)? It can't be undone.",
+      "finished_order_cannot_be_canceled": "A finished order can't be canceled.",
+      "order_already_canceled": "The order is already canceled.",
+      "canceling_the_order": "Canceling the order.",
+      "canceled_or_finished_order_cannot_be_modified": "A canceled or finished order can't be modified.",
+      "already_cut_aligner_cannot_be_canceled": "An already cut aligner can't be canceled.",
+      "aligner_updated": "Aligner updated",
+      "error_updating_aligner": "Error updating aligner",
+      "order_updated": "Order updated",
+      "error_updating_order": "Error updating order.",
+      "models_available_in_models_tabs": "Models are now available in 3D Printing tab",
+      "order_started": "{{ type }} type Orders started",
+      "reset_the_status_of_all_aligners_confirmation": "This will reset the status of all aligners to 'to be printed'. Are you sure ?",
+      "finished_or_canceled_order_cannot_be_reset": "A finished or canceled order can't be reset. Please create a new order",
+      "order_terminated": "The order is terminated.",
+      "mark_order_as_terminated_confirmation": "Are you sure to mark this order as terminated ?",
+      "order_already_finished_or_canceled": "The order is already finished or canceled.",
+      "all_models_must_be_ready": "All models must be ready",
+      "orders_have_been_canceled": "Orders have been canceled",
+      "orders_have_been_terminated": "Orders have been terminated",
+      "order_creation_requires_a_setup": "Order creation requires a setup.",
+      "no_order_selected": "No order selected",
+      "launch_printing_confirmation": "Are you sure to launch the order(s)?",
+      "terminate_order_confirmation": "Are you sure to terminate the order(s)? It can't be undone",
+      "error_starting_order": "Error starting the order. Please check that the setup exist and there is some aligners to be produced."
+    },
+    "setup": {
+      "delete_setup_confirmation": "WARNING! Are you absolutely certain you want to delete the setup and all associated data, including 3D models? This action will cancel related orders. It cannot be undone."
+    },
+    "3d_printing": {
+      "batch_printed": "The batch has been properly printed",
+      "downloading_models_only_available_using_inlase": "Downloading models is only available when using the InLase machine.",
+      "error_downloading_models": "Couldn't download models. Please check that the correct setup is selected, and that all aligners from this batch are ready with a validated cutline."
+    },
+    "parameters": {
+      "sheetsList": {
+        "success": "The material list has been successfully saved",
+        "error": "An error occurred while saving the material list"
+      },
+      "defaultSheet": {
+        "success": "The default material has been successfully saved",
+        "error": "An error occurred while saving the default material"
+      },
+      "producerList": {
+        "success": "The producer list has been successfully saved",
+        "error": "An error occurred while saving the producer list"
+      },
+      "labels": {
+        "success": "The label parameters has been successfully saved",
+        "error": "An error occurred while saving the label parameters"
+      },
+      "order_template": {
+        "success": "The order template parameters has been successfully saved",
+        "error": "An error occurred while saving the order template parameters"
+      },
+      "batchPreferences": {
+        "success": "Batch preferences updated successfully.",
+        "error": "Failed to update batch preferences."
+      }
+    },
+    "licenses": {
+      "delete_confirmation": "WARNING! Are you absolutely certain you want to delete the license?. It cannot be undone.\nLicense: {{ license_name }} - username: {{ username }} ",
+      "no_license_selected": "No license selected",
+      "licenses_have_been_deleted": "Licenses have been deleted",
+      "delete_selected_licenses": "WARNING! Are you absolutely certain you want to delete the selected licenses?. It cannot be undone.",
+      "license_was_created": "License was created",
+      "license_was_updated": "License was updated",
+      "dates_cannot_be_empty": "Start date and end date cannot be empty"
+    },
+    "users": {
+      "delete_confirmation": "WARNING! Are you absolutely certain you want to delete the user?. It cannot be undone.\nLicense: {{ username }}",
+      "no_user_selected": "No user selected",
+      "users_have_been_deleted": "Users have been deleted",
+      "delete_selected_users": "WARNING! Are you absolutely certain you want to delete the selected users?. It cannot be undone.",
+      "user_was_created": "User was created",
+      "user_was_updated": "User was updated",
+      "invalid_information_provided": "Invalid information provided. Please verify the username and email. Ensure that no other user has the same details."
+    }
+  }
+}

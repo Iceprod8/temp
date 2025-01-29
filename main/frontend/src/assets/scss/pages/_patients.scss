@@ -1,0 +1,31 @@
+.patients-infos {
+  height: 80px;
+  background: var(--color-white);
+  margin-top: 16px;
+  border-radius: 3px;
+  padding: 20px 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.patients-infos__item {
+  font-size: 14px;
+  line-height: 14px;
+
+  svg {
+    margin-right: 16px;
+  }
+
+  span {
+    font-size: 32px;
+    line-height: 36px;
+    font-weight: 600;
+    margin-right: 6px;
+  }
+}
+
+.MuiTableRow-root:nth-of-type(odd) {
+  background-color: #f0f0f0;
+  /* Light gray background for odd rows */
+}

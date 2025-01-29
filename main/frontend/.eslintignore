@@ -1,0 +1,4 @@
+build/*
+public/*
+src/assets/*
+cypress/*
